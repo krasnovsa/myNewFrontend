@@ -1,0 +1,13 @@
+
+
+.not-open {
+  font-style: italic;
+} 
+.cur-filter {
+  font-style: italic;
+  color: grey;
+}
+
+.highlight {
+  background-color: khaki;
+}

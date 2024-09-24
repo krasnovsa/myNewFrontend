@@ -1,0 +1,16 @@
+{
+  "folders": [
+	{
+		"name": "myBase",
+		"path": "..\\..\\..\\..\\..\\myBase"
+	},
+	{
+		"name": "myFrontend",
+		"path": "..\\..\\..\\.."
+	},
+	{
+		"path": "c:\\deploy"
+	}
+],
+  "settings": {}
+}
