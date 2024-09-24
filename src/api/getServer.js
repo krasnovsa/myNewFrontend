@@ -3,8 +3,8 @@ export const getServer = () => {
     const servType = localStorage.getItem("serverType");
     
     return {
-      SERVER: servType==='ext'?process.env.REACT_APP_SERVER_EXT:process.env.REACT_APP_SERVER,
-      API: servType==='ext'?process.env.REACT_APP_API_EXT:process.env.REACT_APP_API,
+      SERVER: "localhost:3000",
+      API: "localhost:3000/api",
       servType:servType
     };
   }

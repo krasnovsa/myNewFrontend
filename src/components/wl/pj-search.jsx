@@ -99,8 +99,7 @@ const PjSearch = (props) => {
           />
 
           <button
-            className="submit"
-            className="btn btn-primary col-2 m-1"
+            className="submit btn btn-primary col-2 m-1"
             onClick={handleOnClick}
             disabled={!isInputChanged}
           >

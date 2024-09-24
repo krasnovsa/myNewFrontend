@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Layout from "../components/layout";
 import { login, authenticate, isAuthenticated } from "../auth";
 
@@ -84,10 +84,10 @@ const Login = () => {
 
   const redirectUser = () => {
     if (redirectToReferrer) {
-      return <Redirect to="/dashboard" />;
+      return <Navigate to="/dashboard" />;
     }
     if (isAuthenticated()) {
-      return <Redirect to="/dashboard" />;
+      return <Navigate to="/dashboard" />;
     }
   };
 

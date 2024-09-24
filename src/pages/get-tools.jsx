@@ -1,15 +1,13 @@
-
-
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-import BoxList from "../components/box/box-list";
-import BoxInfo from "../components/box/box-info.js";
-import Layout from "../components/layout";
-import { Box } from "react-bootstrap-icons";
+import GTInfo from "../components/gt/gt-info.js";
+import Layout from "../components/layout.jsx";
+import GTList from "../components/gt/gt-list.js";
+import { Basket2 } from "react-bootstrap-icons";
 
-const Boxes = (props) => {
-  const { pageSize, pageNumber, textFilter = " " } = props.match.params;
+const GetTools = (props) => {
+  const { pageSize, pageNumber, textFilter = " ", parAccId } = props.match.params;
   console.log("text filter in Boxes props.match.params", textFilter);
   const style = {
     height: "500px",
@@ -20,22 +18,23 @@ const Boxes = (props) => {
     <Layout
       title={
         <div>
-          {"  "} <Box /> Отгузки{" "}
+          {"  "} <Basket2 /> Выдача инструмента {" "}
         </div>
       }
-      description="Оформление коробок, печать этикеток"
+      description="Выдача инструмента, открытие шкафов"
       className="container"
     >
       <div className="row">
         <div className="col-12 col-md-8 mb-2">
-          <BoxInfo />
+          <GTInfo />
         </div>
         <div className="col-12 col-md-4">
-          <BoxList
+          <GTList
             style={style}
             pageNumber={pageNumber}
             pageSize={pageSize}
             textFilter={textFilter}
+            parAccId = {parAccId}
           />
         </div>
       </div>
@@ -43,4 +42,4 @@ const Boxes = (props) => {
   );
 };
 
-export default withRouter(Boxes);
+export default withRouter(GetTools);

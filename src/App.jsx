@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import { BrowserRouter  as Router } from "react-router-dom";
 import {CurrentAppProvider} from './contexts/currentApp'
+import AppRoutes from "./routes";
 
 function App() {
 
-
   return (
     <>
+    <h1>Hello world</h1>
     <CurrentAppProvider>
-      <Router basename={process.env.PUBLIC_URL }>
-        <Routes />
+      <Router >
+        <AppRoutes />
       </Router>
     </CurrentAppProvider>
     </>

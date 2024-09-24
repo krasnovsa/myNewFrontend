@@ -2,9 +2,9 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { Lightning} from "react-bootstrap-icons";
 
-import RDSRList from "../components/rdsr/rdsr-list";
+import RDSRList from "../components/rdsr/rdsr-list.js";
 import RDSRInfo from "../components/rdsr/rdsr-info.js";
-import Layout from "../components/layout";
+import Layout from "../components/layout.jsx";
 
 
 const Rdsr= (props) => {

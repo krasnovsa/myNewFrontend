@@ -1,9 +1,9 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-import OiList from "../components/oi/OiProdList";
+import OiList from "../components/oi/OiProdList.js";
 import OrderList from "../components/order/OrderList.js";
-import Layout from "../components/layout";
+import Layout from "../components/layout.jsx";
 import { ArrowBarDown } from "react-bootstrap-icons";
 
 const Orders = (props) => {

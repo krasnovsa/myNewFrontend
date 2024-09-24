@@ -1,25 +1,15 @@
 import React from "react";
 import Layout from "../components/layout";
 import { isAuthenticated, checkWebRole } from "../auth";
-import { Link, withRouter, useHistory } from "react-router-dom";
-
-
-
+import { Link, useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-
-
-
-
   const {
     user: { wwwUserName = "", _rights = 0, fio = "", defAccId = "" },
     webRoles,
   } = isAuthenticated();
   console.log(process.env);
-  const history = useHistory();
-
-
-  
+  const navigate = useNavigate();
 
   const userLinks = () => {
     return (
@@ -38,7 +28,7 @@ const Dashboard = () => {
               <button
                 className="btn btn-outline-success mr-1"
                 onClick={() => {
-                  history.push("/box/addnew");
+                  navigate("/box/addnew");
                 }}
                 style={{ display: "inline-block" }}
               >
@@ -47,11 +37,12 @@ const Dashboard = () => {
             </li>
           )}
           {checkWebRole(webRoles, "ordPr") > 0 && (
-          <li className="list-group-item d-flex justify-content-between">
-            <Link className="nav-link" to={`/orders/0/`}>
-              Заказы
-            </Link>
-          </li>)}
+            <li className="list-group-item d-flex justify-content-between">
+              <Link className="nav-link" to={`/orders/0/`}>
+                Заказы
+              </Link>
+            </li>
+          )}
           {defAccId && checkWebRole(webRoles, "gt") > 0 && (
             <li className="list-group-item d-flex justify-content-between">
               <Link
@@ -79,9 +70,6 @@ const Dashboard = () => {
               </Link>
             </li>
           )}
-
-          
-          
         </ul>
       </div>
     );
@@ -116,4 +104,4 @@ const Dashboard = () => {
   );
 };
 
-export default withRouter(Dashboard);
+export default Dashboard;

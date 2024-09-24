@@ -1,7 +1,7 @@
 import React from 'react';
-import { Switch, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
-// import PrivateRoute from './auth/PrivateRoute'
+import PrivateRoute from './auth/PrivateRoute'
 
 // import Boxes from "./pages/boxes";
 // import Rdsr from "./pages/rdsr";
@@ -14,8 +14,8 @@ import { Switch, Route } from "react-router-dom";
 
 // import BoxAddUpdate from "./pages/box-add-update";
 // import WlAddUpdate from "./components/wl/wl-add-update";
-// import Dashboard from "./pages/dashboard";
-// import Login from "./pages/login";
+import Dashboard from "./pages/dashboard";
+import Login from "./pages/login";
 // import ViewerTestPage from './pages/ViewerTestPage';
 // import QrResponsePage from './components/qr/QrResponsePage'
 
@@ -23,13 +23,13 @@ import { Switch, Route } from "react-router-dom";
 
 
 
-const Routes = () => {
+const AppRoutes = () => {
 
   return (
-    <Switch>
+    <Routes>
       <Route path="/login" exact component={Login} />
-      {/* <PrivateRoute path="/" exact component={Dashboard} />
-      <PrivateRoute path="/dashboard" exact component={Dashboard} />
+      <PrivateRoute path="/" exact component={Dashboard} />
+      {/* <PrivateRoute path="/dashboard" exact component={Dashboard} />
       <PrivateRoute path="/boxes/pageNumber/:pageNumber/pageSize/:pageSize/textFilter/:textFilter"  component={Boxes} />
       
       <PrivateRoute path="/boxes/pageNumber/:pageNumber/pageSize/:pageSize/textFilter"  component={Boxes} />
@@ -59,8 +59,8 @@ const Routes = () => {
       <PrivateRoute path="/qr/:theme" ><QrResponsePage /></PrivateRoute> */}
 
 
-    </Switch>
+    </Routes>
   )
 }
 
-export default Routes
+export default AppRoutes
