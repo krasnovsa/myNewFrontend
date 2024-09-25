@@ -27,8 +27,9 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-      <Route path="/login" exact component={Login} />
-      <PrivateRoute path="/" exact component={Dashboard} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<PrivateRoute element={Dashboard} />} />
+      
       {/* <PrivateRoute path="/dashboard" exact component={Dashboard} />
       <PrivateRoute path="/boxes/pageNumber/:pageNumber/pageSize/:pageSize/textFilter/:textFilter"  component={Boxes} />
       
