@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { CurrentAppContext } from "../../contexts/currentApp";
 
-import Loader from "react-loader-spinner";
+import {ThreeDots} from "react-loader-spinner";
 
 import OiProdListItem from "./OiProdListItem";
 
@@ -57,7 +57,7 @@ function OiProdList(props) {
     <div>
       {error && <div className="alert alert-danger">.{error}</div>}
       {isLoading && (
-        <Loader
+        <ThreeDots
           type="Puff"
           color="#007bff"
           height={70}

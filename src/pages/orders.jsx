@@ -1,15 +1,10 @@
-import React from "react";
-import { withRouter } from "react-router-dom";
-
-import OiList from "../components/oi/OiProdList.js";
-import OrderList from "../components/order/OrderList.js";
+import { useParams } from "react-router-dom";
+import OrderList from "../components/order/OrderList.jsx";
 import Layout from "../components/layout.jsx";
 import { ArrowBarDown } from "react-bootstrap-icons";
 
-const Orders = (props) => {
-  const { filterStr = "", loadMode = 0 } = props.match.params;
-
- 
+const Orders = () => {
+  const { filterStr = "", loadMode = 0 } = useParams();
 
   return (
     <Layout
@@ -22,7 +17,6 @@ const Orders = (props) => {
       className="container"
     >
       <div className="row">
-      
         <div className="col-12 col-md-6">
           <OrderList filterStr={filterStr} loadMode={loadMode} />
         </div>
@@ -31,4 +25,4 @@ const Orders = (props) => {
   );
 };
 
-export default withRouter(Orders);
+export default Orders;

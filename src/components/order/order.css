@@ -11,3 +11,13 @@
 .highlight {
   background-color: khaki;
 }
+
+.order-list-item {
+  height: 150px;
+  /* Установите фиксированную высоту для каждого элемента li */
+}
+
+.progress-bar {
+  height: calc(70%);
+  /* Уменьшение высоты на 30% */
+}

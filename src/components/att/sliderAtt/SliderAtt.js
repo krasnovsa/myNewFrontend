@@ -6,7 +6,7 @@ import UploadForm from "../uploader/UploadForm";
 import { File } from "react-bootstrap-icons";
 import { fileType, trimFName } from "../fileType";
 import { isAuthenticated, checkWebRole } from "../../../auth";
-import Loader from "react-loader-spinner";
+import {ThreeDots} from "react-loader-spinner";
 import "./sliderAtt.css";
 import { Switch } from "react-router";
 import { getServer } from "../../../api/getServer";
@@ -87,7 +87,7 @@ function SliderAtt(props) {
               
               
               {isLoading && (
-              <Loader
+              <ThreeDots
                 type="Puff"
                 color="#007bff"
                 height={70}

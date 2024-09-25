@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Redirect, withRouter } from "react-router-dom";
 import { Trash, Printer, PlusSquare, Exclude } from "react-bootstrap-icons";
-import Loader from "react-loader-spinner";
+import {ThreeDots} from "react-loader-spinner";
 
 import moment from "moment";
 import { CurrentAppContext } from "../../contexts/currentApp";
@@ -215,7 +215,7 @@ setIsLoading(true)
       {popup.isShow && Popup(popup)}
       <div className="d-flex justify-content-center">
         {isLoading && (
-          <Loader
+          <ThreeDots
             type="Puff"
             color="#007bff"
             height={70}

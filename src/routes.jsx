@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route } from "react-router-dom";
 
 import PrivateRoute from './auth/PrivateRoute'
@@ -9,7 +8,7 @@ import PrivateRoute from './auth/PrivateRoute'
 // import RdsrPrint from "./pages/rdsr-print/rdsr-print";
 // import WlByEmplPage from "./components/wl/WlByEmplPage";
 // import WlByParams from "./components/wl/WlByParams";
-// import Orders from "./pages/orders";
+import Orders from "./pages/orders";
 // import Oi from "./pages/oi";
 
 // import BoxAddUpdate from "./pages/box-add-update";
@@ -29,9 +28,13 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<PrivateRoute element={Dashboard} />} />
-      
-      {/* <PrivateRoute path="/dashboard" exact component={Dashboard} />
-      <PrivateRoute path="/boxes/pageNumber/:pageNumber/pageSize/:pageSize/textFilter/:textFilter"  component={Boxes} />
+      <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />
+      <Route path="/orders/:loadMode/:filterStr?"  element={<PrivateRoute element={Orders}/>} />
+      {/* <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />
+      <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />
+      <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} /> */}
+
+      {/* <PrivateRoute path="/boxes/pageNumber/:pageNumber/pageSize/:pageSize/textFilter/:textFilter"  component={Boxes} />
       
       <PrivateRoute path="/boxes/pageNumber/:pageNumber/pageSize/:pageSize/textFilter"  component={Boxes} />
       <PrivateRoute path="/box/addnew" > <BoxAddUpdate loadMode={0}/></PrivateRoute>
@@ -49,15 +52,15 @@ const AppRoutes = () => {
       <PrivateRoute path="/wl/addnew" > <WlAddUpdate loadMode={0}/></PrivateRoute>
       <PrivateRoute path="/wl/update" > <WlAddUpdate loadMode={1}/></PrivateRoute>
       
-      <PrivateRoute path="/att/:table/:keyValue" ><ViewerTestPage /></PrivateRoute>
+      <PrivateRoute path="/att/:table/:keyValue" ><ViewerTestPage /></PrivateRoute> */}
       
     
-      <PrivateRoute path="/orders/:loadMode/:filterStr" ><Orders /></PrivateRoute>
+      {/* <PrivateRoute path="/orders/:loadMode/:filterStr" ><Orders /></PrivateRoute>
       <PrivateRoute path="/orders/:loadMode/" ><Orders /></PrivateRoute>
       
-      <PrivateRoute path="/order/prod/:ordId/" ><Oi /></PrivateRoute>
+      <PrivateRoute path="/order/prod/:ordId/" ><Oi /></PrivateRoute> */}
      
-      <PrivateRoute path="/qr/:theme" ><QrResponsePage /></PrivateRoute> */}
+      {/* <PrivateRoute path="/qr/:theme" ><QrResponsePage /></PrivateRoute> */}
 
 
     </Routes>

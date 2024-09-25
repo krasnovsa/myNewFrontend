@@ -1,14 +1,14 @@
-import React from "react";
+
 import Layout from "../components/layout";
 import { isAuthenticated, checkWebRole } from "../auth";
 import { Link, useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const {
-    user: { wwwUserName = "", _rights = 0, fio = "", defAccId = "" },
+    user: { wwwUserName = "", fio = "", defAccId = "" },
     webRoles,
   } = isAuthenticated();
-  console.log(process.env);
+
   const navigate = useNavigate();
 
   const userLinks = () => {

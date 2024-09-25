@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory, withRouter } from "react-router-dom";
-import Loader from "react-loader-spinner";
+import {ThreeDots} from "react-loader-spinner";
 
 import WlItem from "./wl-item";
 
@@ -107,7 +107,7 @@ const WlList = (props) => {
     <div>
       <div className="d-flex justify-content-center">
         {isLoading && (
-          <Loader
+          <ThreeDots
             type="Puff"
             color="#007bff"
             height={70}

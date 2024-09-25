@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
+import PropTypes from 'prop-types';
 import { CurrentAppContext } from "../../contexts/currentApp";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
-  CircularProgressbar,
   CircularProgressbarWithChildren,
   buildStyles,
 } from "react-circular-progressbar";
@@ -39,7 +39,7 @@ function OrderListItem(props) {
   const { setFilterStr, isSub, isPar } = props;
 
   const [state, dispatch] = useContext(CurrentAppContext);
-  const history = useHistory();
+  const navigate = useNavigate();
   const {
     curOrder: { ordId: curOrdId },
   } = state;
@@ -50,7 +50,7 @@ function OrderListItem(props) {
       setFilterStr(custSName);
       return;
     }
-    history.push(`${process.env.PUBLIC_URL}/order/prod/${curOrdId}`);
+    navigate(`/order/prod/${curOrdId}`);
   };
 
   const getProdStatusVariant = (ps) => {
@@ -74,10 +74,9 @@ function OrderListItem(props) {
 
   return (
     <li
-      className={`list-group-item  ${curOrdId === ordId ? "active" : ""} ${
+      className={`list-group-item order-list-item ${curOrdId === ordId ? "active" : ""} ${
         isClosed && isPar ? " list-group-item-secondary" : ""
-      }${isClosed  ? " list-group-item-dark" : ""}${
-    
+      }${isClosed ? " list-group-item-dark" : ""}${
         !isClosed && isPar ? " list-group-item-primary" : ""
       }${!isClosed && isSub ? " list-group-item-info" : ""}${
         !isOpen ? " not-open" : ""
@@ -92,7 +91,7 @@ function OrderListItem(props) {
           <div>{invNom}</div>
         </div>
 
-        <div className="col-3">
+        <div className="col-2">
           <CircularProgressbarWithChildren
             value={persShipped}
             strokeWidth={8}
@@ -121,24 +120,57 @@ function OrderListItem(props) {
         <div className="col-5 d-flex flex-column justify-content-between">
           <div>{custSName}</div>
           <small>{descr}</small>
-          {!isPar&&<div className="d-flex justify-content-end">
-            <div
-              className={`badge badge-pill badge-${getProdStatusVariant(plSt)}`}
-            >
-              П
+          {!isPar && (
+            <div className="d-flex justify-content-end">
+              <div
+                className={`badge badge-pill badge-${getProdStatusVariant(plSt)}`}
+              >
+                П
+              </div>
+              <div
+                className={`ml-1 badge badge-pill badge-${getCheckMatVariant(
+                  checkMat
+                )}`}
+              >
+                М
+              </div>
             </div>
-            <div
-              className={`ml-1 badge badge-pill badge-${getCheckMatVariant(
-                checkMat
-              )}`}
-            >
-              М
-            </div>
-          </div>}
+          )}
         </div>
       </div>
     </li>
   );
 }
+
+OrderListItem.propTypes = {
+  ord: PropTypes.shape({
+    ordId: PropTypes.number,
+    invoiceId: PropTypes.number,
+    dateCreated: PropTypes.string,
+    isClosed: PropTypes.bool,
+    isOpen: PropTypes.bool,
+    isDirty: PropTypes.bool,
+    persShipped: PropTypes.number,
+    Rang: PropTypes.number,
+    custSName: PropTypes.string,
+    descr: PropTypes.string,
+    ordProdProgress: PropTypes.number,
+    checkMat: PropTypes.number,
+    plSt: PropTypes.number,
+    shPrice: PropTypes.number,
+    ordPrice: PropTypes.number,
+    hrsProdused: PropTypes.number,
+    hrsPlan: PropTypes.number,
+    isCO: PropTypes.bool,
+    isPO: PropTypes.bool,
+    parId: PropTypes.number,
+    nzp: PropTypes.number,
+    firmId: PropTypes.number,
+    invNom: PropTypes.string,
+  }).isRequired,
+  setFilterStr: PropTypes.func.isRequired,
+  isSub: PropTypes.bool,
+  isPar: PropTypes.bool,
+};
 
 export default OrderListItem;

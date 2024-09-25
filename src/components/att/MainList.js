@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import MainListItem from "./MainListItem";
-import Loader from "react-loader-spinner";
+import {ThreeDots} from "react-loader-spinner";
 import "./MainList.css";
 import { getAttList, downloadFile } from "../../api/apiAtt";
 
@@ -85,7 +85,7 @@ function MainList(props) {
       <div className="alert alert-warning">.{fullRelPath}</div>
       <ul className="list-group mt-2 ">
         {isLoading && (
-          <Loader
+          <ThreeDots
             type="Puff"
             color="#007bff"
             height={70}

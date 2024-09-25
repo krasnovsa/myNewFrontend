@@ -4,7 +4,7 @@ import { Carousel } from "react-bootstrap/";
 import { getAttList, downloadFile, removeAtt } from "../../../api/apiAtt";
 import { fileType } from "../fileType";
 import { isAuthenticated, checkWebRole } from "../../../auth";
-import Loader from "react-loader-spinner";
+import {ThreeDots} from "react-loader-spinner";
 import ShowImage from "../ShowImage";
 import ShowPdf from "../ShowPdf";
 import ShowText from "../ShowText";
@@ -99,7 +99,7 @@ function CarouselAtt(props) {
           X
         </button>
         {isLoading && (
-          <Loader
+          <ThreeDots
             type="Puff"
             color="#007bff"
             height={70}

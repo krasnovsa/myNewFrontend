@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import Loader from "react-loader-spinner";
+import {ThreeDots} from "react-loader-spinner";
 
 import GtItem from "./gt-item";
 import Pagination from "../pagination";
@@ -133,7 +133,7 @@ const GtList = (props) => {
       />}
       <div className="d-flex justify-content-center">
         {isLoading && (
-          <Loader
+          <ThreeDots
             type="Puff"
             color="#007bff"
             height={70}

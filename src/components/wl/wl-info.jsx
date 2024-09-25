@@ -7,7 +7,7 @@ import {
   PencilSquare,
 } from "react-bootstrap-icons";
 import { Dropdown } from "react-bootstrap";
-import Loader from "react-loader-spinner";
+import {ThreeDots} from "react-loader-spinner";
 
 import { CurrentAppContext } from "../../contexts/currentApp";
 //import MyModal from "../modal";
@@ -221,7 +221,7 @@ const WlInfo = (props) => {
      {popup.isShow && Popup(popup)}
      <div className="d-flex justify-content-center">
         {isLoading && (
-          <Loader
+          <ThreeDots
             type="Puff"
             color="#007bff"
             height={70}
