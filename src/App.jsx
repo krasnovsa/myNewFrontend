@@ -7,7 +7,6 @@ function App() {
 
   return (
     <>
-    <h1>Hello world</h1>
     <CurrentAppProvider>
       <Router >
         <AppRoutes />

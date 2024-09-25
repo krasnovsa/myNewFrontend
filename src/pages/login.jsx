@@ -18,31 +18,30 @@ const Login = () => {
     setValues({ ...values, error: false, [name]: event.target.value });
   };
 
-  const clickSubmit = (event) => {
+  const clickSubmit = async (event) => {
     event.preventDefault();
     setValues({ ...values, error: false, loading: true });
-    login({ wwwUserName, wwwPass })
-      .then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error, loading: false });
-        } else {
-          authenticate(data, () => {
-            setValues({
-              ...values,
-              redirectToReferrer: true,
-            });
+    try {
+      const data = await login({ wwwUserName, wwwPass });
+      if (data.error) {
+        setValues({ ...values, error: data.error, loading: false });
+      } else {
+        authenticate(data, () => {
+          setValues({
+            ...values,
+            redirectToReferrer: true,
           });
-        }
-      })
-      .catch(() => {
-        setValues({ ...values, error: 'server data error', loading: false });
-      });
+        });
+      }
+    } catch (error) {
+      setValues({ ...values, error: 'Ошибка сервера', loading: false });
+    }
   };
 
   const logInForm = () => (
     <form>
       <div className="form-group">
-        <label className="text-muted">Name</label>
+        <label className="text-muted">Имя пользователя</label>
         <input
           onChange={handleChange("wwwUserName")}
           type="email"
@@ -52,7 +51,7 @@ const Login = () => {
       </div>
 
       <div className="form-group">
-        <label className="text-muted">Password</label>
+        <label className="text-muted">Пароль</label>
         <input
           onChange={handleChange("wwwPass")}
           type="password"
@@ -61,7 +60,7 @@ const Login = () => {
         />
       </div>
       <button onClick={clickSubmit} className="btn btn-primary">
-        Login
+        Войти
       </button>
     </form>
   );
@@ -78,15 +77,12 @@ const Login = () => {
   const showLoading = () =>
     loading && (
       <div className="alert alert-info">
-        <h2>Loading...</h2>
+        <h2>Загрузка...</h2>
       </div>
     );
 
   const redirectUser = () => {
-    if (redirectToReferrer) {
-      return <Navigate to="/dashboard" />;
-    }
-    if (isAuthenticated()) {
+    if (redirectToReferrer || isAuthenticated()) {
       return <Navigate to="/dashboard" />;
     }
   };

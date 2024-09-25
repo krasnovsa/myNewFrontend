@@ -1,23 +1,21 @@
-import { getServer,} from '../api/getServer'
-const {API,SERVER} = getServer()
+import { getServer } from '../api/getServer';
+const { API, SERVER } = getServer();
 
-export const login = (user) => {
-
-  console.log('API is', API, 'sever',SERVER)
-  return fetch(`${API}/signin`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((err) => {
-      console.log(err);
+export const login = async (user) => {
+  console.log('API is', API, 'server', SERVER);
+  try {
+    const response = await fetch(`${API}/signin`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
     });
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const authenticate = (data, next) => {
@@ -27,17 +25,18 @@ export const authenticate = (data, next) => {
   }
 };
 
-export const signout = (next) => {
+export const signout = async (next) => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("jwt");
     next();
-    return fetch(`${API}/signout`, {
-      method: "GET",
-    })
-      .then((response) => {
-        console.log("signout", response);
-      })
-      .catch((err) => console.log(err));
+    try {
+      const response = await fetch(`${API}/signout`, {
+        method: "GET",
+      });
+      console.log("signout", response);
+    } catch (err) {
+      console.log(err);
+    }
   }
 };
 
@@ -52,18 +51,12 @@ export const isAuthenticated = () => {
   }
 };
 
-export const checkWebRole = (webRoles=[], roleName) =>{
-   
-  if(webRoles?.length){
-
- let role =  webRoles.find((webRole)=>{
-      return webRole.name ===  roleName
-  }) 
-  if(role){
-      return role.roleId}
-}
-
- 
-return 0
-
+export const checkWebRole = (webRoles = [], roleName) => {
+  if (webRoles?.length) {
+    const role = webRoles.find((webRole) => webRole.name === roleName);
+    if (role) {
+      return role.roleId;
+    }
+  }
+  return 0;
 };

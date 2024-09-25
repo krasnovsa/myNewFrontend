@@ -3,8 +3,8 @@ export const getServer = () => {
     const servType = localStorage.getItem("serverType");
     
     return {
-      SERVER: "localhost:3000",
-      API: "localhost:3000/api",
+      SERVER: "http://localhost:3000",
+      API: "http://localhost:3000/api",
       servType:servType
     };
   }
