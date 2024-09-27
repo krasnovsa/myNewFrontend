@@ -9,6 +9,7 @@ import PrivateRoute from './auth/PrivateRoute'
 // import WlByEmplPage from "./components/wl/WlByEmplPage";
 // import WlByParams from "./components/wl/WlByParams";
 import Orders from "./pages/orders";
+import MainPage from "./pages/main-page/main-page";
 // import Oi from "./pages/oi";
 
 // import BoxAddUpdate from "./pages/box-add-update";
@@ -28,8 +29,10 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<PrivateRoute element={Dashboard} />} />
+      <Route path="/main-page" element={<PrivateRoute element={MainPage} />} />
       <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />
       <Route path="/orders/:loadMode/:filterStr?"  element={<PrivateRoute element={Orders}/>} />
+
       {/* <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />
       <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />
       <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} /> */}

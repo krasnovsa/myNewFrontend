@@ -1,0 +1,26 @@
+.oi-prod-list-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.oi-prod-list-header {
+    flex: 0 0 auto;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.oi-prod-list-content {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

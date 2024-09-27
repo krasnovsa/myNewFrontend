@@ -1,0 +1,16 @@
+.order-list-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+
+.order-closed {
+    background-color: #d3d3d3;
+    /* Серый фон для закрытых заказов */
+}
+
+.order-open {
+    background-color: #ffffff;
+    /* Белый фон для открытых заказов */
+}

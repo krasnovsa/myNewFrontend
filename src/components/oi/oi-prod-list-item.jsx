@@ -1,19 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import { CurrentAppContext } from "../../contexts/currentApp";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import {Highlighter} from '../common/Highlighter/Highlighter'
+import { Highlighter } from '../common/Highlighter/Highlighter';
 import PjList from "../pj/PjList";
-import OiProdInfo from "./OiProdInfo";
-import './oiList.css'
-// prodName: it.prodName,
-// oiQtt: it.oiQtt,
-// color:it.color,
-// matMap:it.matMap,
-// matSpec:it.matSpec,
-// oiQttShipped:it.oiQttShipped,
-// oiHrsProdused:it.oiHrsProdused,
-// oiHrsSum:it.oiHrsSum
+import OiProdInfo from "./oi-prod-info";
+
 
 function OiProdListItem(props) {
   const {
@@ -32,7 +24,6 @@ function OiProdListItem(props) {
 
   const { pjArr } = props.oi;
 
-  const history = useHistory();
 
   const style = {
     backgroundColor: `#${color.toString(16)}`,
@@ -47,7 +38,7 @@ function OiProdListItem(props) {
 
   const curOiProd = state?.curOiProd?.oiId || 0;
 
-  const {ordFilterStr=''} = state;
+  const { ordFilterStr = '' } = state;
 
   const extAllPj = state?.extAllPj || false;
 
@@ -67,8 +58,8 @@ function OiProdListItem(props) {
   };
 
   const onInfoClickHandler = () => {
-    setShowInfo(!showInfo)
-    //history.push(`${process.env.PUBLIC_URL}/att/Продукция/${prodId}`);
+    setShowInfo(!showInfo);
+    // navigate(`${process.env.PUBLIC_URL}/att/Продукция/${prodId}`);
   };
 
   return (
@@ -76,7 +67,7 @@ function OiProdListItem(props) {
       <div
         className={`d-flex oi-item list-group-item p-0 ${
           curOiProd === oiId ? "active" : ""
-        }`}
+        } `}
       >
         <div className="d-flex col-11 p-1" onClick={onBodyClickHandler}>
           <div className="col-2 m-auto">
@@ -84,10 +75,10 @@ function OiProdListItem(props) {
               {oiId}
             </span>
           </div>
-          <div  className=" col-7 m-auto"> 
+          <div className="col-7 m-auto">
             <Highlighter highlight={ordFilterStr}>{prodName}</Highlighter>
           </div>
-          <div className=" col-3 m-auto">
+          <div className="col-3 m-auto">
             <div>зак {oiQtt}</div>
             <div>
               отг{' '}
@@ -104,10 +95,10 @@ function OiProdListItem(props) {
             <div>{`вып: ${oiPercHrs}%`}</div>
           </div>
         </div>
-        <div className=" col-1 m-auto p-1">
+        <div className="col-1 m-auto p-1">
           {curOiProd === oiId && (
             <button
-              className=" btn btn btn-sm btn-primary m-auto d-flex align-items-center"
+              className="btn btn btn-sm btn-primary m-auto d-flex align-items-center"
               onClick={onInfoClickHandler}
             >
               i
@@ -116,7 +107,7 @@ function OiProdListItem(props) {
         </div>
       </div>
 
-      {showInfo&&<OiProdInfo oi={props.oi.info}/>}
+      {showInfo && <OiProdInfo oi={props.oi.info} />}
 
       {isExtended === true && (
         <div>

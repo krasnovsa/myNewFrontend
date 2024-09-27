@@ -1,8 +1,8 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
-import moment from 'moment'
+import { useNavigate } from "react-router-dom";
+import moment from 'moment';
 
-import SliderAtt from '../att/sliderAtt/SliderAtt'
+//import SliderAtt from '../att/sliderAtt/SliderAtt'
 
 function OiProdInfo(props) {
   const {
@@ -25,27 +25,25 @@ function OiProdInfo(props) {
     borderRadius: "5px",
   };
 
+  const navigate = useNavigate();
+
   const openDrawingHandler = () => {
-    history.push(
-      `${process.env.PUBLIC_URL}/att/Продукция/${
-        prodId}`
+    navigate(
+      `${process.env.PUBLIC_URL}/att/Продукция/${prodId}`
     );
   };
 
   const openWlByProdHandler = () => {
-    history.push(
-      `${process.env.PUBLIC_URL}/wl/byParams/pageNumber/1?prodId=${
-        prodId}&emplId=0`
-    );
-  };
-  const openWlByOiHandler = () => {
-    history.push(
-      `${process.env.PUBLIC_URL}/wl/byParams/pageNumber/1?oiId=${
-       oiId}&emplId=0`
+    navigate(
+      `${process.env.PUBLIC_URL}/wl/byParams/pageNumber/1?prodId=${prodId}&emplId=0`
     );
   };
 
-  const history = useHistory();
+  const openWlByOiHandler = () => {
+    navigate(
+      `${process.env.PUBLIC_URL}/wl/byParams/pageNumber/1?oiId=${oiId}&emplId=0`
+    );
+  };
 
   return (
     <div className="card p-2">
@@ -75,27 +73,13 @@ function OiProdInfo(props) {
         <small>часов план</small>
         <div>{oiHrsSum}</div>
         <small>дата завершения произвоства</small>
-        <div>{pjLastDatePr?moment(pjLastDatePr).format('DD.MM.YYYY') : "нет данных"}</div>
+        <div>{pjLastDatePr ? moment(pjLastDatePr).format('DD.MM.YYYY') : "нет данных"}</div>
       </div>
       <div className='card-img-bottom'>
-        {prodId&&<SliderAtt table='Продукция' keyValue={prodId}/>}
+        {/* {prodId&&<SliderAtt table='Продукция' keyValue={prodId}/>} */}
       </div>
-
     </div>
-
   );
 }
 
 export default OiProdInfo;
-
-// prodName,
-// oiQtt,
-// color,
-// matMap,
-// matSpec,
-// oiQttShipped,
-// oiHrsProdused,
-// oiHrsSum,
-// oiId,
-// prodId,
-// pjLastDatePr

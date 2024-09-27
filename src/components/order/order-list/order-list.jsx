@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from 'prop-types';
 import { ThreeDots } from "react-loader-spinner";
-import { CurrentAppContext } from "../../contexts/currentApp";
-import OrderListItem from "./OrderListItem";
-import { getOrderList } from "../../api/apiOrder";
-import { isAuthenticated } from "../../auth";
-import { reduceOrdArr } from "./helpers/reduceOrdArr";
-import './order.css';
+import { CurrentAppContext } from "../../../contexts/currentApp";
+import OrderListItem from "../order-list-item/order-list-item";
+import { getOrderList } from "../../../api/apiOrder";
+import { isAuthenticated } from "../../../auth";
+import { reduceOrdArr } from "../helpers/reduceOrdArr";
+import './styles.css';
 
 function OrderList(props) {
   const {
@@ -23,11 +23,6 @@ function OrderList(props) {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [{ ordFilterStr }, dispatch] = useContext(CurrentAppContext);
-
-  const style = {
-    height: "80vh",
-    overflow: "auto",
-  };
 
   useEffect(() => {
     const fetchOrderList = async () => {
@@ -67,7 +62,7 @@ function OrderList(props) {
   };
 
   return (
-    <div className="" style={style}>
+    <div className="order-list-container">
       <div className="input-group mb-3">
         <input
           type="text"
@@ -84,15 +79,19 @@ function OrderList(props) {
           Search
         </button>
       </div>
-      {isLoading ? (
-        <ThreeDots color="#00BFFF" height={80} width={80} />
-      ) : error ? (
-        <div className="alert alert-danger">{error}</div>
-      ) : (
-        ordList.map((order) => (
-          <OrderListItem key={order._id || order.id} ord={order} />
-        ))
-      )}
+      <div className="order-list-content">
+        {isLoading ? (
+         <div className="loader-container">
+          <ThreeDots color="#0d6efd" height={80} width={80} />
+        </div>
+        ) : error ? (
+          <div className="alert alert-danger">{error}</div>
+        ) : (
+          ordList.map((order) => (
+            <OrderListItem key={order._id || order.id} ord={order} />
+          ))
+        )}
+      </div>
     </div>
   );
 }

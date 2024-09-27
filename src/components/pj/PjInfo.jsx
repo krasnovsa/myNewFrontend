@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
 
 function PjInfo(props) {
@@ -30,27 +30,26 @@ function PjInfo(props) {
     borderRadius: "5px",
   };
 
-  
+  const navigate = useNavigate();
 
   const openDrawingHandler = () => {
-    history.push(`${process.env.PUBLIC_URL}/att/Продукция/${prodId}`);
+    navigate(`${process.env.PUBLIC_URL}/att/Продукция/${prodId}`);
   };
 
   const openWlByOpHandler = () => {
-    history.push(
+    navigate(
       `${process.env.PUBLIC_URL}/wl/byParams/pageNumber/1?opId=${opId}&emplId=0`
     );
   };
+
   const openWlByPjHandler = () => {
-    history.push(
+    navigate(
       `${process.env.PUBLIC_URL}/wl/byParams/pageNumber/1?pjId=${pjId}&emplId=0`
     );
   };
 
-  const history = useHistory();
-
   return (
-    <div className="card">
+    <div className="card" style={style}>
       <h3 className="card-title">
         {pjId} {opName}
       </h3>
@@ -69,7 +68,7 @@ function PjInfo(props) {
         <small>количество</small>
         <div>{pjQtt}</div>
         <small>количество выполнено</small>
-        <div>{pjQtt}</div>
+        <div>{plQttProdused}</div>
         <small>часов фактически</small>
         <div>{pjHrsProdused}</div>
         <small>часов план</small>
@@ -86,21 +85,3 @@ function PjInfo(props) {
 }
 
 export default PjInfo;
-
-// prodName,
-// oiQtt,
-// color,
-// matMap,
-// matSpec,
-// oiQttShipped,
-// oiHrsProdused,
-// oiHrsSum,
-// oiId,
-// prodId,
-// pjLastDatePr
-//"pjQtt": 26,
-//   "pjQttProdused": 36,
-//   "pjHrsProdused": 1.35,
-//   "pjStartDatePr": "2021-04-01T00:00:00.000Z",
-//   "pjLastDatePr": "2021-04-03T00:00:00.000Z",
-//   "pjLastBToolId": 27,

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import OrderList from "../components/order/OrderList.jsx";
+import OrderList from "../components/order/order-list/order-list.jsx";
 import Layout from "../components/layout.jsx";
 import { ArrowBarDown } from "react-bootstrap-icons";
 

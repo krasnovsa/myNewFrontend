@@ -1,6 +1,6 @@
 import React from "react";
 import Menu from "./menu";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Layout = ({
   title = "Title",
@@ -8,13 +8,17 @@ const Layout = ({
   className,
   children,
 }) => (
-  <div className="p-2">
-    <Menu />
-    <div className="bg-primary text-white">
-      <h1 className="display-4 p2"> {title}</h1>
-      <p className="lead p2"> {description}</p>
-    </div>
-    <div className={className}>{children}</div>
+  <div className="d-flex flex-column vh-100">
+    <header className="bg-primary text-white p-3" style={{ height: '15vh' }}>
+      <Menu />
+      <div>
+        <h1 className="display-4"> {title}</h1>
+        <p className="lead"> {description}</p>
+      </div>
+    </header>
+    <main className={`flex-grow-1 overflow-auto ${className}`} style={{ height: '90vh' }}>
+      {children}
+    </main>
   </div>
 );
 

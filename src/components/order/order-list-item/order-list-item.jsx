@@ -1,13 +1,8 @@
 import React, { useContext } from "react";
 import PropTypes from 'prop-types';
-import { CurrentAppContext } from "../../contexts/currentApp";
+import { CurrentAppContext } from "../../../contexts/currentApp";
 import { useNavigate } from "react-router-dom";
-import {
-  CircularProgressbarWithChildren,
-  buildStyles,
-} from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-import "./order.css";
+import './styles.css'; // Импортируем CSS файл
 
 function OrderListItem(props) {
   const {
@@ -53,35 +48,11 @@ function OrderListItem(props) {
     navigate(`/order/prod/${curOrdId}`);
   };
 
-  const getProdStatusVariant = (ps) => {
-    if (ps <= -35) {
-      return "danger";
-    }
-    if (ps > -35 && ps <= -15) {
-      return "warning";
-    }
-    if (ps > -15 && ps <= -5) {
-      return "primary";
-    }
-    if (ps > -5) {
-      return "success";
-    }
-  };
-
-  const getCheckMatVariant = (chm) => {
-    return chm === 0 ? "warning" : "success";
-  };
-
   return (
     <li
-      className={`list-group-item order-list-item ${curOrdId === ordId ? "active" : ""} ${
-        isClosed && isPar ? " list-group-item-secondary" : ""
-      }${isClosed ? " list-group-item-dark" : ""}${
-        !isClosed && isPar ? " list-group-item-primary" : ""
-      }${!isClosed && isSub ? " list-group-item-info" : ""}${
-        !isOpen ? " not-open" : ""
-      }
-      `}
+      className={`list-group-item ${curOrdId === ordId ? "active" : ""} 
+      ${isOpen ? "list-group-item-light" : "list-group-item-dark"} 
+      ${isClosed ? "order-closed" : "order-open"} order-list-item`}
       onClick={onClickHandler}
     >
       <div className="d-flex align-items-stretch">
@@ -92,50 +63,11 @@ function OrderListItem(props) {
         </div>
 
         <div className="col-2">
-          <CircularProgressbarWithChildren
-            value={persShipped}
-            strokeWidth={8}
-            styles={buildStyles({
-              pathColor: "#205068",
-              trailColor: "transparent",
-            })}
-          >
-            <div style={{ width: "84%" }}>
-              <CircularProgressbarWithChildren
-                value={ordProdProgress}
-                styles={buildStyles({
-                  trailColor: "transparent",
-                })}
-              >
-                <div
-                  style={{ color: "#205068", fontSize: "small" }}
-                >{`${Math.ceil(persShipped)}%`}</div>
-                <small
-                  style={{ color: "3e98c7", fontSize: "x-small" }}
-                >{`${Math.ceil(ordProdProgress)}%`}</small>
-              </CircularProgressbarWithChildren>
-            </div>
-          </CircularProgressbarWithChildren>
+          
         </div>
         <div className="col-5 d-flex flex-column justify-content-between">
           <div>{custSName}</div>
           <small>{descr}</small>
-          {!isPar && (
-            <div className="d-flex justify-content-end">
-              <div
-                className={`badge badge-pill badge-${getProdStatusVariant(plSt)}`}
-              >
-                П
-              </div>
-              <div
-                className={`ml-1 badge badge-pill badge-${getCheckMatVariant(
-                  checkMat
-                )}`}
-              >
-                М
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </li>
