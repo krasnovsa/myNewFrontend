@@ -6,8 +6,8 @@
 }
 
 .pane {
-    background-color: #f1f1f1;
-    border: 1px solid #ccc;
+    background-color: white;
+    border: 1px solid white;
     display: flex;
     flex-direction: column;
     justify-content: center;

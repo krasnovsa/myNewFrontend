@@ -1,34 +1,53 @@
 .order-list-item {
-  display: table-row; /* Устанавливаем строки таблицы */
-  cursor: pointer; /* Указатель мыши при наведении */
+  display: table-row;
+  /* Устанавливаем строки таблицы */
+  cursor: pointer;
+  /* Указатель мыши при наведении */
+  font-size: 12px;
+  border: 1px solid lightgray;
+    /* Светло-серые линии сетки */
 }
 
 .order-open {
   background-color: white;
-  color: rgb(42, 42, 42); /* Белый текст для контраста */
+  color: rgb(42, 42, 42);
+  /* Черный текст для контраста */
 }
 
 .order-closed {
-  background-color: #757373; /* Темно-серый */
-  color: white; /* Белый текст для контраста */
+  background-color: #757373;
+  /* Темно-серый */
+  color: white !important;
+  /* Белый текст для контраста */
+  border: 1px solid rgb(77, 76, 76);
+      /* Светло-серые линии сетки */
 }
 
 .order-not-open {
-  background-color: #d5d5cf; /* Светло-бежевый */
+  background-color: white;
+  /* Светло-бежевый */
+    font-style: italic;
+      /* Курсивный текст */
+  color:rgb(120, 120, 121)
 }
 
 .active-order {
-  background-color: rgb(0, 106, 255); /* Синий фон */
-  color: white; /* Белый текст */
+  background-color: rgb(0, 106, 255);
+  /* Синий фон */
+  color: white;
+  /* Белый текст */
+  border: 1px solid rgb(108, 131, 196);
+      /* Светло-серые линии сетки */
 }
-
-
 
 /* The description column will flex and take up available space */
 .descr {
-  white-space: pre-wrap; /* Preserves formatting */
-  word-wrap: break-word; /* Wraps text if too long */
-  height: auto; /* Adjusts height based on content */
+  white-space: pre-wrap;
+  /* Preserves formatting */
+  word-wrap: break-word;
+  /* Wraps text if too long */
+  height: auto;
+  /* Adjusts height based on content */
 }
 
 /* Условное форматирование */
@@ -48,16 +67,16 @@
 .firmSName.adm {
   color: red;
 }
-  /* часы по технологии */
+
+/* часы по технологии */
 .hrsByTech {
   font-weight: bold;
-
 }
 
 .hrsByTech.exceed {
-  color: rgb(133, 2, 2);
+  color: red;
 }
 
 .hrsByTech.normal {
-  color: rgb(2, 150, 2);
+  color: green;
 }
