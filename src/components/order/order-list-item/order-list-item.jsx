@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { CurrentAppContext } from "../../../contexts/currentApp";
 import './styles.css'; // Импортируем CSS файл
 
-
 const OrderListItem = ({ ord, setSearchStr }) => {
   const {
     ordId = 0,
@@ -14,7 +13,7 @@ const OrderListItem = ({ ord, setSearchStr }) => {
     descrNoHtml = "",
     hrsPlan = 0,
     hrsByTech = 0,
-    hrsProdused = 0,
+    hrsEcProd = 0,
     nzpHrs = 0,
     shHrs = 0,
     persShipped = 0,
@@ -34,7 +33,7 @@ const OrderListItem = ({ ord, setSearchStr }) => {
     if (curOrdId !== ordId) {
       dispatch({ type: "SET_CURRENT_ORDER", payload: ord });
     }
-    setSearchStr(custSName)
+    setSearchStr(custSName);
   };
 
   const orderClass = isClosed ? 'order-closed' : isOpen ? 'order-open' : 'order-not-open';
@@ -47,17 +46,22 @@ const OrderListItem = ({ ord, setSearchStr }) => {
     </React.Fragment>
   ));
 
+  // Определяем класс для firmSName
+  const firmSNameClass = `firmSName ${firmSName.toLowerCase()}`;
+
+
+
   return (
     <>
       {/* First Row */}
       <tr key={`${ordId}-row1`} className={`order-list-item ${curOrdId === ordId ? "active-order" : ""} ${orderClass}`} onClick={onClickHandler}>
-        <td rowSpan="2" className="firmSName">{firmSName}</td> {/* rowspan to cover 2 rows */}
+        <td rowSpan="2" className={firmSNameClass}>{firmSName}</td> {/* rowspan to cover 2 rows */}
         <td rowSpan="2" className="ordId">{ordId}</td> {/* rowspan to cover 2 rows */}
         <td className="dateCreated">{dateCreated}</td>
         <td rowSpan="2" className="custSName">{custSName}</td> {/* rowspan to cover 2 rows */}
         <td rowSpan="2" className="descrNoHtml">{formattedDescrNoHtml}</td> {/* rowspan to cover 2 rows */}
         <td className="hrsPlan">{hrsPlan}</td>
-        <td className="shHrs">{hrsByTech}</td>
+        <td className= "shHrs">{shHrs}</td>
         <td rowSpan="2" className="nzpHrs">{nzpHrs}</td> {/* rowspan to cover 2 rows */}
         <td className="persShipped">{persShipped}</td>
         <td rowSpan="2" className="rang">{rang}</td> {/* rowspan to cover 2 rows */}
@@ -66,7 +70,7 @@ const OrderListItem = ({ ord, setSearchStr }) => {
       <tr key={`${ordId}-row2`} className={`order-list-item ${curOrdId === ordId ? "active-order" : ""} ${orderClass}`} onClick={onClickHandler}>
         <td className="invNom">{invNom}</td>
         <td className="hrsByTech">{hrsByTech}</td>
-        <td className="hrsProdused">{hrsProdused}</td>
+        <td className="hrsProdused">{hrsEcProd}</td>
         <td className="ordProdProgress">{ordProdProgress}</td>
       </tr>
     </>
@@ -83,7 +87,7 @@ OrderListItem.propTypes = {
     descrNoHtml: PropTypes.string,
     hrsPlan: PropTypes.number,
     hrsByTech: PropTypes.number,
-    hrsProdused: PropTypes.number,
+    hrsEcProd: PropTypes.number,
     nzpHrs: PropTypes.number,
     shHrs: PropTypes.number,
     persShipped: PropTypes.number,

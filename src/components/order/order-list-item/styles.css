@@ -31,3 +31,33 @@
   height: auto; /* Adjusts height based on content */
 }
 
+/* Условное форматирование */
+.firmSName {
+  font-weight: bold;
+  /* Делаем текст жирным */
+}
+
+.firmSName.tm {
+  color: orange;
+}
+
+.firmSName.pr {
+  color: purple;
+}
+
+.firmSName.adm {
+  color: red;
+}
+  /* часы по технологии */
+.hrsByTech {
+  font-weight: bold;
+
+}
+
+.hrsByTech.exceed {
+  color: rgb(133, 2, 2);
+}
+
+.hrsByTech.normal {
+  color: rgb(2, 150, 2);
+}
