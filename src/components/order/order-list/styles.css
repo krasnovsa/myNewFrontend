@@ -85,37 +85,30 @@
   
   .hrsPlan {
     width: 80px;
-    text-align: right;
   }
   
   .hrsByTech {
     width: 80px;
-    text-align: right;
   }
   
   .nzpHrs {
     width: 80px;
-    text-align: right;
   }
   
   .shHrs {
     width: 80px;
-    text-align: right;
   }
   
   .persShipped {
     width: 50px;
-    text-align: right;
   }
   
   .ordProdProgress {
     width: 50px;
-    text-align: right;
   }
   
   .rang {
     width: 50px;
-    text-align: right;
   }
   
   /* General cell styles */
@@ -125,3 +118,14 @@
     text-align: left;
     background-color: transparent;
   }
+    .input-group.mb-1 {
+      margin-bottom: 0.25rem !important;
+      /* Уменьшаем отступ снизу */
+    }
+  
+    .current-filter {
+      margin-top: 0.25rem;
+      /* Устанавливаем минимальный отступ сверху */
+      text-align: left;
+      /* Выравниваем по левому краю */
+    }

@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import PropTypes from 'prop-types';
 import { CurrentAppContext } from "../../../contexts/currentApp";
-import { useNavigate } from "react-router-dom";
 import './styles.css'; // Импортируем CSS файл
 
-const OrderListItem = (props) => {
+
+const OrderListItem = ({ ord, setSearchStr }) => {
   const {
     ordId = 0,
     dateCreated = "2021-01-01",
@@ -20,26 +20,24 @@ const OrderListItem = (props) => {
     persShipped = 0,
     ordProdProgress = 0,
     rang = 0,
-  } = props.ord;
-
-  const { setFilterStr } = props;
+    isClosed = false,
+    isOpen = false,
+  } = ord;
 
   const [state, dispatch] = useContext(CurrentAppContext);
-  const navigate = useNavigate();
+
   const {
     curOrder: { ordId: curOrdId },
   } = state;
 
   const onClickHandler = (e) => {
     if (curOrdId !== ordId) {
-      dispatch({ type: "SET_CURRENT_ORDER", payload: props.ord });
-      setFilterStr(custSName);
-      return;
+      dispatch({ type: "SET_CURRENT_ORDER", payload: ord });
     }
-    navigate(`/order/prod/${curOrdId}`);
+    setSearchStr(custSName)
   };
 
-  const orderClass = props.ord.isClosed ? 'order-closed' : props.ord.isOpen ? 'order-open' : 'order-not-open';
+  const orderClass = isClosed ? 'order-closed' : isOpen ? 'order-open' : 'order-not-open';
 
   // Заменяем точки с запятой на перенос строки
   const formattedDescrNoHtml = descrNoHtml.split(';').map((item, index) => (
@@ -94,7 +92,7 @@ OrderListItem.propTypes = {
     isClosed: PropTypes.bool,
     isOpen: PropTypes.bool,
   }).isRequired,
-  setFilterStr: PropTypes.func.isRequired,
+  setSearchStr: PropTypes.func.isRequired,
 };
 
 export default OrderListItem;
