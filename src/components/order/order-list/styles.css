@@ -1,25 +1,127 @@
 .order-list-container {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-}
-
-.input-group {
-    margin-bottom: 10px;
-}
-
-.order-list-content {
-    flex: 1 1 auto;
-    overflow-y: auto;
+    justify-content: center; /* Центрирование по вертикали */
+    align-items: center; /* Центрирование по горизонтали */
+    height: 100vh; /* Занимает всю высоту окна */
     padding: 10px;
-}
-
-.order-list-item {
-    margin-bottom: 10px;
-    padding:5px;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-    background-color: #f8f9fa;
-}
+    overflow: auto; /* Добавляем прокрутку, если содержимое превышает размеры контейнера */
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .order-list-content {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Центрирование по горизонтали */
+    overflow: auto; /* Добавляем прокрутку, если содержимое превышает размеры контейнера */
+  }
+  
+  .loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+  }
+  
+  /* General table styles */
+  .table {
+    width: 100%;
+    table-layout: fixed; /* Ensures the fixed widths are respected */
+    margin: 0 auto; /* Центрирование таблицы */
+    min-width: 800px; /* Минимальная ширина таблицы */
+    max-width: 100%; /* Ограничиваем ширину размером родительского элемента */
+    max-height: 100%; /* Ограничиваем высоту размером родительского элемента */
+    font-size: 12px; /* Уменьшаем размер шрифта для всей таблицы */
+    word-wrap: break-word; /* Перенос текста по словам */
+    white-space: normal; /* Разрешаем перенос текста */
+  }
+  
+  .table-custom th, .table-custom td {
+    background-color: transparent; /* Make cells transparent */
+    white-space: normal; /* Разрешаем перенос текста */
+    word-wrap: break-word; /* Перенос текста по словам */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+  }
+  
+  /* Styles for table headers */
+  .table-custom thead {
+    position: sticky; /* Закрепляем заголовок */
+    top: 0; /* Заголовок будет закреплен в верхней части таблицы */
+    z-index: 1; /* Устанавливаем z-index, чтобы заголовок был поверх содержимого */
+  }
+  
+  .table-custom th {
+    font-size: 10px; /* Уменьшаем размер шрифта до 10px */
+    background-color: white; /* Белый фон для заголовков */
+    padding: 2px 4px; /* Уменьшаем отступы внутри ячеек заголовков */
+    line-height: 1.2; /* Устанавливаем высоту строки */
+  }
+  
+  /* Assign fixed widths for each column */
+  .firmSName {
+    width: 50px; /* Adjust width as needed */
+  }
+  
+  .ordId {
+    width: 80px; /* Adjust width as needed */
+  }
+  
+  .dateCreated {
+    width: 100px;
+  }
+  
+  .custSName {
+    width: 100px;
+  }
+  
+  .descrNoHtml {
+    min-width: 200px;
+    white-space: pre-wrap; /* Разрешаем перенос строк */
+  }
+  
+  .hrsPlan {
+    width: 80px;
+    text-align: right;
+  }
+  
+  .hrsByTech {
+    width: 80px;
+    text-align: right;
+  }
+  
+  .nzpHrs {
+    width: 80px;
+    text-align: right;
+  }
+  
+  .shHrs {
+    width: 80px;
+    text-align: right;
+  }
+  
+  .persShipped {
+    width: 50px;
+    text-align: right;
+  }
+  
+  .ordProdProgress {
+    width: 50px;
+    text-align: right;
+  }
+  
+  .rang {
+    width: 50px;
+    text-align: right;
+  }
+  
+  /* General cell styles */
+  .table-bordered td {
+    padding: 5px;
+    vertical-align: middle;
+    text-align: left;
+    background-color: transparent;
+  }

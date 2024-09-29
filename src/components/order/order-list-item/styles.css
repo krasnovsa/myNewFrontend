@@ -1,16 +1,33 @@
 .order-list-item {
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-}
-
-.order-closed {
-    background-color: #d3d3d3;
-    /* Серый фон для закрытых заказов */
+  display: table-row; /* Устанавливаем строки таблицы */
+  cursor: pointer; /* Указатель мыши при наведении */
 }
 
 .order-open {
-    background-color: #ffffff;
-    /* Белый фон для открытых заказов */
+  background-color: white;
+  color: rgb(42, 42, 42); /* Белый текст для контраста */
 }
+
+.order-closed {
+  background-color: #757373; /* Темно-серый */
+  color: white; /* Белый текст для контраста */
+}
+
+.order-not-open {
+  background-color: #d5d5cf; /* Светло-бежевый */
+}
+
+.active-order {
+  background-color: rgb(0, 106, 255); /* Синий фон */
+  color: white; /* Белый текст */
+}
+
+
+
+/* The description column will flex and take up available space */
+.descr {
+  white-space: pre-wrap; /* Preserves formatting */
+  word-wrap: break-word; /* Wraps text if too long */
+  height: auto; /* Adjusts height based on content */
+}
+
