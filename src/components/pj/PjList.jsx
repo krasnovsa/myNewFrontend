@@ -4,7 +4,7 @@ import PjListItem from './PjListItem'
 import "./pjList.css";
 
 function PjList(props) {
-  const { pjList } = props;
+  const { pjList, oi } = props;
 
 
 
@@ -12,7 +12,7 @@ function PjList(props) {
     <ul className="pj-list list-group list-group-flush">
       {pjList.map((pj) => {
         return (
-            <div className='pj-item' key={pj.pjId}><PjListItem pj={pj}/></div>
+            <div className='pj-item' key={pj.pjId}><PjListItem pj={pj} oi={oi}/></div>
         );
       })}
     </ul>

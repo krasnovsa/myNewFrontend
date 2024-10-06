@@ -1,191 +1,210 @@
 import { getServer } from "./getServer";
-const {API} = getServer()
-console.log('API',API)
+const { API } = getServer();
+console.log("API", API);
 
-export const getWlList = (token, userId, options) => {
+export const getWlList = async (token, userId, options) => {
   const {
-    emplId,
-    pageNumber,
-    pageSize,
-    dStart,
-    dFin,
-    direction,
-    oiId,
-    pjId,
-    opId,
-    prodId,
+    emplId = 0,
+    pageNumber = 1,
+    pageSize = 30,
+    dStart = "2021-01-01",
+    dFin = "2031-01-01",
+    direction = 0,
+    oiId = 0,
+    pjId = 0,
+    opId = 0,
+    prodId = 0,
   } = options;
-  return fetch(
-    `${API}/wl/getlist/${userId}?&emplId=${emplId ? emplId : 0}&pageNumber=${
-      pageNumber ? pageNumber : 1
-    }&pageSize=${pageSize ? pageSize : 30}&dStart=${
-      dStart ? dStart : "2021-01-01"
-    }&dFin=${dFin ? dFin : "2031-01-01"}&direction=${
-      direction ? direction : 0
-    }&prodId=${prodId ? prodId : 0}&oiId=${oiId ? oiId : 0}&pjId=${
-      pjId ? pjId : 0
-    }&opId=${opId ? opId : 0}`,
-    {
-      method: "GET",
+
+  try {
+    const response = await fetch(
+      `${API}/wl/getlist/${userId}?emplId=${emplId}&pageNumber=${
+        pageNumber}&pageSize=${pageSize}&dStart=${dStart}&dFin=${
+          dFin}&direction=${direction}&prodId=${prodId}&oiId=${
+            oiId}&pjId=${pjId}&opId=${opId}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const result = await response.json();
+
+    if (result.error) {
+      return { error: "db error " + result.error };
+    }
+
+    return result;
+  } catch (err) {
+    return { error: "fetch error " + err.message };
+  }
+};
+
+export const getWlById = async (token, userId, wlId) => {
+  try {
+    const response = await fetch(
+      `${API}/wl/getlist/${userId}?pageNumber=1&pageSize=1&wlId=${wlId}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const result = await response.json();
+
+    if (result.error) {
+      return { error: "db error " + result.error };
+    }
+
+    return result[0];
+  } catch (err) {
+    return { error: "fetch error " + err.message };
+  }
+};
+
+export const addNew = async (token, userId, wlItem) => {
+  try {
+    const response = await fetch(`${API}/wl/addNew/${userId}`, {
+      method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify(wlItem),
+    });
+
+    const result = await response.json();
+
+    if (result.error) {
+      return { error: "db error " + result.error };
     }
-  )
-    .then((result) => {
-      if (result.error) {
-        return { error: "db error " + result.error };
-      }
-      return result.json();
-    })
-    .catch((err) => {
-      return { error: "fetch error" & err.message };
-    });
+
+    return result;
+  } catch (err) {
+    return { error: "fetch error " + err.message };
+  }
 };
 
-export const getWlById = (token, userId, wlId) => {
-  return fetch(
-    `${API}/wl/getlist/${userId}?pageNumber=1&pageSize=1&wlId=${wlId}`,
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  )
-    .then((result) => {
-      if (result.error) {
-        return { error: "db error " + result.error };
-      }
-      return result[0].json();
-    })
-    .catch((err) => {
-      return { error: "fetch error" & err.message };
-    });
-};
-
-export const addNew = (token, userId, wlItem) => {
-  return fetch(`${API}/wl/addNew/${userId}`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(wlItem),
-  })
-    .then((result) => {
-      if (result.error) {
-        return { error: "db error " + result.error };
-      }
-      return result;
-    })
-    .catch((err) => {
-      return { error: "fetch error" & err.message };
-    });
-};
-
-export const update = (token, userId, wlItem) => {
+export const update = async (token, userId, wlItem) => {
   console.log("update data", wlItem);
-  return fetch(`${API}/wl/update/${userId}`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(wlItem),
-  })
-    .then((result) => {
-      if (result.error) {
-        return { error: "db error " + result.error };
-      }
-      console.log("wl data updated", result);
-      return result;
-    })
-    .catch((err) => {
-      return { error: "fetch error" & err.message };
+  try {
+    const response = await fetch(`${API}/wl/update/${userId}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(wlItem),
     });
+
+    const result = await response.json();
+
+    if (result.error) {
+      return { error: "db error " + result.error };
+    }
+
+    console.log("wl data updated", result);
+    return result;
+  } catch (err) {
+    return { error: "fetch error " + err.message };
+  }
 };
 
-export const remove = (token, userId, wlId) => {
-  return fetch(`${API}/wl/remove/${userId}?wlId=${wlId}`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((result) => {
-      if (result.error) {
-        return { error: "db error " + result.error };
-      }
-      console.log("wl deleted");
-      return result;
-    })
-    .catch((err) => {
-      return { error: "fetch error" & err.message };
+export const remove = async (token, userId, wlId) => {
+  try {
+    const response = await fetch(`${API}/wl/remove/${userId}?wlId=${wlId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
+
+    const result = await response.json();
+
+    if (result.error) {
+      return { error: "db error " + result.error };
+    }
+
+    console.log("wl deleted");
+    return result;
+  } catch (err) {
+    return { error: "fetch error " + err.message };
+  }
 };
 
-export const getPjById = (token, userId, pjId) => {
-  return fetch(`${API}/pj/getbyid/${userId}?pjId=${pjId}`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((result) => {
-      if (result.error) {
-        return { error: "db error " + result.error };
-      }
-      return result.json();
-    })
-    .catch((err) => {
-      return { error: "fetch error" & err.message };
+export const getPjById = async (token, userId, pjId) => {
+  try {
+    const response = await fetch(`${API}/pj/getbyid/${userId}?pjId=${pjId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
+
+    const result = await response.json();
+
+    if (result.error) {
+      return { error: "db error " + result.error };
+    }
+
+    return result;
+  } catch (err) {
+    return { error: "fetch error " + err.message };
+  }
 };
 
-export const getBtList = (token, userId) => {
-  return fetch(`${API}/bt/getlist/${userId}`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((result) => {
-      if (result.error) {
-        return { error: "db error " + result.error };
-      }
-      return result.json();
-    })
-    .catch((err) => {
-      return { error: "fetch error" & err.message };
+export const getBtList = async (token, userId) => {
+  try {
+    const response = await fetch(`${API}/bt/getlist/${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
+
+    const result = await response.json();
+
+    if (result.error) {
+      return { error: "db error " + result.error };
+    }
+
+    return result;
+  } catch (err) {
+    return { error: "fetch error " + err.message };
+  }
 };
 
-export const getLabel = (token, userId, wlId) => {
-  return fetch(`${API}/wl/getLabel/${userId}?wlId=${wlId}`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((err) => {
-      throw new Error(err.message);
+export const getLabel = async (token, userId, wlId) => {
+  try {
+    const response = await fetch(`${API}/wl/getLabel/${userId}?wlId=${wlId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
+
+    const result = await response.json();
+
+    return result;
+  } catch (err) {
+    throw new Error(err.message);
+  }
 };

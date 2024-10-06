@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import PropTypes from 'prop-types';
 import { CurrentAppContext } from "../../contexts/currentApp";
 import { useNavigate } from "react-router-dom";
 
@@ -67,7 +68,13 @@ function OiProdListItem(props) {
         className={`oi-item list-group-item p-0 ${
           curOiProd === oiId ? "active" : ""
         } `}
-        style={{ display: "grid", gridTemplateColumns: "5px 1fr 30px", gap: "10px", alignItems: "center", fontSize: "10px" }}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "5px 1fr 30px",
+          gap: "10px",
+          alignItems: "center",
+          fontSize: "10px",
+        }}
       >
         <div
           style={{
@@ -76,43 +83,45 @@ function OiProdListItem(props) {
             height: "100%",
           }}
         ></div>
-        <div style={{ display: "grid", gridTemplateRows: "1fr 1fr", gap: "10px", alignItems: "center", fontSize: "10px" }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateRows: "1fr 1fr",
+            gap: "10px",
+            alignItems: "center",
+            fontSize: "10px",
+          }}
+        >
           <div
             className="p-1"
             onClick={onBodyClickHandler}
-            style={{ display: "grid", gridTemplateColumns: "1fr 50px 50px 70px 70px", alignItems: "center", fontSize: "10px" }}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 50px 50px 70px 70px",
+              alignItems: "center",
+              fontSize: "10px",
+            }}
           >
             <div className="m-auto">
-              <span className="p-1 mr-1">
-                {oiSName}
-              </span>
+              <span className="p-1 mr-1">{oiSName}</span>
             </div>
-            <div className="m-auto">
-              зак:{oiQtt}
-            </div>
-            <div className="m-auto">
-              отгр:{oiQttShipped}
-            </div>
-            <div className="m-auto">
-              вып ч:{oiHrsProdused}
-            </div>
-            <div className="m-auto">
-              вып %:{oiPercHrs}%
-            </div>
+            <div className="m-auto">зак:{oiQtt}</div>
+            <div className="m-auto">отгр:{oiQttShipped}</div>
+            <div className="m-auto">вып ч:{oiHrsProdused}</div>
+            <div className="m-auto">вып %:{oiPercHrs}%</div>
           </div>
           <div
             className="p-1"
-            style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", alignItems: "center", fontSize: "10px" }}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              alignItems: "center",
+              fontSize: "10px",
+            }}
           >
-            <div className="m-auto">
-              {shipCalendar}
-            </div>
-            <div className="m-auto">
-              {matSpec}
-            </div>
-            <div className="m-auto">
-              {matMapNoHTML}
-            </div>
+            <div className="m-auto">{shipCalendar}</div>
+            <div className="m-auto">{matSpec}</div>
+            <div className="m-auto">{matMapNoHTML}</div>
           </div>
         </div>
         <div className="m-auto p-1">
@@ -132,11 +141,31 @@ function OiProdListItem(props) {
 
       {isExtended === true && (
         <div>
-          <PjList pjList={pjArr} />
+          <PjList pjList={pjArr} oi={props.oi.info} />
         </div>
       )}
     </>
   );
 }
+OiProdListItem.propTypes = {
+  oi: PropTypes.shape({
+    info: PropTypes.shape({
+      prodName: PropTypes.string,
+      oiQtt: PropTypes.number,
+      color: PropTypes.string,
+      matMapNoHTML: PropTypes.string,
+      matSpec: PropTypes.string,
+      oiQttShipped: PropTypes.number,
+      oiHrsProdused: PropTypes.number,
+      oiHrsSum: PropTypes.number,
+      oiId: PropTypes.number,
+      prodId: PropTypes.number,
+      oiPercHrs: PropTypes.number,
+      oiSName: PropTypes.string,
+      shipCalendar: PropTypes.string,
+    }).isRequired,
+    pjArr: PropTypes.array.isRequired,
+  }).isRequired,
+};
 
 export default OiProdListItem;

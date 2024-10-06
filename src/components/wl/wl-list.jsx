@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
 import { ThreeDots } from "react-loader-spinner";
 
 import WlItem from "./wl-item";
@@ -12,8 +13,7 @@ import { getWlList, getBtList } from "../../api/apiWl";
 const WlList = (props) => {
   const [wlList, setWlList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [Error, setError] = useState(false);
-  const [pageCount, setPageCount] = useState(1);
+  const [error, setError] = useState(false);
   const [{ currentWl }, dispatch] = useContext(CurrentAppContext);
 
   const {
@@ -21,25 +21,35 @@ const WlList = (props) => {
   } = isAuthenticated();
 
   const { token } = isAuthenticated();
-  const options = useMemo(() => props.options, [props.options]);
-  //const { emplId, oiId, prodId } = options;
-  const pageSize = options?.pageSize || 30;
+  const {
+    emplId = 0,
+    pageNumber = 1,
+    pageSize = 30,
+    dStart = "2021-01-01",
+    dFin = "2031-01-01",
+    direction = 0,
+    oiId = 0,
+    pjId = 0,
+    opId = 0,
+    prodId = 0,
+  } = props.options;
 
   useEffect(() => {
     const fetchWlList = async () => {
       setIsLoading(true);
-
-      dispatch({
-        type: "SET_CURRENT_WL",
-        payload: {},
-      });
 
       try {
         const data = await getWlList(token, _id, {
           oiId,
           prodId,
           emplId: emplId >= 0 ? emplId : _id,
+          pageNumber,
           pageSize,
+          dStart,
+          dFin,
+          direction,
+          pjId,
+          opId,
         });
 
         setIsLoading(false);
@@ -49,12 +59,7 @@ const WlList = (props) => {
         } else {
           console.log("get data", data);
           setWlList(data);
-          
-          dispatch({
-            type: "SET_CURRENT_WL",
-            payload:
-              data.find((item) => item.wlId === currentWl.wlId) || data[0],
-          });
+
           setError("");
         }
       } catch (err) {
@@ -65,7 +70,21 @@ const WlList = (props) => {
     };
 
     fetchWlList();
-  }, [token, _id,  dispatch]);
+  }, [
+    token,
+    _id,
+    dispatch,
+    oiId,
+    prodId,
+    emplId,
+    pageNumber,
+    pageSize,
+    dStart,
+    dFin,
+    direction,
+    pjId,
+    opId,
+  ]);
 
   useEffect(() => {
     const fetchBtList = async () => {
@@ -86,7 +105,7 @@ const WlList = (props) => {
     };
 
     fetchBtList();
-  }, [token, _id, dispatch]);
+  }, [token, _id, ]);
 
   const showItems = (items) => {
     return (
@@ -103,24 +122,37 @@ const WlList = (props) => {
       <div className="d-flex justify-content-center">
         {isLoading && (
           <ThreeDots
-            type="Puff"
             color="#007bff"
             height={70}
             width={70}
-            timeout={3000} //3 secs
+            visible={isLoading}
           />
         )}
       </div>
-      
+
       {!isLoading && (
-        <div style={props.style}>
-          {wlList && showItems(wlList)}
-        </div>
+        <div style={props.style}>{wlList && showItems(wlList)}</div>
       )}
 
-      {Error && <ErrorMessage message={Error} />}
+      {error && <ErrorMessage message={error} />}
     </div>
   );
+};
+
+WlList.propTypes = {
+  options: PropTypes.shape({
+    emplId: PropTypes.number,
+    pageNumber: PropTypes.number,
+    pageSize: PropTypes.number,
+    dStart: PropTypes.string,
+    dFin: PropTypes.string,
+    direction: PropTypes.number,
+    oiId: PropTypes.number,
+    pjId: PropTypes.number,
+    opId: PropTypes.number,
+    prodId: PropTypes.number,
+  }).isRequired,
+  style: PropTypes.object,
 };
 
 export default WlList;

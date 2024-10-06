@@ -1,32 +1,35 @@
 import React, { useContext, useState } from "react";
-import moment from 'moment';
+import moment from "moment";
 import { CurrentAppContext } from "../../contexts/currentApp"; // Импортируем контекст
-import Viewer from '../att/Viewer'; // Импортируем компонент Viewer
-import WlList from '../wl/wl-list'; // Импортируем компонент WlList
+import Viewer from "../att/Viewer"; // Импортируем компонент Viewer
+import WlList from "../wl/wl-list"; // Импортируем компонент WlList
 
 function OiProdInfo(props) {
   const [state] = useContext(CurrentAppContext); // Получаем состояние из контекста
   const oi = props.oi || state.curOiProd; // Используем oi из props или из контекста
+  const pj = props.pj || state.curPj; // Используем pj из props или из контекста
 
   const {
-    prodName,
-    oiQtt,
-    color,
-    matMap,
-    matSpec,
-    oiQttShipped,
-    oiHrsProdused,
-    oiHrsSum,
-    oiId,
-    prodId,
-    pjLastDatePr,
-    oiSName,
+    prodName = "",
+    oiQtt = 0,
+    color = "ffffff",
+    matMap = "не заказано",
+    matSpec = "",
+    oiQttShipped = 0,
+    oiHrsProdused = 0,
+    oiHrsSum = 0,
+    oiId = 0,
+    prodId = 0,
+    pjLastDatePr = null,
+    oiSName = "",
   } = oi || {}; // Добавляем проверку на наличие oi
 
-  const [selectedTab, setSelectedTab] = useState('info'); // Состояние для переключения отображения
+  const { pjId = 0 } = pj || {}; // Добавляем проверку на наличие pj
+
+  const [selectedTab, setSelectedTab] = useState("info"); // Состояние для переключения отображения
 
   const style = {
-    backgroundColor: color ? `#${color.toString(16)}` : '#ffffff', // Проверяем наличие color
+    backgroundColor: color ? `#${color.toString(16)}` : "#ffffff", // Проверяем наличие color
     borderRadius: "5px",
   };
 
@@ -35,16 +38,42 @@ function OiProdInfo(props) {
   };
 
   return (
-    <div className="card p-2" style={{ width: '100%', height: '100%', overflowY: 'auto' }}>
+    <div
+      className="card p-2"
+      style={{ width: "100%", height: "100%", overflowY: "auto" }}
+    >
       <h3 className="card-title">{oiSName}</h3>
       <div className="card-body p-1">
         <div className="btn-group" role="group" aria-label="Basic example">
-          <button type="button" className={`btn btn-primary ${selectedTab === 'info' ? 'active' : ''}`} onClick={() => handleTabChange('info')}>Инфо</button>
-          <button type="button" className={`btn btn-primary ${selectedTab === 'drawing' ? 'active' : ''}`} onClick={() => handleTabChange('drawing')}>Чертеж</button>
-          <button type="button" className={`btn btn-primary ${selectedTab === 'wlByProd' ? 'active' : ''}`} onClick={() => handleTabChange('wlByProd')}>ЖР по Продукции</button>
-          <button type="button" className={`btn btn-primary ${selectedTab === 'wlByOi' ? 'active' : ''}`} onClick={() => handleTabChange('wlByOi')}>ЖР по ПЗ</button>
+          <button
+            type="button"
+            className={`btn btn-primary ${
+              selectedTab === "info" ? "active" : ""
+            }`}
+            onClick={() => handleTabChange("info")}
+          >
+            Инфо
+          </button>
+          <button
+            type="button"
+            className={`btn btn-primary ${
+              selectedTab === "drawing" ? "active" : ""
+            }`}
+            onClick={() => handleTabChange("drawing")}
+          >
+            Чертеж
+          </button>
+          <button
+            type="button"
+            className={`btn btn-primary ${
+              selectedTab === "wlByPj" ? "active" : ""
+            }`}
+            onClick={() => handleTabChange("wlByPj")}
+          >
+            ЖР по ПЗ
+          </button>
         </div>
-        {selectedTab === 'info' && (
+        {selectedTab === "info" && (
           <>
             <small>материал</small>
             <div>{matSpec}</div>
@@ -59,14 +88,24 @@ function OiProdInfo(props) {
             <small>часов план</small>
             <div>{oiHrsSum}</div>
             <small>дата завершения произвоства</small>
-            <div>{pjLastDatePr ? moment(pjLastDatePr).format('DD.MM.YYYY') : "нет данных"}</div>
+            <div>
+              {pjLastDatePr
+                ? moment(pjLastDatePr).format("DD.MM.YYYY")
+                : "нет данных"}
+            </div>
           </>
         )}
-        {selectedTab === 'drawing' && <Viewer prodId={prodId} />}
-        {selectedTab === 'wlByProd' && <WlList options={{ prodId, emplId:0 }} />}
-        {selectedTab === 'wlByOi' && <WlList options={{ oiId, emplId:0 }} />}
+        {selectedTab === "drawing" && <Viewer table='production' keyValue={prodId} />}
+        {selectedTab === "wlByPj" &&
+          (pjId === 0 ? (
+            <div className="alert alert-info" role="alert">
+              Пз не выбрано
+            </div>
+          ) : (
+            <WlList options={{ pjId, emplId: 0 }} />
+          ))}
       </div>
-      <div className='card-img-bottom'>
+      <div className="card-img-bottom">
         {/* {prodId&&<SliderAtt table='Продукция' keyValue={prodId}/>} */}
       </div>
     </div>

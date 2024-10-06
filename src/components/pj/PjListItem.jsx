@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import PropTypes from 'prop-types';
 import { CurrentAppContext } from "../../contexts/currentApp";
 import moment from "moment";
 
@@ -43,7 +44,7 @@ function PjListItem(props) {
 
   const onBodyClickHandler = () => {
     if (!curPjId !== pjId) {
-      dispatch({ type: "SET_CURRENT_OIPROD", payload: {} });
+      dispatch({ type: "SET_CURRENT_OIPROD", payload: props.oi });
       dispatch({ type: "SET_CURRENT_PJ", payload: props.pj });
       return;
     }
@@ -90,5 +91,23 @@ function PjListItem(props) {
     </>
   );
 }
+PjListItem.propTypes = {
+  pj: PropTypes.shape({
+    pjQttProdused: PropTypes.number,
+    opName: PropTypes.string,
+    pjQtt: PropTypes.number,
+    pjLastDatePr: PropTypes.string,
+    pjId: PropTypes.number,
+    pjBtName: PropTypes.string,
+    pjLastBtName: PropTypes.string,
+    plStartDate: PropTypes.string,
+    plFinDate: PropTypes.string,
+    pjTOneSec: PropTypes.number,
+    isPjClosed: PropTypes.bool,
+    plBtName: PropTypes.string,
+  }).isRequired,
+  oi: PropTypes.object.isRequired,
+};
+
 
 export default PjListItem;
