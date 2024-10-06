@@ -6,6 +6,7 @@ import './styles.css'; // Подключим кастомные стили
 import Layout from "../../components/layout.jsx";
 import OrderList from '../../components/order/order-list/order-list';
 import OiProdList from '../../components/oi/oi-prod-list/oi-prod-list';
+import OiProdInfo from '../../components/oi/oi-prod-info.jsx';
 
 function MainPage() {
   return (
@@ -34,17 +35,9 @@ function MainPage() {
             <div className="pane">
               <OrderList/>
             </div>
-
             {/* ContextWindow */}
             <div className="pane">
-              <Container fluid className="p-3">
-                <Row>
-                  <Col>
-                    <h3>ContextWindow</h3>
-                    {/* Здесь можно разместить компоненты ContextForm и другие элементы */}
-                  </Col>
-                </Row>
-              </Container>
+              <OiProdInfo/>
             </div>
           </Split>
         </Split>

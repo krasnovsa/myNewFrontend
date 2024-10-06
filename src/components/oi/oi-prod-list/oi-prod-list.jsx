@@ -32,6 +32,12 @@ function OiProdList(props) {
           console.log("newList ", newOiList, Object.keys(newOiList));
           setOiList(newOiList);
           setError(false);
+
+          // Устанавливаем первый элемент как активный
+          const firstOi = Object.values(newOiList)[0];
+          if (firstOi) {
+            dispatch({ type: "SET_CURRENT_OIPROD", payload: firstOi.info });
+          }
         }
       } catch (err) {
         setError(err.message);
@@ -58,8 +64,8 @@ function OiProdList(props) {
 
       <div className="oi-prod-list-content">
         <div className="oi-prod-list-header">
-          <h1>Заказ № {ordId}</h1>
-          <h2>{custSName}</h2>
+          <h3>Заказ № {ordId}</h3>
+          <h4>{custSName}</h4>
           <button
             className="m-auto btn btn-sm btn-primary"
             onClick={onExtAllClick}

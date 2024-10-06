@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useHistory, withRouter } from "react-router-dom";
-import {ThreeDots} from "react-loader-spinner";
+import React, { useState, useEffect, useContext, useMemo } from "react";
+import { ThreeDots } from "react-loader-spinner";
 
 import WlItem from "./wl-item";
-
-import Pagination from "../pagination";
 import ErrorMessage from "../error-message";
 
 import { isAuthenticated } from "../../auth/index";
@@ -12,11 +9,7 @@ import { CurrentAppContext } from "../../contexts/currentApp";
 
 import { getWlList, getBtList } from "../../api/apiWl";
 
-import WlListSalary from "./wl-list-salary";
-
 const WlList = (props) => {
-  const history = useHistory();
-
   const [wlList, setWlList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [Error, setError] = useState(false);
@@ -28,26 +21,27 @@ const WlList = (props) => {
   } = isAuthenticated();
 
   const { token } = isAuthenticated();
-  const options = props.options;
-  const { pageNumber, paginURL, paginURL_1, emplId } = options;
+  const options = useMemo(() => props.options, [props.options]);
+  //const { emplId, oiId, prodId } = options;
   const pageSize = options?.pageSize || 30;
 
   useEffect(() => {
-    setIsLoading(true);
+    const fetchWlList = async () => {
+      setIsLoading(true);
 
-    dispatch({
-      type: "SET_CURRENT_WL",
-      payload: {},
-    });
+      dispatch({
+        type: "SET_CURRENT_WL",
+        payload: {},
+      });
 
-    
+      try {
+        const data = await getWlList(token, _id, {
+          oiId,
+          prodId,
+          emplId: emplId >= 0 ? emplId : _id,
+          pageSize,
+        });
 
-    getWlList(token, _id, {
-      ...options,
-      emplId: emplId >= 0 ? emplId : _id,
-      pageSize,
-    })
-      .then((data) => {
         setIsLoading(false);
         if (data.error) {
           setError(data.error);
@@ -55,28 +49,28 @@ const WlList = (props) => {
         } else {
           console.log("get data", data);
           setWlList(data);
-          setPageCount(Math.ceil(data[0].cr / pageSize));
+          
           dispatch({
             type: "SET_CURRENT_WL",
             payload:
-              data.find((item) => {
-                if (item.wlId === currentWl.wlId) return item;
-              }) || data[0],
+              data.find((item) => item.wlId === currentWl.wlId) || data[0],
           });
-          setIsLoading(false);
           setError("");
         }
-      })
-      .catch((err) => {
+      } catch (err) {
         setIsLoading(false);
         setError("Нет данных");
         setWlList([]);
-      });
-  }, [_id, token, options]);
+      }
+    };
+
+    fetchWlList();
+  }, [token, _id,  dispatch]);
 
   useEffect(() => {
-    getBtList(token, _id)
-      .then((data) => {
+    const fetchBtList = async () => {
+      try {
+        const data = await getBtList(token, _id);
         if (data.error) {
           console.log("bt list loading error " + data.error);
         } else {
@@ -86,14 +80,15 @@ const WlList = (props) => {
             payload: data,
           });
         }
-      })
-      .catch((err) => {
+      } catch (err) {
         console.log("bt list loading error " + err);
-      });
-  }, []);
+      }
+    };
+
+    fetchBtList();
+  }, [token, _id, dispatch]);
 
   const showItems = (items) => {
-   
     return (
       <ul className="list-group">
         {items.map((wlItem) => {
@@ -102,7 +97,7 @@ const WlList = (props) => {
       </ul>
     );
   };
-  
+
   return (
     <div>
       <div className="d-flex justify-content-center">
@@ -118,20 +113,8 @@ const WlList = (props) => {
       </div>
       
       {!isLoading && (
-        <Pagination
-          pageNumber={pageNumber}
-          pageCount={pageCount}
-          url={paginURL}
-          url_1={paginURL_1}
-          currentPage={pageNumber}
-        />
-      )}
-
-      {!isLoading && (
         <div style={props.style}>
-          {wlList &&
-            //showItems(wlList)
-            WlListSalary(wlList)}
+          {wlList && showItems(wlList)}
         </div>
       )}
 
@@ -140,4 +123,4 @@ const WlList = (props) => {
   );
 };
 
-export default withRouter(WlList);
+export default WlList;

@@ -5,14 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { Highlighter } from '../common/Highlighter/Highlighter';
 import PjList from "../pj/PjList";
 import OiProdInfo from "./oi-prod-info";
-
+import replaceSubstrings from "../../helpers/repalaceSubstrings";
 
 function OiProdListItem(props) {
   const {
     prodName,
     oiQtt,
     color,
-    matMap,
+    matMapNoHTML,
     matSpec,
     oiQttShipped,
     oiHrsProdused,
@@ -20,31 +20,31 @@ function OiProdListItem(props) {
     oiId,
     prodId,
     oiPercHrs,
+    oiSName,
+    shipCalendar
   } = props.oi.info;
 
   const { pjArr } = props.oi;
 
+  // const style = {
+  //   backgroundColor: `#${color.toString(16)}`,
+  //   borderRadius: "5px",
+  //   fontSize: "10px" // Уменьшение размера шрифта
+  // };
 
-  const style = {
-    backgroundColor: `#${color.toString(16)}`,
-    borderRadius: "5px",
-  };
 
   const [isExtended, setIsExtended] = useState(false);
-
   const [showInfo, setShowInfo] = useState(false);
 
   const [state, dispatch] = useContext(CurrentAppContext);
 
   const curOiProd = state?.curOiProd?.oiId || 0;
-
   const { ordFilterStr = '' } = state;
-
   const extAllPj = state?.extAllPj || false;
 
   useEffect(() => {
     setIsExtended(extAllPj);
-  }, [, extAllPj]);
+  }, [extAllPj]);
 
   const onBodyClickHandler = (e) => {
     e.stopPropagation();
@@ -52,7 +52,6 @@ function OiProdListItem(props) {
     if (curOiProd !== oiId) {
       dispatch({ type: "SET_CURRENT_OIPROD", payload: props.oi.info });
       dispatch({ type: "SET_CURRENT_PJ", payload: {} });
-
       return;
     }
   };
@@ -65,41 +64,63 @@ function OiProdListItem(props) {
   return (
     <>
       <div
-        className={`d-flex oi-item list-group-item p-0 ${
+        className={`oi-item list-group-item p-0 ${
           curOiProd === oiId ? "active" : ""
         } `}
+        style={{ display: "grid", gridTemplateColumns: "5px 1fr 30px", gap: "10px", alignItems: "center", fontSize: "10px" }}
       >
-        <div className="d-flex col-11 p-1" onClick={onBodyClickHandler}>
-          <div className="col-2 m-auto">
-            <span style={style} className="p-1 mr-1">
-              {oiId}
-            </span>
-          </div>
-          <div className="col-7 m-auto">
-            <Highlighter highlight={ordFilterStr}>{prodName}</Highlighter>
-          </div>
-          <div className="col-3 m-auto">
-            <div>зак {oiQtt}</div>
-            <div>
-              отг{' '}
-              <span
-                className={`badge badge-pill badge-${
-                  oiQttShipped < oiQtt ? "danger" : ""
-                }${oiQttShipped === oiQtt ? "primary" : ""}${
-                  oiQttShipped > oiQtt ? "success" : ""
-                }`}
-              >
-                {oiQttShipped}
+        <div
+          style={{
+            backgroundColor: `#${color.toString(16)}`,
+            width: "5px",
+            height: "100%",
+          }}
+        ></div>
+        <div style={{ display: "grid", gridTemplateRows: "1fr 1fr", gap: "10px", alignItems: "center", fontSize: "10px" }}>
+          <div
+            className="p-1"
+            onClick={onBodyClickHandler}
+            style={{ display: "grid", gridTemplateColumns: "1fr 50px 50px 70px 70px", alignItems: "center", fontSize: "10px" }}
+          >
+            <div className="m-auto">
+              <span className="p-1 mr-1">
+                {oiSName}
               </span>
             </div>
-            <div>{`вып: ${oiPercHrs}%`}</div>
+            <div className="m-auto">
+              зак:{oiQtt}
+            </div>
+            <div className="m-auto">
+              отгр:{oiQttShipped}
+            </div>
+            <div className="m-auto">
+              вып ч:{oiHrsProdused}
+            </div>
+            <div className="m-auto">
+              вып %:{oiPercHrs}%
+            </div>
+          </div>
+          <div
+            className="p-1"
+            style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", alignItems: "center", fontSize: "10px" }}
+          >
+            <div className="m-auto">
+              {shipCalendar}
+            </div>
+            <div className="m-auto">
+              {matSpec}
+            </div>
+            <div className="m-auto">
+              {matMapNoHTML}
+            </div>
           </div>
         </div>
-        <div className="col-1 m-auto p-1">
+        <div className="m-auto p-1">
           {curOiProd === oiId && (
             <button
-              className="btn btn btn-sm btn-primary m-auto d-flex align-items-center"
+              className="btn btn-sm btn-primary m-auto d-flex align-items-center"
               onClick={onInfoClickHandler}
+              style={{ fontSize: "10px" }}
             >
               i
             </button>
