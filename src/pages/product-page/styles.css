@@ -1,0 +1,31 @@
+.main-container {
+    height: 100vh;
+    /* Ограничиваем высоту до высоты экрана */
+    overflow: hidden;
+    /* Чтобы не было скроллов */
+}
+
+.pane {
+    background-color: white;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.split {
+    display: flex;
+    height: 100%;
+}
+
+.split-horizontal .gutter {
+    cursor: col-resize;
+    /* Курсор для горизонтального разделения */
+}
+
+.split-vertical .gutter {
+    cursor: row-resize;
+    /* Курсор для вертикального разделения */
+}

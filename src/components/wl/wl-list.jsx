@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import { ThreeDots } from "react-loader-spinner";
 
 import WlItem from "./wl-item";
+import WlItemLight from "./wl-items-light/wl-item-light";
 import ErrorMessage from "../error-message";
 
 import { isAuthenticated } from "../../auth/index";
 import { CurrentAppContext } from "../../contexts/currentApp";
 
 import { getWlList, getBtList } from "../../api/apiWl";
+
 
 const WlList = (props) => {
   const [wlList, setWlList] = useState([]);
@@ -111,7 +113,7 @@ const WlList = (props) => {
     return (
       <ul className="list-group">
         {items.map((wlItem) => {
-          return <WlItem wl={wlItem} key={wlItem.wlId} />;
+          return <WlItemLight wl={wlItem} key={wlItem.wlId} />;
         })}
       </ul>
     );

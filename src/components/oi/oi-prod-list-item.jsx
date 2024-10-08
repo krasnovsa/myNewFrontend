@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import { CurrentAppContext } from "../../contexts/currentApp";
-import { useNavigate } from "react-router-dom";
 
 import { Highlighter } from '../common/Highlighter/Highlighter';
 import PjList from "../pj/PjList";

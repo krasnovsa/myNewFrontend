@@ -1,0 +1,44 @@
+.wl-item-light-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* 6 equal columns */
+  grid-template-areas:
+    "date shift tone unname qtt wtime"
+    "eFio shift tone unname qtt wtime";
+  gap: 2px;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+  border: 1px solid #ccc; /* Add border to the grid container */
+}
+
+
+
+/* Define grid areas */
+.date {
+  grid-area: date;
+}
+
+.shift {
+  grid-area: shift;
+}
+
+.tone {
+  grid-area: tone;
+}
+
+.unname {
+  grid-area: unname;
+}
+
+.qtt {
+  grid-area: qtt;
+}
+
+.wtime {
+  grid-area: wtime;
+}
+
+.eFio {
+  grid-area: eFio;
+}

@@ -1,6 +1,5 @@
 import React from 'react';
 import Split from 'react-split';
-import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css'; // Подключим кастомные стили
 import Layout from "../../components/layout.jsx";

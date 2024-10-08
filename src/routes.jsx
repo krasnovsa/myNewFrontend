@@ -10,6 +10,7 @@ import PrivateRoute from './auth/PrivateRoute'
 // import WlByParams from "./components/wl/WlByParams";
 import Orders from "./pages/orders";
 import MainPage from "./pages/main-page/main-page";
+import ProductPage from "./pages/product-page/product-page";
 // import Oi from "./pages/oi";
 
 // import BoxAddUpdate from "./pages/box-add-update";
@@ -30,8 +31,9 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<PrivateRoute element={Dashboard} />} />
       <Route path="/main-page" element={<PrivateRoute element={MainPage} />} />
+      <Route path="/product-page" element={<PrivateRoute element={ProductPage} />} />
       <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />
-      <Route path="/orders/:loadMode/:filterStr?"  element={<PrivateRoute element={Orders}/>} />
+      <Route path="/orders/:loadMode/:filterStr?"  element={<PrivateRoute element={ProductPage}/>} />
 
       {/* <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />
       <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />

@@ -103,6 +103,24 @@ const initialState = {
   },
   extServer: "",
   extApi: "",
+  tpAddOpsTemplate: {
+    operations: [
+      { isSelected: 0, num: 10, wgId: 1, qttToOne: 1.0, qtt: 60 },
+      { isSelected: 0, num: 20, wgId: 2, qttToOne: 1.0, qtt: 120 },
+      { isSelected: 0, num: 30, wgId: 3, qttToOne: 1.0, qtt: 180 },
+      // другие операции
+    ],
+    length: 0,
+    prodId: 0,
+    tpId: 0,
+  },
+  workGroups: [
+    { toFirm: "tm", Id: 1, name: "RF", unId: 4, isCNC: 1 },
+    { toFirm: "tm", Id: 2, name: "VT", wgUnName: 4, isCNC: 1 },
+    { toFirm: "pr", Id: 3, name: "VC", wgUnName: 4, isCNC: 1 },
+    { toFirm: "adm", Id: 4, name: "RSL", wgUnName: 4, isCNC: 1 },
+    { toFirm: "tm", Id: 5, name: "RF+C", wgUnName: 4, isCNC: 1 },
+  ],
 };
 
 const reducer = (state, action) => {
@@ -160,6 +178,12 @@ const reducer = (state, action) => {
 
     case "SET_EXT_API":
       return { ...state, extServer: action.payload };
+
+    case "SET_TP_ADD_OPS_TEMPLATE": 
+      return {...state, tpAddOpsTemplate: action.payload};
+
+    case "SET_WORK_GROUPS": 
+      return {...state, workGroups: action.payload};
 
     
 
