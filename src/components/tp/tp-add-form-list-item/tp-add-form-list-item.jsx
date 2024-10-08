@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { CurrentAppContext } from "../../../contexts/currentApp";
 
 const TpAddFormListItem = ({ index }) => {
-  const { state, dispatch } = useContext(CurrentAppContext);
+  const [state, dispatch ]  = useContext(CurrentAppContext);
   const [operation, setOperation] = useState(
     state.tpAddOpsTemplate.operations[index]
   );
@@ -24,7 +24,7 @@ const TpAddFormListItem = ({ index }) => {
     };
 
     loadWgData();
-  }, [operation.wgId]);
+  }, [operation.Id]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

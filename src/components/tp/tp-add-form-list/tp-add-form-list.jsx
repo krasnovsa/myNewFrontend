@@ -3,7 +3,7 @@ import { CurrentAppContext } from "../../../contexts/currentApp";
 import TpAddFormListItem from "../tp-add-form-list-item/tp-add-form-list-item";
 
 const TpAddFormList = () => {
-  const { state, dispatch } = useContext(CurrentAppContext);
+  const [state, dispatch]   = useContext(CurrentAppContext);
 
   // Добавляем проверку на случай, если state не определен
   if (!state || !state.tpAddOpsTemplate) {

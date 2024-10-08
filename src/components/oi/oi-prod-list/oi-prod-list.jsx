@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { CurrentAppContext } from "../../../contexts/currentApp";
 import { ThreeDots } from "react-loader-spinner";
-import OiProdListItem from "../oi-prod-list-item";
+import OiProdListItem from "../oi-prod-list-Item/oi-prod-list-item";
 import { isAuthenticated } from "../../../auth";
 import { getProdInfoById } from "../../../api/apiOrder";
 import { reduceOiProd } from "../reduceOiProd";
-import './styles.css'; // Импортируем CSS файл
+import "./styles.css"; // Импортируем CSS файл
 
 function OiProdList(props) {
   const {

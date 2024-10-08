@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
-import PropTypes from 'prop-types';
-import { CurrentAppContext } from "../../contexts/currentApp";
+import PropTypes from "prop-types";
+import { CurrentAppContext } from "../../../contexts/currentApp";
 
-import { Highlighter } from '../common/Highlighter/Highlighter';
-import PjList from "../pj/PjList";
-import OiProdInfo from "./oi-prod-info";
-import replaceSubstrings from "../../helpers/repalaceSubstrings";
+import { Highlighter } from "../../common/Highlighter/Highlighter";
+import PjList from "../../pj/PjList";
+import OiProdInfo from "../oi-prod-info";
+
 
 function OiProdListItem(props) {
   const {
@@ -21,7 +21,7 @@ function OiProdListItem(props) {
     prodId,
     oiPercHrs,
     oiSName,
-    shipCalendar
+    shipCalendar,
   } = props.oi.info;
 
   const { pjArr } = props.oi;
@@ -32,14 +32,13 @@ function OiProdListItem(props) {
   //   fontSize: "10px" // Уменьшение размера шрифта
   // };
 
-
   const [isExtended, setIsExtended] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 
   const [state, dispatch] = useContext(CurrentAppContext);
 
   const curOiProd = state?.curOiProd?.oiId || 0;
-  const { ordFilterStr = '' } = state;
+  const { ordFilterStr = "" } = state;
   const extAllPj = state?.extAllPj || false;
 
   useEffect(() => {
