@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import Split from "react-split";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css"; // Подключим кастомные стили
 import Layout from "../../components/layout.jsx";
-import TpAddForm from "../../components/tp/tp-add-form/tp-add-form..jsx";
-
+import TpAddForm from "../../components/tp/tp-add-form/tp-add-form.jsx";
+import TpListForm from "../../components/tp/tp-list-form/tp-list-form.jsx";
 
 function ProductPage() {
+  const [prodId, setProdId] = useState("");
+
+  const handleProdIdChange = (event) => {
+    setProdId(event.target.value);
+  };
+
   return (
     <div className="main-container">
       <Layout title="Управление продукцией" description="Управляем продукцией">
@@ -18,10 +24,19 @@ function ProductPage() {
           style={{ display: "flex", height: "100%" }}
         >
           <div className="pane">
-            <TpAddForm />
+            <TpAddForm prodId={prodId} />
           </div>
           <div className="pane">
-            Second window
+            <div className="prod-id-input">
+              <label htmlFor="prodId">Product ID:</label>
+              <input
+                type="text"
+                id="prodId"
+                value={prodId}
+                onChange={handleProdIdChange}
+              />
+            </div>
+            <TpListForm prodId={prodId} />
           </div>
         </Split>
       </Layout>

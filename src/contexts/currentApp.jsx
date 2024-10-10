@@ -115,7 +115,7 @@ const initialState = {
     tpId: 0,
   },
   workGroups: [
-    { toFirm: "tm", Id: 1, name: "RF", unId: 4, isCNC: 1 },
+    { toFirm: "tm", Id: 1, name: "RF", wgUnName: 4, isCNC: 1 },
     { toFirm: "tm", Id: 2, name: "VT", wgUnName: 4, isCNC: 1 },
     { toFirm: "pr", Id: 3, name: "VC", wgUnName: 4, isCNC: 1 },
     { toFirm: "adm", Id: 4, name: "RSL", wgUnName: 4, isCNC: 1 },
