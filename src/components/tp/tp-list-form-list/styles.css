@@ -1,6 +1,6 @@
 .list-group-item {
   display: grid;
-  grid-template-columns: 10% 20% 10% auto 10% ;
+  grid-template-columns: 10% 20% 10% auto 10% 5%;
   align-items: center;
   padding: 3px;
   border: 1px solid #ddd;
@@ -14,4 +14,39 @@
 .header {
   font-weight: lighter;
   font-size: 0.8em;
+}
+
+.list-group-item.active {
+  background-color: #f0f0f0; /* Светло-серый фон для активного элемента */
+  border-left: 4px solid #007bff; /* Синяя левая граница для активного элемента */
+}
+
+.list-group-item .btn {
+  margin-left: auto;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.list-group-item.edit-mode {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.list-group-item.edit-mode .form-group {
+  margin-bottom: 10px;
+}
+
+.list-group-item.edit-mode .form-buttons {
+  grid-column: span 5;
+  display: flex;
+  justify-content: space-between;
+}
+
+.list-group-item.edit-mode .form-buttons .btn {
+  margin-left: 0;
 }

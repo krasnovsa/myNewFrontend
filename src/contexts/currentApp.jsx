@@ -121,6 +121,8 @@ const initialState = {
     { toFirm: "adm", Id: 4, name: "RSL", wgUnName: 4, isCNC: 1 },
     { toFirm: "tm", Id: 5, name: "RF+C", wgUnName: 4, isCNC: 1 },
   ],
+  curTpItem: {},
+  curTpItemRef: {},
 };
 
 const reducer = (state, action) => {
@@ -179,13 +181,17 @@ const reducer = (state, action) => {
     case "SET_EXT_API":
       return { ...state, extServer: action.payload };
 
-    case "SET_TP_ADD_OPS_TEMPLATE": 
-      return {...state, tpAddOpsTemplate: action.payload};
+    case "SET_TP_ADD_OPS_TEMPLATE":
+      return { ...state, tpAddOpsTemplate: action.payload };
 
-    case "SET_WORK_GROUPS": 
-      return {...state, workGroups: action.payload};
+    case "SET_WORK_GROUPS":
+      return { ...state, workGroups: action.payload };
 
-    
+    case "SET_CUR_TP_ITEM":
+      return { ...state, curTpItem: action.payload };
+
+    case "SET_CUR_TP_ITEM_REF":
+      return { ...state, curTpItemRef: action.payload };
 
     default:
       return state;

@@ -81,3 +81,25 @@ export const createTechProcessWithOperations = async (token, userId, techProcess
     throw new Error(err);
   }
 };
+
+// Новый метод для обновления tpItem
+export const updateTpItem = async (token, userId, tpItemData) => {
+  try {
+    const response = await fetch(
+      `${API}/tp/update/${userId}`,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(tpItemData),
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
