@@ -1,0 +1,17 @@
+.list-group-item {
+  display: grid;
+  grid-template-columns: 10% 20% 10% auto 10% ;
+  align-items: center;
+  padding: 3px;
+  border: 1px solid #ddd;
+  margin-bottom: 2px;
+}
+
+.descr-text {
+  font-size: 0.8em; /* Уменьшенный шрифт для описания */
+}
+
+.header {
+  font-weight: lighter;
+  font-size: 0.8em;
+}

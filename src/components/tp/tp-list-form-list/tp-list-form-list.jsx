@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import TpListFormListItem from '../tp-list-form-list-item/tp-list-form-list-item';
-
+import './styles.css'; // Импортируем CSS-файл
 
 const TpListFormList = ({ techProcess }) => {
   const [isCollapsed, setIsCollapsed] = useState(!techProcess.tpIsDefault);
@@ -23,15 +23,15 @@ const TpListFormList = ({ techProcess }) => {
           <div className="list-group-item">
             <div className="header num">Номер</div>
             <div className="header wgId">Группа работ</div>
-            <div className="header qttToOne">Количество на единицу</div>
             <div className="header qttPlan">Плановое количество</div>
             <div className="header descr">Описание</div>
+            <div className="header qttToOne">Количество на единицу</div>
           </div>
-          <ul>
+
             {techProcess.tpItems.map((item) => (
               <TpListFormListItem tpItem={item} key={item.Id} />
             ))}
-          </ul>
+
         </div>
       )}
     </div>

@@ -1,8 +1,3 @@
-/**
- * Функция для группировки элементов tpItems по техпроцессам
- * @param {Array} tpItems - массив объектов tpItems
- * @returns {Array} - массив техпроцессов с вложенными массивами объектов tpItems
- */
 const reduceTpListData = (tpItems) => {
     // Создаем объект для хранения техпроцессов
     const techProcesses = {};
@@ -24,6 +19,11 @@ const reduceTpListData = (tpItems) => {
   
       // Добавляем элемент tpItem в массив tpItems техпроцесса
       techProcesses[tpId].tpItems.push(tpItem);
+    });
+  
+    // Сортируем элементы tpItems по возрастанию num
+    Object.values(techProcesses).forEach((techProcess) => {
+      techProcess.tpItems.sort((a, b) => a.num - b.num);
     });
   
     // Преобразуем объект техпроцессов в массив

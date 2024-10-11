@@ -1,0 +1,43 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+ALTER VIEW [dbo].[TPItList]
+AS
+SELECT  tpi.tpId
+	, tpi.Id
+	, tpi.toId
+	, tpi.num
+	, tpi.qttToOne
+	, op.wGroupId
+	, op.qttPlan
+	, op.author
+	, op.crDate
+	, op.IsAgreed
+	, op.qttAgreed
+	, op.IsCanceled
+	, op.descr
+	, wt.Id AS wtId
+	, dbo.Units.Id AS unId
+	, op.isOwn
+	, op.prodId
+	, wg.name AS wgName
+	, dbo.Units.name AS unName
+	
+	, tp.author as tpAuthorId
+	, tp.crDate as tpCrDate
+	, tp.isDefault as tpIsDefault
+
+
+FROM            
+	dbo.TPItems tpi INNER JOIN
+	dbo.TOperations op ON tpi.toId = op.Id inner join 
+	TechProccess tp on tpi.tpId=tp.Id inner join
+	dbo.WorkGroups wg on op.wGroupId=wg.Id  left join
+	dbo.WTypes wt ON wt.Id = wg.wtId left JOIN
+	dbo.Units ON wg.unId = dbo.Units.Id 
+	
+
+GO
