@@ -123,6 +123,8 @@ const initialState = {
   ],
   curTpItem: {},
   curTpItemRef: {},
+  curProduct: null,
+  curProdIdTrigger: 0,
 };
 
 const reducer = (state, action) => {
@@ -192,6 +194,15 @@ const reducer = (state, action) => {
 
     case "SET_CUR_TP_ITEM_REF":
       return { ...state, curTpItemRef: action.payload };
+
+    case "SET_CUR_PROD_ID_TRIGGER":
+      return { ...state, curProdIdTrigger: action.payload };
+
+    case "SET_CUR_PRODUCT":
+      return { ...state, curProduct: action.payload };
+      
+    case "SET_CUR_PROD_ID_TRIGGER":
+      return { ...state, curProdIdTrigger: action.payload };
 
     default:
       return state;

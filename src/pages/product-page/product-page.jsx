@@ -1,13 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Split from "react-split";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css"; // Подключим кастомные стили
 import Layout from "../../components/layout.jsx";
 import TpAddForm from "../../components/tp/tp-add-form/tp-add-form.jsx";
 import TpListForm from "../../components/tp/tp-list-form/tp-list-form.jsx";
+import { getProductById } from "../../api/apiProduct";
+import { isAuthenticated } from "../../auth";
+import { CurrentAppContext } from "../../contexts/currentApp";
 
 function ProductPage() {
   const [prodId, setProdId] = useState("");
+  const [state, dispatch] = useContext(CurrentAppContext);
+  const { user, token } = isAuthenticated();
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (prodId) {
+        try {
+          const product = await getProductById(user._id, token, prodId);
+          dispatch({ type: "SET_CUR_PRODUCT", payload: product });
+        } catch (err) {
+          console.error("Ошибка при получении информации о продукте:", err);
+        }
+      }
+    };
+
+    fetchProduct();
+  }, [prodId, user._id, token, dispatch]);
 
   const handleProdIdChange = (event) => {
     setProdId(event.target.value);
@@ -24,7 +44,7 @@ function ProductPage() {
           style={{ display: "flex", height: "100%" }}
         >
           <div className="pane">
-            <TpAddForm prodId={prodId} />
+            <TpAddForm prodId={state.curProduct ? state.curProduct.Id : 0} />
           </div>
           <div className="pane">
             <div className="prod-id-input">

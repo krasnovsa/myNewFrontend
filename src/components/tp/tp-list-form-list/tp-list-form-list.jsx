@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import TpListFormListItem from "../tp-list-form-list-item/tp-list-form-list-item";
+import { CurrentAppContext } from "../../../contexts/currentApp";
 import "./styles.css"; // Импортируем CSS-файл
 
 const TpListFormList = ({ techProcess }) => {
   const [isCollapsed, setIsCollapsed] = useState(!techProcess.tpIsDefault);
   const [activeItemId, setActiveItemId] = useState(null);
+  const [state, dispatch] = useContext(CurrentAppContext);
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
 
-  const handleItemClick = (itemId) => {
-    setActiveItemId(itemId);
+  const handleItemClick = (item) => {
+    setActiveItemId(item.Id);
+    dispatch({ type: "SET_CUR_TP_ITEM", payload: item });
   };
 
   return (
@@ -38,7 +41,7 @@ const TpListFormList = ({ techProcess }) => {
               tpItem={item}
               key={item.Id}
               isActive={item.Id === activeItemId}
-              onClick={() => handleItemClick(item.Id)}
+              onClick={() => handleItemClick(item)}
             />
           ))}
         </div>

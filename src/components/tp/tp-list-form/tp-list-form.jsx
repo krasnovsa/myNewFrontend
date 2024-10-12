@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import TpListFormList from '../tp-list-form-list/tp-list-form-list';
 import reduceTpListData from './reduce-tp-list-data';
 import { getTechProcessList } from '../../../api/apiTp';
 import { isAuthenticated } from '../../../auth/index';
+import { CurrentAppContext } from '../../../contexts/currentApp'; // Импортируем контекст
 import './styles.css'; // Импортируем стили
 
 const TpListForm = ({ prodId }) => {
   const [techProcesses, setTechProcesses] = useState([]);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [state] = useContext(CurrentAppContext); // Используем контекст
 
   const {
     user: { _id: userId = null },
@@ -28,7 +30,7 @@ const TpListForm = ({ prodId }) => {
     if (prodId) {
       fetchTechProcesses();
     }
-  }, [prodId, token, userId]);
+  }, [prodId, token, userId, state.curProdIdTrigger]); // Добавляем зависимость от триггера
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);

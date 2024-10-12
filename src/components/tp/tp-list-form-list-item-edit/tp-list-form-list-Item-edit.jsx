@@ -3,11 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { CurrentAppContext } from "../../../contexts/currentApp";
 import { updateTpItem } from "../../../api/apiTp"; // Import the updateTpItem function
+import { isAuthenticated } from "../../../auth";
 
 const TPListFormListItemEdit = ({ tpItem, onSave, onCancel }) => {
   const [editedTpItem, setEditedTpItem] = useState(tpItem);
-  const [state] = useContext(CurrentAppContext);
+  const [state, dispatch] = useContext(CurrentAppContext);
   const [wgData, setWgData] = useState([]);
+  
+  const {
+    user: { _id = null },
+  } = isAuthenticated();
+  const { token } = isAuthenticated();
 
   useEffect(() => {
     // Функция для загрузки данных, связанных с wgId
@@ -29,10 +35,9 @@ const TPListFormListItemEdit = ({ tpItem, onSave, onCancel }) => {
 
   const handleSaveClick = async () => {
     try {
-      const token = state.auth.token; // Предполагается, что токен хранится в состоянии приложения
-      const userId = state.auth.user.id; // Предполагается, что идентификатор пользователя хранится в состоянии приложения
-      await updateTpItem(token, userId, editedTpItem); // Вызываем метод updateTpItem из apiTp
-      onSave(editedTpItem); // Вызываем onSave для обновления состояния родительского компонента
+      await updateTpItem(token, _id, editedTpItem); 
+      onSave(editedTpItem); 
+      dispatch({ type: "SET_CUR_PROD_ID_TRIGGER", payload: state.curProdIdTrigger + 1 }); // Обновляем триггер
     } catch (err) {
       console.error("Ошибка при обновлении tpItem:", err);
     }

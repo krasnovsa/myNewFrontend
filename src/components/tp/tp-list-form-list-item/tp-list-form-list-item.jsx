@@ -22,7 +22,7 @@ const TpListFormListItem = ({ tpItem, isActive, onClick }) => {
 
   return (
     <div
-      className={`list-group-item ${isActive ? "active" : ""}`}
+      className={`list-group-item ${isActive ? "bg-primary text-white" : ""}`}
       onClick={onClick}
     >
       {isEditing ? (
@@ -40,7 +40,7 @@ const TpListFormListItem = ({ tpItem, isActive, onClick }) => {
           <div className="qttToOne">{tpItem.qttToOne}</div>
           {isActive && (
             <button
-              className="btn btn-primary edit-btn"
+              className="btn btn-light edit-btn"
               onClick={handleEditClick}
             >
               <FontAwesomeIcon icon={faEdit} />
