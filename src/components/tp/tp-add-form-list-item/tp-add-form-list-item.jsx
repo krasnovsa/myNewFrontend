@@ -2,7 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import { CurrentAppContext } from "../../../contexts/currentApp";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { addOperationToTechProcess } from "../../../api/apiTp"; // Импортируем метод
 import "./styles.css"; // Импортируем CSS-файл
+import { isAuthenticated } from "../../../auth/index";
 
 const TpAddFormListItem = ({ index, onDelete }) => {
   const [state, dispatch] = useContext(CurrentAppContext);
@@ -10,6 +12,10 @@ const TpAddFormListItem = ({ index, onDelete }) => {
     state.tpAddOpsTemplate.operations[index]
   );
   const [wgData, setWgData] = useState([]); // данные связанные с wgId
+  const { user, token } = isAuthenticated();
+  const tpId = state.curTpItem.tpId; // Получаем tpId из контекста
+  const prodId = state.curTpItem.prodId; // Получаем prodId из контекста
+
 
   useEffect(() => {
     // Функция для загрузки данных, связанных с wgId
@@ -45,9 +51,16 @@ const TpAddFormListItem = ({ index, onDelete }) => {
     });
   };
 
-  const handleButtonClick = () => {
-    console.log("tpId:", state.curTpItem.tpId);
-    console.log("operation:", operation);
+  const handleButtonClick = async () => {
+    try {
+      const response = await addOperationToTechProcess(token, user._id, tpId, prodId, operation);
+      console.log("Operation added successfully:", response);
+
+      // Обновляем состояние curProdIdTrigger
+      dispatch({ type: "SET_CUR_PROD_ID_TRIGGER", payload: state.curProdIdTrigger + 1 });
+    } catch (err) {
+      console.error("Error adding operation:", err);
+    }
   };
 
   return (

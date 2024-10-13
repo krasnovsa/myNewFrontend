@@ -201,8 +201,7 @@ const reducer = (state, action) => {
     case "SET_CUR_PRODUCT":
       return { ...state, curProduct: action.payload };
       
-    case "SET_CUR_PROD_ID_TRIGGER":
-      return { ...state, curProdIdTrigger: action.payload };
+
 
     default:
       return state;

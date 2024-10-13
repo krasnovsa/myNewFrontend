@@ -57,9 +57,9 @@ const TPListFormListItemEdit = ({ tpItem, onSave, onCancel }) => {
       </div>
       <div className="form-group wgId">
         <select
-          name="wgId"
+          name="wGroupId"
           className="form-control"
-          value={editedTpItem.wgId}
+          value={editedTpItem.wGroupId}
           onChange={handleInputChange}
         >
           <option value="" disabled>

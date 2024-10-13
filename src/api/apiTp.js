@@ -103,3 +103,26 @@ export const updateTpItem = async (token, userId, tpItemData) => {
     throw new Error(err);
   }
 };
+
+
+// Новый метод для добавления операции в техпроцесс
+export const addOperationToTechProcess = async (token, userId, tpId, prodId, operation) => {
+  try {
+    const response = await fetch(
+      `${API}/tp/add-operation/${tpId}/${prodId}/${userId}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ operation : operation }), // Отправляем объект operation в теле запроса
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
