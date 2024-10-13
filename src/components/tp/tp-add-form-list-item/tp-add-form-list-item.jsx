@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { CurrentAppContext } from "../../../contexts/currentApp";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import "./styles.css"; // Импортируем CSS-файл
 
 const TpAddFormListItem = ({ index, onDelete }) => {
@@ -16,7 +16,7 @@ const TpAddFormListItem = ({ index, onDelete }) => {
     const loadWgData = async () => {
       // здесь можно подгружать данные с сервера
       // например, запрос к API для получения wgName и wgUnName по wgId
-      const fetchedData = state.workGroups
+      const fetchedData = state.workGroups;
       setWgData(fetchedData);
     };
 
@@ -43,6 +43,11 @@ const TpAddFormListItem = ({ index, onDelete }) => {
       type: "SET_TP_ADD_OPS_TEMPLATE",
       payload: { ...state.tpAddOpsTemplate, operations: updatedOperations },
     });
+  };
+
+  const handleButtonClick = () => {
+    console.log("tpId:", state.curTpItem.tpId);
+    console.log("operation:", operation);
   };
 
   return (
@@ -108,10 +113,13 @@ const TpAddFormListItem = ({ index, onDelete }) => {
         />
       </div>
       <button
-        className="btn btn-danger"
+        className="btn btn-danger mr-2"
         onClick={() => onDelete(index)}
       >
         <FontAwesomeIcon icon={faTrash} />
+      </button>
+      <button className="btn btn-info" onClick={handleButtonClick}>
+        <FontAwesomeIcon icon={faArrowRight} />
       </button>
     </li>
   );
