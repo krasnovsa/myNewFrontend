@@ -9,6 +9,10 @@ const TpListFormList = ({ techProcess }) => {
   const [isCollapsed, setIsCollapsed] = useState(!techProcess.tpIsDefault);
   const [activeItemId, setActiveItemId] = useState(null);
   const [state, dispatch] = useContext(CurrentAppContext);
+  
+  
+  const isCurrentTpItem = state.curTpItem?.tpId === techProcess.tpId;
+  
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
@@ -21,11 +25,25 @@ const TpListFormList = ({ techProcess }) => {
 
   return (
     <div className="form-group ">
-      <div className="row align-items-center bg-light">
+      <div
+        className="row align-items-center bg-light"
+        style={{
+          fontWeight: techProcess.tpIsDefault ? "bold" : "normal",
+          backGroundColor: "blue",
+        }}
+      >
         <div className="col form-group mb-0">
-          <p onClick={toggleCollapse} style={{ cursor: "pointer" }} className="form-control-plaintext">
-            <FontAwesomeIcon icon={isCollapsed ? faPlus : faMinus} className="mr-2" />
+          <p
+            onClick={toggleCollapse}
+            style={{ cursor: "pointer" }}
+            className="form-control-plaintext"
+          >
+            <FontAwesomeIcon
+              icon={isCollapsed ? faPlus : faMinus}
+              className="mr-2"
+            />
             {techProcess.tpId}
+            {isCurrentTpItem && <span style={{ color: "blue" }}> * </span>}
           </p>
         </div>
         <div className="col form-group mb-0">
@@ -35,7 +53,9 @@ const TpListFormList = ({ techProcess }) => {
           <p className="form-control-plaintext">{techProcess.tpCrDate}</p>
         </div>
         <div className="col form-group mb-0">
-          <p className="form-control-plaintext">{techProcess.tpIsDefault ? "Да" : "Нет"}</p>
+          <p className="form-control-plaintext">
+            {techProcess.tpIsDefault ? "Да" : "Нет"}
+          </p>
         </div>
       </div>
 

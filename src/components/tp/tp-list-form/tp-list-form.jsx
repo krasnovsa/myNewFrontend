@@ -9,6 +9,7 @@ import './styles.css'; // Импортируем стили
 const TpListForm = ({ prodId }) => {
   const [techProcesses, setTechProcesses] = useState([]);
   const [state] = useContext(CurrentAppContext); // Используем контекст
+  
 
   const {
     user: { _id: userId = null },
