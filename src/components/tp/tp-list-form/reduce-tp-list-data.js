@@ -1,17 +1,24 @@
 const reduceTpListData = (tpItems) => {
-  // Создаем объект для хранения техпроцессов
   const techProcesses = {};
 
-  // Проходим по каждому элементу tpItems
   tpItems.forEach((item) => {
     const { tpId, tpAuthorId, tpCrDate, tpIsDefault, ...tpItem } = item;
+
+    // Преобразование даты в формат DD.MM.YYYY
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}.${month}.${year}`;
+    };
 
     // Если техпроцесс с таким tpId еще не создан, создаем его
     if (!techProcesses[tpId]) {
       techProcesses[tpId] = {
         tpId,
         tpAuthorId,
-        tpCrDate,
+        tpCrDate: formatDate(tpCrDate), // Преобразуем дату
         tpIsDefault,
         tpItems: [],
       };

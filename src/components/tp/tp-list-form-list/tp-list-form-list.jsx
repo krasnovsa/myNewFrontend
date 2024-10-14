@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import TpListFormListItem from "../tp-list-form-list-item/tp-list-form-list-item";
 import { CurrentAppContext } from "../../../contexts/currentApp";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import "./styles.css"; // Импортируем CSS-файл
 
 const TpListFormList = ({ techProcess }) => {
@@ -18,14 +20,25 @@ const TpListFormList = ({ techProcess }) => {
   };
 
   return (
-    <div>
-      <h3>Техпроцесс ID: {techProcess.tpId}</h3>
-      <p>Автор: {techProcess.tpAuthorId}</p>
-      <p>Дата создания: {techProcess.tpCrDate}</p>
-      <p>По умолчанию: {techProcess.tpIsDefault ? "Да" : "Нет"}</p>
-      <h4 onClick={toggleCollapse} style={{ cursor: "pointer" }}>
-        {isCollapsed ? "Развернуть" : "Свернуть"} список элементов
-      </h4>
+    <div className="form-group ">
+      <div className="row align-items-center bg-light">
+        <div className="col form-group mb-0">
+          <p onClick={toggleCollapse} style={{ cursor: "pointer" }} className="form-control-plaintext">
+            <FontAwesomeIcon icon={isCollapsed ? faPlus : faMinus} className="mr-2" />
+            {techProcess.tpId}
+          </p>
+        </div>
+        <div className="col form-group mb-0">
+          <p className="form-control-plaintext">{techProcess.tpAuthorId}</p>
+        </div>
+        <div className="col form-group mb-0">
+          <p className="form-control-plaintext">{techProcess.tpCrDate}</p>
+        </div>
+        <div className="col form-group mb-0">
+          <p className="form-control-plaintext">{techProcess.tpIsDefault ? "Да" : "Нет"}</p>
+        </div>
+      </div>
+
       {!isCollapsed && (
         <div>
           <div className="list-group-item">

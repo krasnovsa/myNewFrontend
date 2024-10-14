@@ -8,7 +8,6 @@ import './styles.css'; // Импортируем стили
 
 const TpListForm = ({ prodId }) => {
   const [techProcesses, setTechProcesses] = useState([]);
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const [state] = useContext(CurrentAppContext); // Используем контекст
 
   const {
@@ -32,22 +31,30 @@ const TpListForm = ({ prodId }) => {
     }
   }, [prodId, token, userId, state.curProdIdTrigger]); // Добавляем зависимость от триггера
 
-  const toggleCollapse = () => {
-    setIsCollapsed(!isCollapsed);
-  };
-
   return (
     <div className="tp-list-form-container">
-      <h3 onClick={toggleCollapse} style={{ cursor: 'pointer' }}>
-        {isCollapsed ? 'Развернуть' : 'Свернуть'} список техпроцессов для продукта ID: {prodId}
-      </h3>
-      {!isCollapsed && (
-        <div className="tp-list-form-content">
-          {techProcesses.map((tp) => (
-            <TpListFormList key={tp.tpId} techProcess={tp} />
-          ))}
+      <h3>Список техпроцессов для продукта ID: {prodId}</h3>
+      <div className="tp-list-form-content">
+        <div className="row align-items-center">
+          <div className="col form-group mb-0">
+            <p>ID</p>
+          </div>
+          <div className="col form-group mb-0">
+            <p>Автор</p>
+          </div>
+          <div className="col form-group mb-0">
+            <p>Дата создания</p>
+          </div>
+          <div className="col form-group mb-0">
+            <p>По умолчанию</p>
+          </div>
         </div>
-      )}
+        {techProcesses.map((tp) => (
+          <div key={tp.tpId} className="border-bottom">
+            <TpListFormList techProcess={tp} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
