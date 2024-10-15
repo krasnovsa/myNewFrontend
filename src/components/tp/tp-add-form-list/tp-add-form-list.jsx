@@ -61,11 +61,16 @@ const TpAddFormList = () => {
           <div className="form-group wgId mr-3">
             <label>{labels.wgId}</label>
           </div>
+          <div className="form-group qtt">
+            <label>{labels.qtt}</label>
+          </div>
           <div className="form-group qttToOne mr-3">
             <label>{labels.qttToOne}</label>
           </div>
-          <div className="form-group qtt">
-            <label>{labels.qtt}</label>
+          <div className="form-group btns mr-3">
+            <button className="btn btn-primary mt-1" onClick={addOperation}>
+              +
+            </button>
           </div>
         </li>
         {tpAddOpsTemplate.operations.map((operation, index) => (
@@ -74,9 +79,7 @@ const TpAddFormList = () => {
       </ul>
 
     </div>
-        <button className="btn btn-primary mt-3" onClick={addOperation}>
-        Добавить операцию
-      </button> 
+ 
        </>
   );
 };

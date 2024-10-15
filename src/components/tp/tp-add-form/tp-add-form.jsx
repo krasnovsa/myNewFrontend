@@ -52,10 +52,10 @@ function TpAddForm(props) {
   };
 
   return (
-    <div className="container mt-4">
-      <h2 className="mb-4">Добавление техпроцесса</h2>
+    <div className="container mt-1">
+      <h3 className="mb-1">Добавление техпроцесса</h3>
       <TpAddFormList />
-      <div className="form-group mt-4">
+      <div className="form-group mb-1">
         <label htmlFor="lengthInput">Длина заготовки:</label>
         <input
           type="number"
@@ -65,16 +65,22 @@ function TpAddForm(props) {
           onChange={handleLengthChange}
         />
       </div>
-      <button className="btn btn-secondary mr-2" onClick={setLengthTo750}>
+      <button className="btn btn-secondary mr-3" onClick={setLengthTo750}>
         L=750 мм
       </button>
       {curProduct && curProduct.lenght && (
-        <button className="btn btn-secondary mr-2" onClick={setLenghtToCurProduct}>
+        <button
+          className="btn btn-secondary mr-2"
+          onClick={setLenghtToCurProduct}
+        >
           L={curProduct.lenght} мм
         </button>
       )}
+
       <button className="btn btn-primary" onClick={createProcess}>
-        {curProduct ? `Создать техпроцесс для ${curProduct.name}` : "Создать техпроцесс"}
+        {curProduct
+          ? `Создать техпроцесс для ${curProduct.name}`
+          : "Создать техпроцесс"}
       </button>
     </div>
   );

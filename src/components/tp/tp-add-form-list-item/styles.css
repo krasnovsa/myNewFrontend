@@ -1,0 +1,19 @@
+.tp-add-form-list-item {
+  font-size: 0.875rem; /* 14px */
+  padding: 0.1rem;
+}
+
+.tp-add-form-list-item .form-group {
+  margin-bottom: 0.1rem;
+}
+
+.tp-add-form-list-item .form-control,
+.tp-add-form-list-item .form-check-input {
+  font-size: 0.875rem; /* 14px */
+  padding: 0.1rem;
+}
+
+.tp-add-form-list-item .btn {
+  font-size: 0.875rem; /* 14px */
+  padding: 0.25rem 0.5rem;
+}

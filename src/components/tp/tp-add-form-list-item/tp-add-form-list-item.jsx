@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { CurrentAppContext } from "../../../contexts/currentApp";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { addOperationToTechProcess } from "../../../api/apiTp"; // Импортируем метод
 import "./styles.css"; // Импортируем CSS-файл
 import { isAuthenticated } from "../../../auth/index";
@@ -15,7 +15,6 @@ const TpAddFormListItem = ({ index, onDelete }) => {
   const { user, token } = isAuthenticated();
   const tpId = state.curTpItem.tpId; // Получаем tpId из контекста
   const prodId = state.curTpItem.prodId; // Получаем prodId из контекста
-
 
   useEffect(() => {
     // Функция для загрузки данных, связанных с wgId
@@ -53,18 +52,27 @@ const TpAddFormListItem = ({ index, onDelete }) => {
 
   const handleButtonClick = async () => {
     try {
-      const response = await addOperationToTechProcess(token, user._id, tpId, prodId, operation);
+      const response = await addOperationToTechProcess(
+        token,
+        user._id,
+        tpId,
+        prodId,
+        operation
+      );
       console.log("Operation added successfully:", response);
 
       // Обновляем состояние curProdIdTrigger
-      dispatch({ type: "SET_CUR_PROD_ID_TRIGGER", payload: state.curProdIdTrigger + 1 });
+      dispatch({
+        type: "SET_CUR_PROD_ID_TRIGGER",
+        payload: state.curProdIdTrigger + 1,
+      });
     } catch (err) {
       console.error("Error adding operation:", err);
     }
   };
 
   return (
-    <li className="list-group-item d-flex align-items-center">
+    <li className="list-group-item d-flex align-items-center tp-add-form-list-item">
       <div className="form-group isSelect mr-3">
         <input
           type="checkbox"
@@ -94,13 +102,26 @@ const TpAddFormListItem = ({ index, onDelete }) => {
           value={operation.wgId}
           onChange={handleInputChange}
         >
-          <option value="" disabled>Тип операции</option>
+          <option value="" disabled>
+            Тип операции
+          </option>
           {wgData.map((item) => (
             <option key={item.Id} value={item.Id}>
               {item.name} ({item.wgUnName}) {item.wgUnName === 4 ? ", c" : ""}
             </option>
           ))}
         </select>
+      </div>
+      <div className="form-group qtt mr-3">
+        <input
+          type="number"
+          id={`qtt-${index}`}
+          name="qtt"
+          className="form-control"
+          value={operation.qtt}
+          onChange={handleInputChange}
+          placeholder="Количество единиц измерения"
+        />
       </div>
       <div className="form-group qttToOne mr-3">
         <input
@@ -114,21 +135,7 @@ const TpAddFormListItem = ({ index, onDelete }) => {
           placeholder="Количество на одну деталь"
         />
       </div>
-      <div className="form-group qtt mr-3">
-        <input
-          type="number"
-          id={`qtt-${index}`}
-          name="qtt"
-          className="form-control"
-          value={operation.qtt}
-          onChange={handleInputChange}
-          placeholder="Количество единиц измерения"
-        />
-      </div>
-      <button
-        className="btn btn-danger mr-2"
-        onClick={() => onDelete(index)}
-      >
+      <button className="btn btn-danger mr-2" onClick={() => onDelete(index)}>
         <FontAwesomeIcon icon={faTrash} />
       </button>
       <button className="btn btn-info" onClick={handleButtonClick}>

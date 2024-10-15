@@ -1,6 +1,7 @@
 .form-group {
     color: gray;
-    font-size: 0.875rem;
+    font-size: 0.9rem;
+
   }
   
   .form-group.isSelect {
@@ -16,20 +17,26 @@
   }
   
   .form-group.qttToOne {
-    flex: 1 1 25%;
+    flex: 1 1 20%;
   }
   
   .form-group.qtt {
-    flex: 1 1 25%;
+    flex: 1 1 20%;
+  }
+  .form-group.btns {
+    flex: 1 1 10%;
   }
   
   .form-check-input {
     margin-top: 0.3rem;
   }
   .tp-add-form-list-container {
-    height: 500px;
+    height: 300px;
     overflow-y: auto;
     border: 1px solid #ddd; /* Добавляем границу для визуального эффекта */
-    padding: 10px; /* Добавляем отступы */
+    padding: 5px; /* Добавляем отступы */
     border-radius: 5px; /* Добавляем скругленные углы */
   }
+  .tp-add-form-list-container label {
+  font-size: 12px; /* 12px */
+}
