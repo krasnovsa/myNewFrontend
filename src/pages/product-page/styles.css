@@ -1,31 +1,26 @@
 .main-container {
     height: 100vh;
-    /* Ограничиваем высоту до высоты экрана */
-    overflow: hidden;
-    /* Чтобы не было скроллов */
-}
-
-.pane {
-    background-color: white;
-    border: 1px solid white;
+    width: 100vw;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.split {
-    display: flex;
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     height: 100%;
-}
-
-.split-horizontal .gutter {
-    cursor: col-resize;
-    /* Курсор для горизонтального разделения */
-}
-
-.split-vertical .gutter {
-    cursor: row-resize;
-    /* Курсор для вертикального разделения */
-}
+    width: 100%;
+  }
+  
+  .header {
+    overflow-y: auto;
+  }
+  
+  .left-pane, .right-pane {
+    overflow-y: auto;
+  }
+  
+  .prod-id-input {
+    margin-bottom: 1rem;
+  }

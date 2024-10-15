@@ -33,7 +33,6 @@
   .tp-add-form-list-container {
     height: 300px;
     overflow-y: auto;
-    border: 1px solid #ddd; /* Добавляем границу для визуального эффекта */
     padding: 5px; /* Добавляем отступы */
     border-radius: 5px; /* Добавляем скругленные углы */
   }
