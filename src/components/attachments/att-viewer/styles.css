@@ -1,0 +1,15 @@
+.att-viewer-container {
+  display: flex;
+  height: 100vh;
+}
+
+.att-explorer {
+  width: 30%;
+  border-right: 1px solid #ccc;
+  padding: 10px;
+}
+
+.image-viewer {
+  width: 70%;
+  padding: 10px;
+}

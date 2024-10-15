@@ -4,6 +4,8 @@ import "./styles.css"; // Подключим кастомные стили
 import Layout from "../../components/layout.jsx";
 import TpAddForm from "../../components/tp/tp-add-form/tp-add-form.jsx";
 import TpListForm from "../../components/tp/tp-list-form/tp-list-form.jsx";
+import AttViewer from "../../components/attachments/att-viewer/att-viewer.jsx";
+
 import { getProductById } from "../../api/apiProduct";
 import { isAuthenticated } from "../../auth/index.js";
 import { CurrentAppContext } from "../../contexts/currentApp.jsx";
@@ -49,7 +51,7 @@ function ProductPage() {
             </div>    
           </div>
           <div className="grid-item header">
-            <h1>Верхняя правая панель</h1>
+            <AttViewer></AttViewer>
           </div>
           <div className="grid-item left-pane">
             <TpAddForm prodId={state.curProduct ? state.curProduct.Id : 0} />

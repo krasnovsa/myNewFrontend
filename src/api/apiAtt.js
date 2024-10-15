@@ -1,63 +1,58 @@
 import axios from "axios";
 import { getServer } from "./getServer";
-const {SERVER} = getServer()
+const { SERVER } = getServer();
 
-export const getAttList = (token, userId, table, keyValue, parId, Id) => {
-  return fetch(
-    `${SERVER}/att/list/t/${table}/kv/${keyValue}/parId/${parId || 0}/Id/${
-      Id || 0
-    }/userId/${userId}`,
-
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  )
-    .then((response) => {
-      return response.json();
-    })
-    .catch((err) => {
-      console.log(err);
-      return [];
-    });
+export const getAttList = async (token, userId, table, keyValue, parId, Id) => {
+  try {
+    const response = await fetch(
+      `${SERVER}/att/list/t/${table}/kv/${keyValue}/parId/${parId || 0}/Id/${
+        Id || 0
+      }/userId/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
 };
 
-export function addFolder(
+export const addFolder = async (
   token,
   userId,
   folderName,
   tableName,
   keyValue,
   relPath
-) {
-  return fetch(
-    `${SERVER}/att/addFolder/${userId}?tableName=${tableName}&keyValue=${keyValue}&relPath=${relPath}&folderName=${folderName}`,
+) => {
+  try {
+    const response = await fetch(
+      `${SERVER}/att/addFolder/${userId}?tableName=${tableName}&keyValue=${keyValue}&relPath=${relPath}&folderName=${folderName}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log("response", response);
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+    throw new Error(err);
+  }
+};
 
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  )
-    .then((response) => {
-      console.log("responce", response);
-      return response.json();
-    })
-
-    .catch((err) => {
-      console.log(err);
-      throw new Error(err);
-    });
-}
-
-export function uploadFile(
+export const uploadFile = (
   token,
   userId,
   file,
@@ -67,13 +62,11 @@ export function uploadFile(
   relPath,
   changeProgress,
   uploadId
-) {
+) => {
   return async () => {
-    //console.log('start transfer')
     try {
       const formData = new FormData();
       formData.append("file", file);
-
       formData.append("tableName", tableName);
       formData.append("keyValue", keyValue);
       formData.append("aType", aType);
@@ -104,11 +97,9 @@ export function uploadFile(
       alert(e?.response?.data?.message);
     }
   };
-}
+};
 
-
-
-export function removeAtt(token, userId, Id) {
+export const removeAtt = (token, userId, Id) => {
   return async () => {
     try {
       console.log("start removing");
@@ -125,28 +116,29 @@ export function removeAtt(token, userId, Id) {
       console.log(e);
     }
   };
-}
+};
 
-export function downloadFile(Id, name) {
-  //
-  return fetch(`${SERVER}/att/file/${Id}?withDownload=true`, {
-    method: "GET",
-  })
-    .then((response) => response.blob())
-    .then((blob) => {
-      // Create blob link to download
-      const url = window.URL.createObjectURL(new Blob([blob]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", name);
-
-      // Append to html link element page
-      document.body.appendChild(link);
-
-      // Start download
-      link.click();
-
-      // Clean up and remove the link
-      link.parentNode.removeChild(link);
+export const downloadFile = async (Id, name) => {
+  try {
+    const response = await fetch(`${SERVER}/att/file/${Id}?withDownload=true`, {
+      method: "GET",
     });
-}
+    const blob = await response.blob();
+    // Create blob link to download
+    const url = window.URL.createObjectURL(new Blob([blob]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", name);
+
+    // Append to html link element page
+    document.body.appendChild(link);
+
+    // Start download
+    link.click();
+
+    // Clean up and remove the link
+    link.parentNode.removeChild(link);
+  } catch (err) {
+    console.log(err);
+  }
+};
