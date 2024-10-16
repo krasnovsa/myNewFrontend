@@ -6,20 +6,27 @@ import organizeFiles from "./prepare-att-data";
 import { isAuthenticated } from "../../../auth";
 import "./styles.css"; // Импортируем стили
 
-const AttViewer = ({ productId }) => {
+const AttViewer = ({ keyValue, tableName }) => {
   const { user, token } = isAuthenticated();
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedAtt, setSelectedAtt] = useState(null);
   const [files, setFiles] = useState([]);
 
-  const handleImageSelect = (image) => {
-    setSelectedImage(image);
+  const handleAttSelect = (att) => {
+    setSelectedAtt(att);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getAttList(token, user._id, "Products", productId, -1, 0);
+        const data = await getAttList(
+          token,
+          user._id,
+          tableName,
+          keyValue,
+          -1,
+          0
+        );
         const organizedData = organizeFiles(data);
         setFiles(organizedData);
       } catch (error) {
@@ -28,15 +35,15 @@ const AttViewer = ({ productId }) => {
     };
 
     fetchData();
-  }, [productId, token, user._id]);
+  }, [keyValue, tableName, token, user._id]);
 
   return (
     <div className="att-viewer-container">
       <div className="att-explorer">
-        <AttExplorer files={files} onImageSelect={handleImageSelect} />
+        <AttExplorer files={files} onAttSelect={handleAttSelect} />
       </div>
       <div className="image-viewer">
-        <ImageViewer image={selectedImage} />
+        <ImageViewer att={selectedAtt} />
       </div>
     </div>
   );

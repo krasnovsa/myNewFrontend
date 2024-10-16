@@ -54,7 +54,7 @@ function PjListItem(props) {
 
   return (
     <><li
-      className={`pj-item list-group-item ${
+      className={`pj-item  ${
         isPjClosed || pjQtt <= pjQttProdused
           ? "list-group-item-secondary"
           : "list-group-item-light"

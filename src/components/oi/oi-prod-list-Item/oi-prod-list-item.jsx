@@ -1,11 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { CurrentAppContext } from "../../../contexts/currentApp";
-
 import { Highlighter } from "../../common/Highlighter/Highlighter";
 import PjList from "../../pj/PjList";
 import OiProdInfo from "../oi-prod-info";
-
+import "./styles.css"; // Импортируем стили
 
 function OiProdListItem(props) {
   const {
@@ -25,12 +24,6 @@ function OiProdListItem(props) {
   } = props.oi.info;
 
   const { pjArr } = props.oi;
-
-  // const style = {
-  //   backgroundColor: `#${color.toString(16)}`,
-  //   borderRadius: "5px",
-  //   fontSize: "10px" // Уменьшение размера шрифта
-  // };
 
   const [isExtended, setIsExtended] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
@@ -57,49 +50,21 @@ function OiProdListItem(props) {
 
   const onInfoClickHandler = () => {
     setShowInfo(!showInfo);
-    // navigate(`${process.env.PUBLIC_URL}/att/Продукция/${prodId}`);
   };
 
   return (
     <>
       <div
-        className={`oi-item list-group-item p-0 ${
+        className={`oi-item  p-0 ${
           curOiProd === oiId ? "active" : ""
-        } `}
-        style={{
-          display: "grid",
-          gridTemplateColumns: "5px 1fr 30px",
-          gap: "10px",
-          alignItems: "center",
-          fontSize: "10px",
-        }}
+        }`}
       >
         <div
-          style={{
-            backgroundColor: `#${color.toString(16)}`,
-            width: "5px",
-            height: "100%",
-          }}
+          className="color-bar"
+          style={{ backgroundColor: `#${color.toString(16)}` }}
         ></div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateRows: "1fr 1fr",
-            gap: "10px",
-            alignItems: "center",
-            fontSize: "10px",
-          }}
-        >
-          <div
-            className="p-1"
-            onClick={onBodyClickHandler}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 50px 50px 70px 70px",
-              alignItems: "center",
-              fontSize: "10px",
-            }}
-          >
+        <div className="oi-item-content" onClick={onBodyClickHandler}>
+          <div className="oi-item-header p-1" >
             <div className="m-auto">
               <span className="p-1 mr-1">{oiSName}</span>
             </div>
@@ -108,15 +73,7 @@ function OiProdListItem(props) {
             <div className="m-auto">вып ч:{oiHrsProdused}</div>
             <div className="m-auto">вып %:{oiPercHrs}%</div>
           </div>
-          <div
-            className="p-1"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              alignItems: "center",
-              fontSize: "10px",
-            }}
-          >
+          <div className="oi-item-details p-1">
             <div className="m-auto">{shipCalendar}</div>
             <div className="m-auto">{matSpec}</div>
             <div className="m-auto">{matMapNoHTML}</div>
@@ -127,7 +84,6 @@ function OiProdListItem(props) {
             <button
               className="btn btn-sm btn-primary m-auto d-flex align-items-center"
               onClick={onInfoClickHandler}
-              style={{ fontSize: "10px" }}
             >
               i
             </button>
@@ -135,7 +91,7 @@ function OiProdListItem(props) {
         </div>
       </div>
 
-      {showInfo && <OiProdInfo oi={props.oi.info} />}
+      {/* {showInfo && <OiProdInfo oi={props.oi.info} />} */}
 
       {isExtended === true && (
         <div>
@@ -145,6 +101,7 @@ function OiProdListItem(props) {
     </>
   );
 }
+
 OiProdListItem.propTypes = {
   oi: PropTypes.shape({
     info: PropTypes.shape({

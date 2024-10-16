@@ -1,0 +1,41 @@
+.oi-item {
+  display: grid;
+  grid-template-columns: 5px 1fr 30px;
+  gap: 5px;
+  align-items: center;
+  font-size: 10px;
+  background-color: #f1f3f5;
+}
+
+.color-bar {
+  width: 5px;
+  height: 100%;
+}
+
+.oi-item-content {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 5px;
+  align-items: center;
+  font-size: 10px;
+}
+
+.oi-item-header {
+  display: grid;
+  grid-template-columns: 1fr 50px 50px 70px 70px;
+  align-items: top;
+  font-size: 12px;
+  justify-content: left; /* Прижимаем элементы к правому краю */
+}
+
+.oi-item-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  font-size: 12px;
+}
+
+.oi-item.active {
+  background-color: #0D6EFD;
+  color: white;
+}

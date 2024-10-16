@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import moment from "moment";
 import { CurrentAppContext } from "../../contexts/currentApp"; // Импортируем контекст
-import Viewer from "../att/Viewer"; // Импортируем компонент Viewer
+import AttViewer from "../attachments/att-viewer/att-viewer";
 import WlList from "../wl/wl-list"; // Импортируем компонент WlList
 
 function OiProdInfo(props) {
@@ -95,7 +95,7 @@ function OiProdInfo(props) {
             </div>
           </>
         )}
-        {selectedTab === "drawing" && <Viewer table='production' keyValue={prodId} />}
+        {selectedTab === "drawing" && <AttViewer tableName='Products' keyValue={prodId} />}
         {selectedTab === "wlByPj" &&
           (pjId === 0 ? (
             <div className="alert alert-info" role="alert">

@@ -51,7 +51,7 @@ function ProductPage() {
             </div>    
           </div>
           <div className="grid-item header">
-            <AttViewer productId = {prodId}></AttViewer >
+            <AttViewer keyValue = {prodId} tableName = 'Products'></AttViewer >
           </div>
           <div className="grid-item left-pane">
             <TpAddForm prodId={state.curProduct ? state.curProduct.Id : 0} />

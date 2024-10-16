@@ -7,9 +7,11 @@
   width: 30%;
   border-right: 1px solid #ccc;
   padding: 10px;
+  overflow-y: auto; /* Добавляем прокрутку по высоте */
 }
 
 .image-viewer {
   width: 70%;
   padding: 10px;
+  overflow-y: auto; /* Добавляем прокрутку по высоте */
 }
