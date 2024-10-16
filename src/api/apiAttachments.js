@@ -5,7 +5,7 @@ const { SERVER } = getServer();
 export const getAttList = async (token, userId, table, keyValue, parId, Id) => {
   try {
     const response = await fetch(
-      `${SERVER}/att/list/t/${table}/kv/${keyValue}/parId/${parId || 0}/Id/${
+      `${SERVER}/api/att/getList/t/${table}/kv/${keyValue}/parId/${parId || -1}/Id/${
         Id || 0
       }/userId/${userId}`,
       {

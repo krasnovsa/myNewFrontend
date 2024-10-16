@@ -7,7 +7,7 @@ const AttExplorer = ({ files, onImageSelect }) => {
   const handleFileClick = (file) => {
     setSelectedId(file.Id);
     if (!file.children) {
-      onImageSelect(file.path);
+      onImageSelect(file.hashFileName);
     }
   };
 
@@ -18,7 +18,7 @@ const AttExplorer = ({ files, onImageSelect }) => {
           onClick={() => handleFileClick(file)}
           className={selectedId === file.Id ? "selected" : ""}
         >
-          {file.name}
+          {file.fName}
         </li>
         {file.children && <ul>{renderFiles(file.children)}</ul>}
       </React.Fragment>
