@@ -29,6 +29,9 @@ const AttViewer = ({ keyValue, tableName }) => {
         );
         const organizedData = organizeFiles(data);
         setFiles(organizedData);
+        if (organizedData.length > 0) {
+          setSelectedAtt(organizedData[0]); // Устанавливаем первый элемент активным
+        }
       } catch (error) {
         console.error("Error fetching attachment list:", error);
       }

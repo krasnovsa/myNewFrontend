@@ -34,22 +34,7 @@ const TpListForm = ({ prodId }) => {
 
   return (
     <div className="tp-list-form-container">
-      <h3>Список техпроцессов для продукта ID: {prodId}</h3>
       <div className="tp-list-form-content">
-        <div className="row align-items-center">
-          <div className="col form-group mb-0">
-            <p>ID</p>
-          </div>
-          <div className="col form-group mb-0">
-            <p>Автор</p>
-          </div>
-          <div className="col form-group mb-0">
-            <p>Дата создания</p>
-          </div>
-          <div className="col form-group mb-0">
-            <p>По умолчанию</p>
-          </div>
-        </div>
         {techProcesses.map((tp) => (
           <div key={tp.tpId} className="border-bottom">
             <TpListFormList techProcess={tp} />

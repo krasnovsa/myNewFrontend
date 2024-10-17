@@ -3,6 +3,7 @@ import moment from "moment";
 import { CurrentAppContext } from "../../contexts/currentApp"; // Импортируем контекст
 import AttViewer from "../attachments/att-viewer/att-viewer";
 import WlList from "../wl/wl-list"; // Импортируем компонент WlList
+import Product from "../product/product"; // Импортируем компонент Product
 
 function OiProdInfo(props) {
   const [state] = useContext(CurrentAppContext); // Получаем состояние из контекста
@@ -72,9 +73,19 @@ function OiProdInfo(props) {
           >
             ЖР по ПЗ
           </button>
+          <button
+            type="button"
+            className={`btn btn-primary ${
+              selectedTab === "product" ? "active" : ""
+            }`}
+            onClick={() => handleTabChange("product")}
+          >
+            Продукция
+          </button>
         </div>
         {selectedTab === "info" && (
           <>
+            <div></div>
             <small>материал</small>
             <div>{matSpec}</div>
             <small>снабжение</small>
@@ -104,6 +115,7 @@ function OiProdInfo(props) {
           ) : (
             <WlList options={{ pjId, emplId: 0 }} />
           ))}
+        {selectedTab === "product" && <Product prodId={prodId} />}
       </div>
       <div className="card-img-bottom">
         {/* {prodId&&<SliderAtt table='Продукция' keyValue={prodId}/>} */}
