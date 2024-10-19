@@ -41,19 +41,16 @@ function calculateMaterialProperties(dim1, dim2 = 0, dim3 = 1, profile, density,
     }
   
     // Вычисление массы 1 метра
-    const mass1m = (area * density) / 1000;
+    const mass1m = ((area * density) / 1000).toFixed(3);
   
     // Добавление качества к названию материала, если оно указано
     if (qlt) {
       matName += ` ${qlt}`;
     }
 
-    console.log("Результат:");
-    console.log("mass1m:", mass1m);
-    console.log("matName:", matName);
-  
+
     return {
-      mass1m: parseFloat(mass1m.toFixed(3)),
+      mass1m: mass1m,
       matName: matName.trim(),
     };
   }
