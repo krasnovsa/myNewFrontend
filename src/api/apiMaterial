@@ -110,3 +110,22 @@ export const deleteMaterial = async (id, userId, token) => {
     throw err;
   }
 };
+
+// Метод для поиска материалов по параметрам
+export const findMaterialByParams = async (userId, token, params) => {
+  try {
+    const response = await fetch(`${API}/materials/search/${userId}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(params),
+    });
+    return await response.json();
+  } catch (err) {
+    console.error("Error searching materials by params:", err);
+    throw err;
+  }
+};
