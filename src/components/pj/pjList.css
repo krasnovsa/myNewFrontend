@@ -9,3 +9,8 @@
     padding: 3px;
     margin-top: 3px;
 }
+.pj-item.active {
+  font-weight: bold;
+  background-color: #c1d7f9;
+  color: #0D6EFD; /* Опционально, чтобы текст был виден на синем фоне */
+}

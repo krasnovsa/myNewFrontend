@@ -52,24 +52,36 @@ function OiProdListItem(props) {
     setShowInfo(!showInfo);
   };
 
+  // Определение класса для oiQttShipped
+  const getOiQttShippedClass = () => {
+    if (curOiProd === oiId) {
+      return ""; // Не применять условное форматирование для активного элемента
+    }
+    if (oiQttShipped < oiQtt) {
+      return "text-danger"; // Красный цвет
+    } else if (oiQttShipped === oiQtt) {
+      return "text-success"; // Зеленый цвет
+    } else {
+      return "text-primary"; // Синий цвет
+    }
+  };
+
   return (
     <>
       <div
-        className={`oi-item  p-0 ${
-          curOiProd === oiId ? "active" : ""
-        }`}
+        className={`oi-item p-0 ${curOiProd === oiId ? "active" : ""}`}
       >
         <div
           className="color-bar"
           style={{ backgroundColor: `#${color.toString(16)}` }}
         ></div>
         <div className="oi-item-content" onClick={onBodyClickHandler}>
-          <div className="oi-item-header p-1" >
+          <div className="oi-item-header p-1">
             <div className="m-auto">
-              <span className="p-1 mr-1">{oiSName}</span>
+              {oiSName}
             </div>
             <div className="m-auto">зак:{oiQtt}</div>
-            <div className="m-auto">отгр:{oiQttShipped}</div>
+            <div className={`m-auto ${getOiQttShippedClass()}`}>отгр:{oiQttShipped}</div>
             <div className="m-auto">вып ч:{oiHrsProdused}</div>
             <div className="m-auto">вып %:{oiPercHrs}%</div>
           </div>
@@ -90,8 +102,6 @@ function OiProdListItem(props) {
           )}
         </div>
       </div>
-
-      {/* {showInfo && <OiProdInfo oi={props.oi.info} />} */}
 
       {isExtended === true && (
         <div>

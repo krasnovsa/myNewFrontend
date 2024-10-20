@@ -6,17 +6,7 @@ import moment from "moment";
 import PjInfo from './PjInfo'
 import "./pjList.css";
 function PjListItem(props) {
-  //   "pjQttProdused": 36,
-  //   "pjHrsProdused": 1.35,
-  //   "pjStartDatePr": "2021-04-01T00:00:00.000Z",
-  //   "pjLastDatePr": "2021-04-03T00:00:00.000Z",
-  //   "pjLastBToolId": 27,
-  //   "opName": "10 VC",
-  //   "pjBtName": "VC85",
-  //   "pjLastBtName": "VC102",
-  //   "plStartDate": null,
-  //   "plFinDate": null,
-  //   "pjTOneSec": 250,
+
   const {
     pjQttProdused,
     opName,

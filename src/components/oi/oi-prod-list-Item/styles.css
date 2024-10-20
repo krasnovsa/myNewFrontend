@@ -1,10 +1,11 @@
 .oi-item {
   display: grid;
   grid-template-columns: 5px 1fr 30px;
-  gap: 5px;
-  align-items: center;
+  gap: 3px;
+  align-items: left;
   font-size: 10px;
-  background-color: #f1f3f5;
+  background-color: #e1edf9;
+  border-bottom: 1px solid white; /* Добавление тонкой белой полосы внизу */
 }
 
 .color-bar {
@@ -16,26 +17,38 @@
   display: grid;
   grid-template-rows: auto auto;
   gap: 5px;
-  align-items: center;
+  align-items: left;
   font-size: 10px;
 }
 
 .oi-item-header {
   display: grid;
-  grid-template-columns: 1fr 50px 50px 70px 70px;
+  grid-template-columns: 1fr 70px 70px 70px 70px;
   align-items: top;
-  font-size: 12px;
-  justify-content: left; /* Прижимаем элементы к правому краю */
+  font-size: 10px;
+  justify-content: start; /* Прижимаем элементы к левому краю */
 }
 
 .oi-item-details {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  align-items: center;
-  font-size: 12px;
+  align-items: top;
+  font-size: 10px;
 }
 
 .oi-item.active {
   background-color: #0D6EFD;
   color: white;
+}
+
+.text-danger {
+  color: rgb(161, 1, 1);
+}
+
+.text-success {
+  color: rgb(0, 111, 0);
+}
+
+.text-primary {
+  color: rgb(2, 93, 173);
 }
