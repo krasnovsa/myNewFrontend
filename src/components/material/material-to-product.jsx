@@ -53,9 +53,10 @@ const MaterialToProduct = ({ prodId }) => {
   useEffect(() => {
     const updateProductMaterial = async () => {
       if (newMaterialId > 0 && newMaterialId !== formData.matId) {
-        console.log("newMaterialId:", newMaterialId);
+        
         try {
-          const updatedProduct = await updateProduct(user._id, token, prodId, {
+          console.log("start update product:", newMaterialId);
+          const updatedProduct = await updateProduct(user._id, token,  {
             ...formData,
             matId: newMaterialId,
           });
