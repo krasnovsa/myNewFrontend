@@ -9,7 +9,7 @@ import { isAuthenticated } from "../../../auth/index";
 import "./styles.css"; // Подключаем стили
 import calculateMaterialProperties from "../calc-mat-mass"; // Импортируем функцию расчета массы
 
-const MaterialSelectByParams = ({ matId, handleClose }) => {
+const MaterialSelectByParams = ({ matId, handleSelectPopup }) => {
   const [materialData, setMaterialData] = useState({});
   const [materialMarks, setMaterialMarks] = useState([]);
   const [profileTypes, setProfileTypes] = useState([]);
@@ -246,6 +246,19 @@ const MaterialSelectByParams = ({ matId, handleClose }) => {
     return null;
   }
 
+const handleSelectMaterial = () => {
+  console.log("Выбран материал:", foundMaterial);
+  if (foundMaterial && foundMaterial.Id) {
+    handleSelectPopup(foundMaterial.Id, false);
+  } else {
+    console.error("Ошибка: foundMaterial не содержит Id");
+  }
+};
+
+  const handleClose = () => {
+    handleSelectPopup(0, false);
+  }
+
   return (
     <div className="popup">
       <div className="popup-inner">
@@ -373,25 +386,38 @@ const MaterialSelectByParams = ({ matId, handleClose }) => {
               onChange={handleMass1mChange}
             />
           </div>
-
-        
         </form>
 
-        {foundMaterial && foundMaterial.matName && (
-          <>
-            <button
-              className="btn btn-primary mt-3"
-
-            >
-              Создать материал
-            </button>
-            <div className="mt-3">
-              <strong>Расчетные значения:</strong>
-              <p>Масса 1м: {foundMaterial.mass1m} кг</p>
-              <p>Название: {foundMaterial.matName}</p>
-            </div>
-          </>
-        )}
+        {foundMaterial &&
+          foundMaterial.matName && ( // matName взяли из calculateMaterialProperties
+            <>
+              <p style={{ color: "red" }}>
+                Материал <strong>{foundMaterial.matName} </strong> не найден
+              </p>
+              <div className="mt-3">
+                <p>Масса 1м: {foundMaterial.mass1m} кг</p>
+              </div>
+              <button className="btn btn-primary mt-3"
+              onClick={handleCreateMaterial}>Создать материал</button>
+            </>
+          )}
+        {foundMaterial &&
+          foundMaterial.name && ( // matName взяли из calculateMaterialProperties
+            <>
+              <p style={{ color: "green" }}>
+                Материал <strong>{foundMaterial.name} </strong> найден
+              </p>
+              <div className="mt-3">
+                <p>Масса 1м: {foundMaterial.mass1m} кг</p>
+              </div>
+              <button
+                className="btn btn-primary btn-success mt-3"
+                onClick={handleSelectMaterial}
+              >
+                Выбрать
+              </button>
+            </>
+          )}
       </div>
     </div>
   );

@@ -1,35 +1,24 @@
 import React, { useState, useEffect } from "react";
-import {
-  getMaterialProfileTypes,
-  getMaterialById,
-} from "../../api/apiMaterial";
-import { getProductById } from "../../api/apiProduct";
+import { getMaterialById } from "../../api/apiMaterial";
+import { getProductById, updateProduct } from "../../api/apiProduct";
 import { isAuthenticated } from "../../auth/index";
 import PriceHistory from "./material-price-history";
 import MaterialSelectByParams from "./material-select-by-params/material-select-by-params";
 
-
 const MaterialToProduct = ({ prodId }) => {
   const { user, token } = isAuthenticated();
-  const [formData, setFormData] = useState({
-    matId: 0,
-    lenght: 0,
-    resQttToOne: 1,
-  });
+  const [formData, setFormData] = useState({});
   const [materialName, setMaterialName] = useState("");
   const [priceData, setPriceData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
+  const [newMaterialId, setNewMaterialId] = useState(null); // Новое состояние
 
   useEffect(() => {
     const fetchProductData = async () => {
       try {
         const productData = await getProductById(user._id, token, prodId);
         console.log("Полученные данные о продукте:", productData);
-        setFormData({
-          matId: productData.matId || 0,
-          lenght: productData.lenght || 0,
-          resQttToOne: productData.resQttToOne || 1,
-        });
+        setFormData(productData); // Записываем весь объект productData
         setPriceData(productData.priceHistory || []);
       } catch (err) {
         console.error("Ошибка при получении данных о продукте:", err);
@@ -61,6 +50,29 @@ const MaterialToProduct = ({ prodId }) => {
     fetchMaterialName();
   }, [formData.matId, user._id, token]);
 
+  useEffect(() => {
+    const updateProductMaterial = async () => {
+      if (newMaterialId > 0 && newMaterialId !== formData.matId) {
+        console.log("newMaterialId:", newMaterialId);
+        try {
+          const updatedProduct = await updateProduct(user._id, token, prodId, {
+            ...formData,
+            matId: newMaterialId,
+          });
+          console.log("Продукт обновлен:", updatedProduct);
+          
+          setFormData(updatedProduct); // Обновляем состояние formData с данными из обновленного продукта
+        } catch (err) {
+          console.error("Ошибка при обновлении продукта:", err);
+        }
+      } else {
+        console.log("остался материал с Id:", newMaterialId);
+      }
+    };
+
+    updateProductMaterial();
+  }, [newMaterialId, formData.matId, prodId, user._id, token]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -69,12 +81,13 @@ const MaterialToProduct = ({ prodId }) => {
     });
   };
 
-  const handleShowPopup = () => {
-    setShowPopup(true);
+  const handleSelectPopup = (matId, showPopupState) => {
+    setNewMaterialId(matId);
+    setShowPopup(showPopupState);
   };
 
-  const handleClosePopup = () => {
-    setShowPopup(false);
+  const handleShowPopup = () => {
+    handleSelectPopup(0, true);
   };
 
   return (
@@ -86,7 +99,7 @@ const MaterialToProduct = ({ prodId }) => {
               type="hidden"
               id="matId"
               name="matId"
-              value={formData.matId}
+              value={formData.matId || 0}
               onChange={handleInputChange}
             />
             <div className="mb-3">
@@ -111,7 +124,7 @@ const MaterialToProduct = ({ prodId }) => {
                 id="lenght"
                 name="lenght"
                 className="form-control"
-                value={formData.lenght}
+                value={formData.lenght || 0}
                 onChange={handleInputChange}
               />
             </div>
@@ -124,7 +137,7 @@ const MaterialToProduct = ({ prodId }) => {
                 id="resQttToOne"
                 name="resQttToOne"
                 className="form-control"
-                value={formData.resQttToOne}
+                value={formData.resQttToOne || 1}
                 onChange={handleInputChange}
               />
             </div>
@@ -144,7 +157,8 @@ const MaterialToProduct = ({ prodId }) => {
       {showPopup && (
         <MaterialSelectByParams
           matId={formData.matId}
-          handleClose={handleClosePopup}
+          handleSelectPopup={handleSelectPopup}
+          setShowPopup={setShowPopup} // Передаем функцию
         />
       )}
     </div>
