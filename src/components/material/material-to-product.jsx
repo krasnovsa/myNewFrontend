@@ -56,7 +56,7 @@ const MaterialToProduct = ({ prodId }) => {
         
         try {
           console.log("start update product:", newMaterialId);
-          const updatedProduct = await updateProduct(user._id, token,  {
+          const updatedProduct = await updateProduct(user._id, token, prodId, {
             ...formData,
             matId: newMaterialId,
           });

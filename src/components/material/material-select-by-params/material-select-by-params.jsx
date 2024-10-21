@@ -25,44 +25,28 @@ const MaterialSelectByParams = ({ matId, handleSelectPopup }) => {
   });
   const [foundMaterial, setFoundMaterial] = useState(null);
   const { user, token } = isAuthenticated();
-  const [isMounted, setIsMounted] = useState(false); // Флаг для отслеживания монтирования
 
   useEffect(() => {
-    const fetchMaterialData = async () => {
+    const fetchData = async () => {
       try {
-        const data = await getMaterialById(matId, user._id, token);
-        console.log("Полученные данные о материале:", data);
-        setMaterialData(data);
-      } catch (err) {
-        console.error("Ошибка при получении данных о материале:", err);
-      }
-    };
-
-    const fetchMaterialMarks = async () => {
-      try {
-        const marks = await getMaterialMarksList(user._id, token);
+        const [materialData, marks, profiles] = await Promise.all([
+          getMaterialById(matId, user._id, token),
+          getMaterialMarksList(user._id, token),
+          getMaterialProfileTypes(user._id, token),
+        ]);
+        console.log("Полученные данные о материале:", materialData);
+        setMaterialData(materialData);
         setMaterialMarks(marks);
-      } catch (err) {
-        console.error("Ошибка при получении списка марок материала:", err);
-      }
-    };
-
-    const fetchProfileTypes = async () => {
-      try {
-        const profiles = await getMaterialProfileTypes(user._id, token);
         setProfileTypes(profiles);
       } catch (err) {
-        console.error("Ошибка при получении списка профилей:", err);
+        console.error("Ошибка при получении данных:", err);
       }
     };
 
-    if (matId && !isMounted) {
-      fetchMaterialData();
-      fetchMaterialMarks();
-      fetchProfileTypes();
-      setIsMounted(true); // Устанавливаем флаг после первого монтирования
+    if (matId) {
+      fetchData();
     }
-  }, [matId, user._id, token, isMounted]);
+  }, [matId, user._id, token]);
 
   useEffect(() => {
     if (materialData.profile) {
@@ -87,16 +71,15 @@ const MaterialSelectByParams = ({ matId, handleSelectPopup }) => {
   const searchMaterial = useCallback(
     async (params) => {
       try {
-        console.log("Поиск материала по параметрам  ", params);
+        console.log("Поиск материала по параметрам", params);
         const result = await findMaterialByParams(user._id, token, params);
-                             
+
         if (result.length > 0) {
           console.log("Найден материал:", result[0]);
           setFoundMaterial(result[0]);
           setMaterialData((prevData) => ({
             ...prevData,
             mass1m: result[0].mass1m,
-
           }));
         } else {
           console.log("Такого материала нет");
@@ -126,13 +109,11 @@ const MaterialSelectByParams = ({ matId, handleSelectPopup }) => {
               "",
             qlt: params.qlt,
             Id: 0,
-
           });
 
           setMaterialData((prevData) => ({
             ...prevData,
             mass1m: calculated.mass1m,
-
           }));
         }
       } catch (err) {
@@ -141,7 +122,6 @@ const MaterialSelectByParams = ({ matId, handleSelectPopup }) => {
         setMaterialData((prevData) => ({
           ...prevData,
           mass1m: 0,
-
         }));
       }
     },
@@ -165,13 +145,15 @@ const MaterialSelectByParams = ({ matId, handleSelectPopup }) => {
     };
 
     initialSearch();
-  }, [materialData.markId, 
-    materialData.dim1, 
-    materialData.profile, 
-    searchMaterial, 
-    materialData.dim2, 
-    materialData.dim3, 
-    materialData.qlt]);
+  }, [
+    materialData.markId,
+    materialData.dim1,
+    materialData.profile,
+    searchMaterial,
+    materialData.dim2,
+    materialData.dim3,
+    materialData.qlt,
+  ]);
 
   const handleInputChange = async (e) => {
     const { name, value } = e.target;
@@ -230,12 +212,8 @@ const MaterialSelectByParams = ({ matId, handleSelectPopup }) => {
     setFoundMaterial((prevData) => ({
       ...prevData,
       mass1m: value,
-  
-
     }));
   };
-
-
 
   const handleCreateMaterial = () => {
     // Логика создания нового материала
@@ -246,18 +224,18 @@ const MaterialSelectByParams = ({ matId, handleSelectPopup }) => {
     return null;
   }
 
-const handleSelectMaterial = () => {
-  console.log("Выбран материал:", foundMaterial);
-  if (foundMaterial && foundMaterial.Id) {
-    handleSelectPopup(foundMaterial.Id, false);
-  } else {
-    console.error("Ошибка: foundMaterial не содержит Id");
-  }
-};
+  const handleSelectMaterial = () => {
+    console.log("Выбран материал:", foundMaterial);
+    if (foundMaterial && foundMaterial.Id) {
+      handleSelectPopup(foundMaterial.Id, false);
+    } else {
+      console.error("Ошибка: foundMaterial не содержит Id");
+    }
+  };
 
   const handleClose = () => {
     handleSelectPopup(0, false);
-  }
+  };
 
   return (
     <div className="popup">
@@ -397,8 +375,12 @@ const handleSelectMaterial = () => {
               <div className="mt-3">
                 <p>Масса 1м: {foundMaterial.mass1m} кг</p>
               </div>
-              <button className="btn btn-primary mt-3"
-              onClick={handleCreateMaterial}>Создать материал</button>
+              <button
+                className="btn btn-primary mt-3"
+                onClick={handleCreateMaterial}
+              >
+                Создать материал
+              </button>
             </>
           )}
         {foundMaterial &&
