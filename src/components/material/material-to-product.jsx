@@ -83,8 +83,9 @@ const MaterialToProduct = ({ prodId }) => {
   };
 
   const handleSelectPopup = (matId, showPopupState) => {
-    setNewMaterialId(matId);
-    setShowPopup(showPopupState);
+   setShowPopup(showPopupState); 
+   setNewMaterialId(matId);
+    
   };
 
   const handleShowPopup = () => {

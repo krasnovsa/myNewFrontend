@@ -66,7 +66,7 @@ const MaterialSelectByParams = ({ matId, handleSelectPopup }) => {
         });
       }
     }
-  }, [materialData.profile, profileTypes]);
+  }, [materialData.profile]);
 
   const searchMaterial = useCallback(
     async (params) => {
@@ -77,10 +77,6 @@ const MaterialSelectByParams = ({ matId, handleSelectPopup }) => {
         if (result.length > 0) {
           console.log("Найден материал:", result[0]);
           setFoundMaterial(result[0]);
-          setMaterialData((prevData) => ({
-            ...prevData,
-            mass1m: result[0].mass1m,
-          }));
         } else {
           console.log("Такого материала нет");
           // Рассчитываем массу 1 метра и имя нового материала
@@ -110,19 +106,10 @@ const MaterialSelectByParams = ({ matId, handleSelectPopup }) => {
             qlt: params.qlt,
             Id: 0,
           });
-
-          setMaterialData((prevData) => ({
-            ...prevData,
-            mass1m: calculated.mass1m,
-          }));
         }
       } catch (err) {
         console.error("Ошибка при поиске материала:", err);
         setFoundMaterial("Ошибка при поиске материала");
-        setMaterialData((prevData) => ({
-          ...prevData,
-          mass1m: 0,
-        }));
       }
     },
     [user._id, token, materialMarks]
@@ -145,15 +132,7 @@ const MaterialSelectByParams = ({ matId, handleSelectPopup }) => {
     };
 
     initialSearch();
-  }, [
-    materialData.markId,
-    materialData.dim1,
-    materialData.profile,
-    searchMaterial,
-    materialData.dim2,
-    materialData.dim3,
-    materialData.qlt,
-  ]);
+  }, [materialData]);
 
   const handleInputChange = async (e) => {
     const { name, value } = e.target;
@@ -200,19 +179,7 @@ const MaterialSelectByParams = ({ matId, handleSelectPopup }) => {
       profile: name === "profile" ? value : materialData.profile,
     };
 
-    console.log("params", params);
-
     await searchMaterial(params);
-
-    // Обновляем подписи к размерам и видимость полей при изменении профиля
-  };
-
-  const handleMass1mChange = (e) => {
-    const { value } = e.target;
-    setFoundMaterial((prevData) => ({
-      ...prevData,
-      mass1m: value,
-    }));
   };
 
   const handleCreateMaterial = () => {
@@ -347,23 +314,6 @@ const MaterialSelectByParams = ({ matId, handleSelectPopup }) => {
             />
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="mass1m" className="form-label">
-              Масса 1м
-            </label>
-            <input
-              type="number"
-              id="mass1m"
-              name="mass1m"
-              className="form-control"
-              value={
-                foundMaterial && foundMaterial !== "Такого материала нет"
-                  ? foundMaterial.mass1m
-                  : 0
-              }
-              onChange={handleMass1mChange}
-            />
-          </div>
         </form>
 
         {foundMaterial &&
