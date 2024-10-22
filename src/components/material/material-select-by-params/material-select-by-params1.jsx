@@ -1,25 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { getMaterialProfileTypes } from "../../../api/apiMaterial";
+import React, { useEffect, useState, useCallback } from "react";
+import {
+  getMaterialById,
+  getMaterialProfileTypes,
+  findMaterialByParams,
+} from "../../../api/apiMaterial";
 import { getMaterialMarksList } from "../../../api/apiMatMarks"; // Импортируем метод для получения списка марок материала
 import { isAuthenticated } from "../../../auth/index";
 import "./styles.css"; // Подключаем стили
-import MaterialFindByParams from "./MaterialFindByParams"; // Импортируем дочерний компонент
+import calculateMaterialProperties from "../calc-mat-mass"; // Импортируем функцию расчета массы
 
-const MaterialSelectByParams = ({
-  dim1: initialDim1,
-  dim2: initialDim2,
-  dim3: initialDim3,
-  profile: initialProfile,
-  density: initialDensity,
-  handleSelectPopup,
-}) => {
-  const [materialData, setMaterialData] = useState({
-    dim1: initialDim1,
-    dim2: initialDim2,
-    dim3: initialDim3,
-    profile: initialProfile,
-    density: initialDensity,
-  });
+const MaterialSelectByParams = ({ matId, handleSelectPopup }) => {
+  const [materialData, setMaterialData] = useState({});
   const [materialMarks, setMaterialMarks] = useState([]);
   const [profileTypes, setProfileTypes] = useState([]);
   const [dimensionLabels, setDimensionLabels] = useState({
@@ -32,23 +23,30 @@ const MaterialSelectByParams = ({
     dim2: true,
     dim3: true,
   });
+  const [foundMaterial, setFoundMaterial] = useState(null);
   const { user, token } = isAuthenticated();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [marks, profiles] = await Promise.all([
+        const [materialData, marks, profiles] = await Promise.all([
+          getMaterialById(matId, user._id, token),
           getMaterialMarksList(user._id, token),
           getMaterialProfileTypes(user._id, token),
         ]);
+        console.log("Полученные данные о материале:", materialData);
+        setMaterialData(materialData);
         setMaterialMarks(marks);
         setProfileTypes(profiles);
       } catch (err) {
         console.error("Ошибка при получении данных:", err);
       }
     };
-    fetchData();
-  }, [user._id, token]);
+
+    if (matId) {
+      fetchData();
+    }
+  }, [matId, user._id, token]);
 
   useEffect(() => {
     if (materialData.profile) {
@@ -68,7 +66,7 @@ const MaterialSelectByParams = ({
         });
       }
     }
-  }, [materialData.profile]);
+  }, [materialData.profile, profileTypes]);
 
   const searchMaterial = useCallback(
     async (params) => {
@@ -368,13 +366,40 @@ const MaterialSelectByParams = ({
           </div>
         </form>
 
-        <MaterialFindByParams
-          dim1={materialData.dim1}
-          dim2={materialData.dim2}
-          dim3={materialData.dim3}
-          profile={materialData.profile}
-          density={materialData.density}
-        />
+        {foundMaterial &&
+          foundMaterial.matName && ( // matName взяли из calculateMaterialProperties
+            <>
+              <p style={{ color: "red" }}>
+                Материал <strong>{foundMaterial.matName} </strong> не найден
+              </p>
+              <div className="mt-3">
+                <p>Масса 1м: {foundMaterial.mass1m} кг</p>
+              </div>
+              <button
+                className="btn btn-primary mt-3"
+                onClick={handleCreateMaterial}
+              >
+                Создать материал
+              </button>
+            </>
+          )}
+        {foundMaterial &&
+          foundMaterial.name && ( // matName взяли из calculateMaterialProperties
+            <>
+              <p style={{ color: "green" }}>
+                Материал <strong>{foundMaterial.name} </strong> найден
+              </p>
+              <div className="mt-3">
+                <p>Масса 1м: {foundMaterial.mass1m} кг</p>
+              </div>
+              <button
+                className="btn btn-primary btn-success mt-3"
+                onClick={handleSelectMaterial}
+              >
+                Выбрать
+              </button>
+            </>
+          )}
       </div>
     </div>
   );
