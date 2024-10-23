@@ -1,54 +1,102 @@
 import React, { useState, useEffect } from "react";
 import { findMaterialByParams } from "../../api/apiMaterial";
-import { isAuthenticated } from "../../auth/index";
+import calculateMaterialProperties from "./calc-mat-mass";
 
 const MaterialFindByParams = ({ params }) => {
-  const { user, token } = isAuthenticated();
   const [material, setMaterial] = useState(null);
+  const [calculatedMaterial, setCalculatedMaterial] = useState(null);
+  const [lastPrice, setLastPrice] = useState(""); // Состояние для последней цены
+ 
 
   useEffect(() => {
     const fetchMaterial = async () => {
       try {
-        console.log("Параметры", params);
-        const materialData = await findMaterialByParams(user._id, token, params);
-        setMaterial(materialData);
-        console.log("Полученные данные о материале:", materialData);
+        const materialData = await findMaterialByParams(params);
+        if (Array.isArray(materialData) && materialData.length > 0) {
+          setMaterial(materialData[0]);
+          console.log('found material data', materialData[0]);
+        } else {
+          console.error("Материал не найден или данные некорректны");
+          const calculated = calculateMaterialProperties(
+            params.dim1,
+            params.dim2,
+            params.dim3,
+            params.profile,
+            params.density,
+            params.markName,
+            params.qlt
+          );
+          console.log('calculated', calculated);
+          setCalculatedMaterial(calculated);
+          setMaterial(null);
+        }
       } catch (err) {
         console.error("Ошибка при поиске материала:", err);
       }
     };
 
     fetchMaterial();
-  }, [params, user._id, token]);
+  }, [params]);
 
-  if (!material) {
-    return <div>Загрузка...</div>;
+  const handleCreateMaterial = async () => {
+    try {
+      const newMaterial = {
+        name: calculatedMaterial.matName,
+        density: params.density,
+        profile: params.profile,
+        dim1: params.dim1,
+        dim2: params.dim2,
+        dim3: params.dim3,
+        qlt: params.qlt,
+        lastPrice: lastPrice,
+      };
+      // await createMaterialMark(newMaterial);
+      console.log("Материал успешно создан");
+    } catch (err) {
+      console.error("Ошибка при создании материала:", err);
+    }
+  };
+
+  if (!material && !calculatedMaterial) {
+    return (
+     <div className="alert alert-success">
+      <p>
+      <strong>Загрузка ...</strong> 
+      </p>
+    </div>);
   }
 
   return (
-    <div>
+    <div className="container mt-4">
       <h5>Параметры материала</h5>
-      <p>
-        <strong>Размер 1:</strong> {material.dim1}
-      </p>
-      <p>
-        <strong>Размер 2:</strong> {material.dim2}
-      </p>
-      <p>
-        <strong>Размер 3:</strong> {material.dim3}
-      </p>
-      <p>
-        <strong>Профиль:</strong> {material.profile}
-      </p>
-      <p>
-        <strong>Плотность:</strong> {material.density}
-      </p>
-      <p>
-        <strong>Марка:</strong> {material.markId}
-      </p>
-      <p>
-        <strong>Качество:</strong> {material.qlt}
-      </p>
+      {material ? (
+        <div className="alert alert-success">
+          <p>
+            <strong>Название:</strong> {material.name}
+          </p>
+        </div>
+      ) : (
+        <div className="alert alert-warning">
+          <p>Материал не найден</p>
+          <p>
+            <strong>Рассчитанное название:</strong> {calculatedMaterial.matName}
+          </p>
+          <p>
+            <strong>Масса 1 метра:</strong> {calculatedMaterial.mass1m} кг
+          </p>
+          <div className="mb-3">
+            <label htmlFor="lastPrice" className="form-label">Последняя цена:</label>
+            <input
+              type="text"
+              id="lastPrice"
+              className="form-control"
+              value={lastPrice}
+              onChange={(e) => setLastPrice(e.target.value)}
+            />
+          </div>
+          <button className="btn btn-primary" onClick={handleCreateMaterial}>Создать материал</button>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,13 +1,13 @@
 function calculateMaterialProperties(dim1, dim2 = 0, dim3 = 1, profile, density, markName, qlt) {
     // Вывод входных параметров в консоль
-    console.log("Входные параметры:");
-    console.log("dim1:", dim1);
-    console.log("dim2:", dim2);
-    console.log("dim3:", dim3);
-    console.log("profile:", profile);
-    console.log("density:", density);
-    console.log("markName:", markName);
-    console.log("qlt:", qlt);
+    // console.log("Входные параметры:");
+    // console.log("dim1:", dim1);
+    // console.log("dim2:", dim2);
+    // console.log("dim3:", dim3);
+    // console.log("profile:", profile);
+    // console.log("density:", density);
+    // console.log("markName:", markName);
+    // console.log("qlt:", qlt);
   
     let area = 0;
     let matName = `${markName} ${profile} ${dim1}`;

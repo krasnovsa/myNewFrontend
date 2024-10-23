@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { getMaterialProfileTypes } from "../../../api/apiMaterial";
 import { getMaterialMarksList } from "../../../api/apiMatMarks";
-import { isAuthenticated } from "../../../auth/index";
 import "./styles.css";
 import MaterialFindByParams from "../material-find-by-params";
 
@@ -19,23 +18,33 @@ const MaterialSelectByParams = ({ material, handleSelectPopup }) => {
     dim2: true,
     dim3: true,
   });
-  const { user, token } = isAuthenticated();
+  
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [marks, profiles] = await Promise.all([
-          getMaterialMarksList(user._id, token),
-          getMaterialProfileTypes(user._id, token),
+          getMaterialMarksList(),
+          getMaterialProfileTypes(),
         ]);
         setMaterialMarks(marks);
         setProfileTypes(profiles);
+
+        // Обновляем materialData с текущими значениями плотности и названия марки материала
+        const selectedMark = marks.find((mark) => mark.Id === material.markId);
+        if (selectedMark) {
+          setMaterialData((prevData) => ({
+            ...prevData,
+            density: selectedMark.density,
+            markName: selectedMark.name,
+          }));
+        }
       } catch (err) {
         console.error("Ошибка при получении данных:", err);
       }
     };
     fetchData();
-  }, [user._id, token]);
+  }, [material.markId]);
 
   useEffect(() => {
     if (materialData.profile) {
@@ -86,11 +95,24 @@ const MaterialSelectByParams = ({ material, handleSelectPopup }) => {
         }));
       }
     }
-  }, [profileTypes]);
+
+    if (name === "markId") {
+      const selectedMark = materialMarks.find((mark) => mark.Id === value);
+      if (selectedMark) {
+        setMaterialData((prevData) => ({
+          ...prevData,
+          density: selectedMark.density,
+          markName: selectedMark.name,
+        }));
+      }
+    }
+  }, [profileTypes, materialMarks]);
 
   const handleClose = useCallback(() => {
     handleSelectPopup(0, false);
   }, [handleSelectPopup]);
+
+  const memoizedMaterialData = useMemo(() => materialData, [materialData]);
 
   return (
     <div className="popup">
@@ -204,7 +226,7 @@ const MaterialSelectByParams = ({ material, handleSelectPopup }) => {
         </form>
 
         <MaterialFindByParams
-          params={materialData} // Передаем объект materialData как params
+          params={memoizedMaterialData} // Передаем мемоизированный объект materialData как params
         />
       </div>
     </div>

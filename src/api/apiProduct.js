@@ -1,11 +1,13 @@
 import { getServer } from "./getServer";
+import { isAuthenticated } from "../auth/index";
 const { API } = getServer();
 
 // Получение информации о продукте по Id
-export const getProductById = async (userId, token, prodId) => {
+export const getProductById = async (prodId) => {
+  const { user, token } = isAuthenticated();
   try {
     const response = await fetch(
-      `${API}/product/${prodId}/${userId}`,
+      `${API}/product/${prodId}/${user._id}`,
       {
         method: "GET",
         headers: {
@@ -23,10 +25,11 @@ export const getProductById = async (userId, token, prodId) => {
 };
 
 // Создание нового продукта
-export const createProduct = async (userId, token, product) => {
+export const createProduct = async (product) => {
+  const { user, token } = isAuthenticated();
   try {
     const response = await fetch(
-      `${API}/product/create/${userId}`,
+      `${API}/product/create/${user._id}`,
       {
         method: "POST",
         headers: {
@@ -45,10 +48,11 @@ export const createProduct = async (userId, token, product) => {
 };
 
 // Обновление данных о продукте
-export const updateProduct = async (userId, token, prodId, product) => {
+export const updateProduct = async (prodId, product) => {
+  const { user, token } = isAuthenticated();
   try {
     const response = await fetch(
-      `${API}/product/${prodId}/${userId}`,
+      `${API}/product/${prodId}/${user._id}`,
       {
         method: "PUT",
         headers: {
@@ -67,10 +71,11 @@ export const updateProduct = async (userId, token, prodId, product) => {
 };
 
 // Удаление продукта по Id
-export const deleteProduct = async (userId, token, prodId) => {
+export const deleteProduct = async (prodId) => {
+  const { user, token } = isAuthenticated();
   try {
     const response = await fetch(
-      `${API}/product/${prodId}/${userId}`,
+      `${API}/product/${prodId}/${user._id}`,
       {
         method: "DELETE",
         headers: {
