@@ -227,6 +227,7 @@ const MaterialSelectByParams = ({ material, handleSelectPopup }) => {
 
         <MaterialFindByParams
           params={memoizedMaterialData} // Передаем мемоизированный объект materialData как params
+          handleSelectPopup={handleSelectPopup}
         />
       </div>
     </div>

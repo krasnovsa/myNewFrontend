@@ -97,3 +97,43 @@ export const findMaterialByParams = async (params) => {
     throw err;
   }
 };
+
+// Метод для создания нового материала
+export const createMaterial = async (material) => {
+  const { user, token } = isAuthenticated();
+  try {
+    const response = await fetch(`${API}/material/create/${user._id}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(material),
+    });
+    return await response.json();
+  } catch (err) {
+    console.error("Error creating material:", err);
+    throw err;
+  }
+};
+
+// Метод для обновления существующего материала
+export const updateMaterial = async (id, material) => {
+  const { user, token } = isAuthenticated();
+  try {
+    const response = await fetch(`${API}/material/${id}/${user._id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(material),
+    });
+    return await response.json();
+  } catch (err) {
+    console.error(`Error updating material with id ${id}:`, err);
+    throw err;
+  }
+};

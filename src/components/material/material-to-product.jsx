@@ -81,7 +81,7 @@ const MaterialToProduct = ({ prodId }) => {
 
   const handleSelectPopup = useCallback((matId, showPopupState) => {
     setShowPopup(showPopupState);
-    //setNewMaterialId(matId);
+    setNewMaterialId(matId);
   }, []);
 
   const handleShowPopup = useCallback(() => {
