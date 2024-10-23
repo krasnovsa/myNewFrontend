@@ -6,7 +6,7 @@ import TpAddForm from "../../components/tp/tp-add-form/tp-add-form.jsx";
 import TpListForm from "../../components/tp/tp-list-form/tp-list-form.jsx";
 import AttViewer from "../../components/attachments/att-viewer/att-viewer.jsx";
 
-import { getProductById } from "../../api/apiProduct";
+import { getProductById } from "../../api/apiProduct.js";
 import { isAuthenticated } from "../../auth/index.js";
 import { CurrentAppContext } from "../../contexts/currentApp.jsx";
 

@@ -6,10 +6,11 @@ import WlList from "../wl/wl-list"; // Импортируем компонент
 import Product from "../product/product"; // Импортируем компонент Product
 
 function OiProdInfo(props) {
-  const [state] = useContext(CurrentAppContext); // Получаем состояние из контекста
-  const oi = props.oi || state.curOiProd; // Используем oi из props или из контекста
-  const pj = props.pj || state.curPj; // Используем pj из props или из контекста
-
+  
+   const [{curOiProd,curPj}] = useContext(CurrentAppContext); // Получаем состояние из контекста
+  const oi = props.oi || curOiProd; // Используем oi из props или из контекста
+  const pj = props.pj || curPj; // Используем pj из props или из контекста
+console.log('last oi prod info oi', oi, 'pj', pj)
   const {
     prodName = "",
     oiQtt = 0,

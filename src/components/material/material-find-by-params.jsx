@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { findMaterialByParams } from "../../api/apiProduct";
+import { findMaterialByParams } from "../../api/apiMaterial";
 import { isAuthenticated } from "../../auth/index";
 
 const MaterialFindByParams = ({ params }) => {
@@ -9,8 +9,10 @@ const MaterialFindByParams = ({ params }) => {
   useEffect(() => {
     const fetchMaterial = async () => {
       try {
+        console.log("Параметры", params);
         const materialData = await findMaterialByParams(user._id, token, params);
         setMaterial(materialData);
+        console.log("Полученные данные о материале:", materialData);
       } catch (err) {
         console.error("Ошибка при поиске материала:", err);
       }

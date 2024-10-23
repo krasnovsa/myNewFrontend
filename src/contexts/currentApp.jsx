@@ -212,7 +212,7 @@ export const CurrentAppContext = createContext();
 
 export const CurrentAppProvider = ({ children }) => {
   const value = useReducer(reducer, initialState);
-
+  console.log("state changed");
   return (
     <CurrentAppContext.Provider value={value}>
       {children}

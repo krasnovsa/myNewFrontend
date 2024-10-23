@@ -9,6 +9,7 @@ const Product = ({ prodId }) => {
   const handleTabChange = (tab) => {
     setSelectedTab(tab);
   };
+  console.log('loading prodId', prodId)
 
   return (
     <div>
