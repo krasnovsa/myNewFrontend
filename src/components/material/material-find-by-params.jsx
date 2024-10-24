@@ -6,7 +6,7 @@ import {
 } from "../../api/apiMaterial";
 import calculateMaterialProperties from "./calc-mat-mass";
 
-const MaterialFindByParams = ({ params, handleSelectPopup }) => {
+const MaterialFindByParams = ({ params, handleClose }) => {
   const [material, setMaterial] = useState(null);
   const [calculatedMaterial, setCalculatedMaterial] = useState(null);
   const [lastPrice, setLastPrice] = useState(""); // Состояние для последней цены
@@ -108,20 +108,28 @@ const MaterialFindByParams = ({ params, handleSelectPopup }) => {
             <strong>Последняя цена:</strong> {material.lastPrice} руб. от{" "}
             {formatDate(material.lastPriceDate)}
           </p>
-          <div className="mb-3">
-            <label htmlFor="newPrice" className="form-label">
+          <div className="input-group mb-3">
+            <span className="input-group-text" id="newPriceLabel">
               Новая цена:
-            </label>
+            </span>
             <input
               type="number"
               id="newPrice"
               className="form-control"
               value={newPrice}
               onChange={(e) => setNewPrice(e.target.value)}
+              aria-describedby="newPriceLabel"
             />
+            <button
+              className="btn btn-primary"
+              onClick={handleUpdateMaterial}
+              disabled={!newPrice || isNaN(newPrice)}
+            >
+              Обновить
+            </button>
           </div>
-          <button className="btn btn-primary" onClick={handleUpdateMaterial}>
-            Обновить
+          <button className="btn btn-secondary" onClick={handleClose}>
+            Выбрать
           </button>
         </div>
       ) : (
@@ -133,21 +141,26 @@ const MaterialFindByParams = ({ params, handleSelectPopup }) => {
           <p>
             <strong>Масса 1 метра:</strong> {calculatedMaterial.mass1m} кг
           </p>
-          <div className="mb-3">
-            <label htmlFor="lastPrice" className="form-label">
+          <div className="input-group mb-3">
+            <span className="input-group-text" id="lastPriceLabel">
               Последняя цена:
-            </label>
+            </span>
             <input
               type="number"
               id="lastPrice"
               className="form-control"
               value={lastPrice}
               onChange={(e) => setLastPrice(e.target.value)}
+              aria-describedby="lastPriceLabel"
             />
+            <button
+              className="btn btn-primary"
+              onClick={handleCreateMaterial}
+              disabled={!lastPrice || isNaN(lastPrice)}
+            >
+              Создать материал
+            </button>
           </div>
-          <button className="btn btn-primary" onClick={handleCreateMaterial}>
-            Создать материал
-          </button>
         </div>
       )}
     </div>
