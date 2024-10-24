@@ -6,7 +6,7 @@ import {
 } from "../../api/apiMaterial";
 import calculateMaterialProperties from "./calc-mat-mass";
 
-const MaterialFindByParams = ({ params, handleClose }) => {
+const MaterialFindByParams = ({ params, handleSelectMaterial }) => {
   const [material, setMaterial] = useState(null);
   const [calculatedMaterial, setCalculatedMaterial] = useState(null);
   const [lastPrice, setLastPrice] = useState(""); // Состояние для последней цены
@@ -82,6 +82,8 @@ const MaterialFindByParams = ({ params, handleClose }) => {
     const options = { day: "2-digit", month: "2-digit", year: "numeric" };
     return new Date(dateString).toLocaleDateString("ru-RU", options);
   };
+
+  const handleClose = () => {handleSelectMaterial(material.Id,false)};
 
   if (loading) {
     return (

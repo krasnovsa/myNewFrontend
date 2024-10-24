@@ -49,29 +49,15 @@ const OrderListItem = ({ ord, setSearchStr }) => {
   // Определяем класс для firmSName
   const firmSNameClass = `firmSName ${firmSName.toLowerCase()}`;
 
-
-
   return (
     <>
       {/* First Row */}
       <tr key={`${ordId}-row1`} className={`order-list-item ${curOrdId === ordId ? "active-order" : ""} ${orderClass}`} onClick={onClickHandler}>
-        <td rowSpan="2" className={firmSNameClass}>{firmSName}</td> {/* rowspan to cover 2 rows */}
-        <td rowSpan="2" className="ordId">{ordId}</td> {/* rowspan to cover 2 rows */}
-        <td className="dateCreated">{dateCreated}</td>
-        <td rowSpan="2" className="custSName">{custSName}</td> {/* rowspan to cover 2 rows */}
-        <td rowSpan="2" className="descrNoHtml">{formattedDescrNoHtml}</td> {/* rowspan to cover 2 rows */}
-        <td className="hrsPlan">{hrsPlan}</td>
-        <td className= "shHrs">{shHrs}</td>
-        <td rowSpan="2" className="nzpHrs">{nzpHrs}</td> {/* rowspan to cover 2 rows */}
-        <td className="persShipped">{persShipped}</td>
-        <td rowSpan="2" className="rang">{rang}</td> {/* rowspan to cover 2 rows */}
+        <td rowSpan="2" className={firmSNameClass}>{firmSName}</td><td rowSpan="2" className="ordId">{ordId}</td><td className="dateCreated">{dateCreated}</td><td rowSpan="2" className="custSName">{custSName}</td><td rowSpan="2" className="descrNoHtml">{formattedDescrNoHtml}</td><td className="hrsPlan">{hrsPlan}</td><td className= "shHrs">{shHrs}</td><td rowSpan="2" className="nzpHrs">{nzpHrs}</td><td className="persShipped">{persShipped}</td><td rowSpan="2" className="rang">{rang}</td>
       </tr>
       {/* Second Row */}
       <tr key={`${ordId}-row2`} className={`order-list-item ${curOrdId === ordId ? "active-order" : ""} ${orderClass}`} onClick={onClickHandler}>
-        <td className="invNom">{invNom}</td>
-        <td className="hrsByTech">{hrsByTech}</td>
-        <td className="hrsProdused">{hrsEcProd}</td>
-        <td className="ordProdProgress">{ordProdProgress}</td>
+        <td className="invNom">{invNom}</td><td className="hrsByTech">{hrsByTech}</td><td className="hrsProdused">{hrsEcProd}</td><td className="ordProdProgress">{ordProdProgress}</td>
       </tr>
     </>
   );

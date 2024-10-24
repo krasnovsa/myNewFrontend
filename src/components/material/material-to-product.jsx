@@ -5,16 +5,14 @@ import { getProductById, updateProduct } from "../../api/apiProduct";
 import PriceHistory from "./material-price-history";
 import MaterialSelectByParams from "./material-select-by-params/material-select-by-params";
 
-
 const MaterialToProduct = ({ prodId }) => {
   const [formData, setFormData] = useState({});
   const [material, setMaterial] = useState({}); // Объект материала
   const [priceData, setPriceData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
-  const [newMaterialId, setNewMaterialId] = useState(null);
+  const [newMaterialId, setNewMaterialId] = useState(0); // Добавляем состояние для нового matId
 
   useEffect(() => {
-  
     const fetchProductData = async () => {
       try {
         const productData = await getProductById(prodId);
@@ -33,9 +31,7 @@ const MaterialToProduct = ({ prodId }) => {
     const fetchMaterial = async () => {
       if (formData.matId) {
         try {
-          const materialData = await getMaterialById(
-            formData.matId
-          );
+          const materialData = await getMaterialById(formData.matId);
           console.log("Полученные данные о материале:", materialData);
           setMaterial(materialData || {});
         } catch (err) {
@@ -54,12 +50,14 @@ const MaterialToProduct = ({ prodId }) => {
       if (newMaterialId > 0 && newMaterialId !== formData.matId) {
         try {
           console.log("start update product:", newMaterialId);
-          const updatedProduct = await updateProduct( prodId, {
+           await updateProduct(prodId, {
             ...formData,
             matId: newMaterialId,
           });
-          console.log("Продукт обновлен:", updatedProduct);
-          setFormData(updatedProduct);
+          setFormData({
+            ...formData,
+            matId: newMaterialId,
+          });
         } catch (err) {
           console.error("Ошибка при обновлении продукта:", err);
         }
@@ -69,28 +67,36 @@ const MaterialToProduct = ({ prodId }) => {
     };
 
     updateProductMaterial();
-  }, [newMaterialId, formData.matId, prodId ]);
+  }, [newMaterialId, formData.matId, prodId]);
 
-  const handleInputChange = useCallback((e) => {
+  const handleSelectMaterial = useCallback((materialId, popupState) => {
+    setNewMaterialId(materialId);
+    setShowPopup(popupState);
+  }, []);
+
+  const handleInputChange = useCallback(async (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
+    const updatedFormData = {
+      ...formData,
       [name]: value,
-    }));
-  }, []);
-
-  const handleSelectPopup = useCallback((matId, showPopupState) => {
-    setShowPopup(showPopupState);
-    setNewMaterialId(matId);
-  }, []);
+    };
+  
+    try {
+      // Обновляем продукт по API
+       await updateProduct(prodId, updatedFormData);
+      // Обновляем состояние с новыми данными продукта
+      setFormData(updatedFormData);
+    } catch (err) {
+      console.error("Ошибка при обновлении продукта:", err);
+    }
+  }, [formData]);
 
   const handleShowPopup = useCallback(() => {
-    handleSelectPopup(0, true);
-  }, [handleSelectPopup]);
+    handleSelectMaterial(0, true);
+  }, [handleSelectMaterial]);
 
   // Мемоизация объекта material и функции handleSelectPopup
   const memoizedMaterial = useMemo(() => material, [material]);
-  const memoizedHandleSelectPopup = useMemo(() => handleSelectPopup, [handleSelectPopup]);
 
   return (
     <div className="container mt-4">
@@ -104,10 +110,12 @@ const MaterialToProduct = ({ prodId }) => {
               value={formData.matId || 0}
               onChange={handleInputChange}
             />
-            <div className="mb-3">
-              <label htmlFor="materialName" className="form-label">
-                Наименование материала
-              </label>
+            <div className="input-group mb-3">
+             <div className="input-group-prepend">
+                <label htmlFor="materialName" className="input-group-text">
+                  Материал
+                </label>
+              </div>
               <input
                 type="text"
                 id="materialName"
@@ -116,6 +124,15 @@ const MaterialToProduct = ({ prodId }) => {
                 value={material.name || ""}
                 readOnly
               />
+              <div className="input-group-append">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleShowPopup}
+                >
+                  Выбрать
+                </button>
+              </div>
             </div>
             <div className="mb-3">
               <label htmlFor="lenght" className="form-label">
@@ -143,13 +160,6 @@ const MaterialToProduct = ({ prodId }) => {
                 onChange={handleInputChange}
               />
             </div>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={handleShowPopup}
-            >
-              Выбрать
-            </button>
           </form>
         </div>
         <div className="col-md-6">
@@ -159,7 +169,7 @@ const MaterialToProduct = ({ prodId }) => {
       {showPopup && (
         <MaterialSelectByParams
           material={memoizedMaterial}
-          handleSelectPopup={memoizedHandleSelectPopup} // Передаем мемоизированную функцию handleSelectPopup
+          handleSelectMaterial={handleSelectMaterial}
         />
       )}
     </div>

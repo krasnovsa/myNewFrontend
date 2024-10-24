@@ -4,7 +4,7 @@ import { getMaterialMarksList } from "../../../api/apiMatMarks";
 import "./styles.css";
 import MaterialFindByParams from "../material-find-by-params";
 
-const MaterialSelectByParams = ({ material, handleSelectPopup }) => {
+const MaterialSelectByParams = ({ material, handleSelectMaterial }) => {
   const [materialData, setMaterialData] = useState(material);
   const [materialMarks, setMaterialMarks] = useState([]);
   const [profileTypes, setProfileTypes] = useState([]);
@@ -109,8 +109,8 @@ const MaterialSelectByParams = ({ material, handleSelectPopup }) => {
   }, [profileTypes, materialMarks]);
 
   const handleClose = useCallback(() => {
-    handleSelectPopup(0, false);
-  }, [handleSelectPopup]);
+    handleSelectMaterial(0, false);
+  }, [handleSelectMaterial]);
 
   const memoizedMaterialData = useMemo(() => materialData, [materialData]);
 
@@ -227,7 +227,7 @@ const MaterialSelectByParams = ({ material, handleSelectPopup }) => {
 
         <MaterialFindByParams
           params={memoizedMaterialData} // Передаем мемоизированный объект materialData как params
-          handleSelectPopup={handleSelectPopup}
+          handleSelectMaterial={handleSelectMaterial} // Передаем функцию handleSelectMaterial
         />
       </div>
     </div>
