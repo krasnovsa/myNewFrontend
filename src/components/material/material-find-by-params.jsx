@@ -128,7 +128,7 @@ const MaterialFindByParams = ({ params, handleClose }) => {
               Обновить
             </button>
           </div>
-          <button className="btn btn-secondary" onClick={handleClose}>
+          <button className="btn btn-success" onClick={handleClose}>
             Выбрать
           </button>
         </div>
