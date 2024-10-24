@@ -8,9 +8,10 @@ import MaterialSelectByParams from "./material-select-by-params/material-select-
 const MaterialToProduct = ({ prodId }) => {
   const [formData, setFormData] = useState({});
   const [material, setMaterial] = useState({}); // Объект материала
-  const [priceData, setPriceData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [newMaterialId, setNewMaterialId] = useState(0); // Добавляем состояние для нового matId
+    const [mass, setMass] = useState(0);
+    const [price, setPrice] = useState(0);
 
   useEffect(() => {
     const fetchProductData = async () => {
@@ -18,7 +19,6 @@ const MaterialToProduct = ({ prodId }) => {
         const productData = await getProductById(prodId);
         console.log("Полученные данные о продукте:", productData);
         setFormData(productData);
-        setPriceData(productData.priceHistory || []);
       } catch (err) {
         console.error("Ошибка при получении данных о продукте:", err);
       }
@@ -65,9 +65,31 @@ const MaterialToProduct = ({ prodId }) => {
         console.log("остался материал с Id:", newMaterialId);
       }
     };
+    
 
     updateProductMaterial();
   }, [newMaterialId, formData.matId, prodId]);
+
+  useEffect(() => {
+    const calculateMass = () => {
+      return (
+        ((material.mass1m * formData.resQttToOne) / 1000) *
+        formData.lenght
+      ).toFixed(2);
+    };
+
+    const calculatePrice = () => {
+      return (
+        ((material.mass1m * formData.resQttToOne) / 1000) *
+        formData.lenght *
+        material.lastPrice
+      ).toFixed(2);
+    };
+
+    setMass(calculateMass());
+    setPrice(calculatePrice());
+  }, [material, formData]);
+
 
   const handleSelectMaterial = useCallback((materialId, popupState) => {
     setNewMaterialId(materialId);
@@ -111,7 +133,7 @@ const MaterialToProduct = ({ prodId }) => {
               onChange={handleInputChange}
             />
             <div className="input-group mb-3">
-             <div className="input-group-prepend">
+              <div className="input-group-prepend">
                 <label htmlFor="materialName" className="input-group-text">
                   Материал
                 </label>
@@ -160,10 +182,16 @@ const MaterialToProduct = ({ prodId }) => {
                 onChange={handleInputChange}
               />
             </div>
+             <div>
+            <strong>Macca детали: </strong>{mass||0}
+            кг <strong>Цена детали: </strong>{price||0}
+            руб 
+          </div>
           </form>
         </div>
         <div className="col-md-6">
-          <PriceHistory priceData={priceData} />
+
+            <PriceHistory matId={formData.matId} mass={mass} />
         </div>
       </div>
       {showPopup && (

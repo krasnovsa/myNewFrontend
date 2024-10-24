@@ -137,3 +137,22 @@ export const updateMaterial = async (id, material) => {
     throw err;
   }
 };
+
+// Метод для получения истории цен материала
+export const getMaterialPriceHistory = async (id) => {
+  const { user, token } = isAuthenticated();
+  try {
+    const response = await fetch(`${API}/material/${id}/price-history/${user._id}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return await response.json();
+  } catch (err) {
+    console.error(`Error fetching price history for material with id ${id}:`, err);
+    throw err;
+  }
+};
