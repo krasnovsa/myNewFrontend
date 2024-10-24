@@ -23,6 +23,8 @@ function OiProdListItem(props) {
     shipCalendar,
   } = props.oi.info;
 
+  
+
   const { pjArr } = props.oi;
 
   const [isExtended, setIsExtended] = useState(false);
