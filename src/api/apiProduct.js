@@ -91,3 +91,29 @@ export const deleteProduct = async (prodId) => {
     throw new Error(err);
   }
 };
+
+// Получение данных по процедуре ProdCalcPriceList
+export const getProdCalcPriceList = async (prodId, queryParams) => {
+  const { user, token } = isAuthenticated();
+  const queryString = new URLSearchParams(queryParams).toString();
+  try {
+    const response = await fetch(
+      `${API}/product/${prodId}/calc-price-list/${user._id}?${queryString}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+
+

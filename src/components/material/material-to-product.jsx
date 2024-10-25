@@ -10,8 +10,8 @@ const MaterialToProduct = ({ prodId }) => {
   const [material, setMaterial] = useState({}); // Объект материала
   const [showPopup, setShowPopup] = useState(false);
   const [newMaterialId, setNewMaterialId] = useState(0); // Добавляем состояние для нового matId
-    const [mass, setMass] = useState(0);
-    const [price, setPrice] = useState(0);
+  const [mass, setMass] = useState(0);
+  const [price, setPrice] = useState(0);
 
   useEffect(() => {
     const fetchProductData = async () => {
@@ -50,14 +50,21 @@ const MaterialToProduct = ({ prodId }) => {
       if (newMaterialId > 0 && newMaterialId !== formData.matId) {
         try {
           console.log("start update product:", newMaterialId);
-           await updateProduct(prodId, {
+          const updatedProduct = await updateProduct(prodId, {
             ...formData,
             matId: newMaterialId,
           });
-          setFormData({
-            ...formData,
-            matId: newMaterialId,
-          });
+
+          if (updatedProduct && updatedProduct.matId === newMaterialId) {
+            setFormData({
+              ...formData,
+              matId: newMaterialId,
+            });
+          } else {
+            console.error(
+              "Ошибка при обновлении продукта: продукт не обновился правильно"
+            );
+          }
         } catch (err) {
           console.error("Ошибка при обновлении продукта:", err);
         }
@@ -65,53 +72,73 @@ const MaterialToProduct = ({ prodId }) => {
         console.log("остался материал с Id:", newMaterialId);
       }
     };
-    
 
     updateProductMaterial();
-  }, [newMaterialId, formData.matId, prodId]);
+  }, [newMaterialId, formData, prodId]);
 
   useEffect(() => {
     const calculateMass = () => {
-      return (
-        ((material.mass1m * formData.resQttToOne) / 1000) *
-        formData.lenght
-      ).toFixed(2);
+      if (material.mass1m && formData.resQttToOne && formData.lenght) {
+        return (
+          ((material.mass1m * formData.resQttToOne) / 1000) *
+          formData.lenght
+        ).toFixed(2);
+      }
+      return 0;
     };
 
     const calculatePrice = () => {
-      return (
-        ((material.mass1m * formData.resQttToOne) / 1000) *
-        formData.lenght *
+      if (
+        material.mass1m &&
+        formData.resQttToOne &&
+        formData.lenght &&
         material.lastPrice
-      ).toFixed(2);
+      ) {
+        return (
+          ((material.mass1m * formData.resQttToOne) / 1000) *
+          formData.lenght *
+          material.lastPrice
+        ).toFixed(2);
+      }
+      return 0;
     };
 
     setMass(calculateMass());
     setPrice(calculatePrice());
   }, [material, formData]);
 
-
   const handleSelectMaterial = useCallback((materialId, popupState) => {
     setNewMaterialId(materialId);
     setShowPopup(popupState);
   }, []);
 
-  const handleInputChange = useCallback(async (e) => {
+  const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
-    const updatedFormData = {
-      ...formData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       [name]: value,
-    };
-  
-    try {
-      // Обновляем продукт по API
-       await updateProduct(prodId, updatedFormData);
-      // Обновляем состояние с новыми данными продукта
-      setFormData(updatedFormData);
-    } catch (err) {
-      console.error("Ошибка при обновлении продукта:", err);
-    }
-  }, [formData]);
+    }));
+  }, []);
+
+  const handleInputBlur = useCallback(
+    async (e) => {
+      const { name, value } = e.target;
+      const updatedFormData = {
+        ...formData,
+        [name]: value,
+      };
+
+      try {
+        // Обновляем продукт по API и получаем обновленные данные
+        const updatedProduct = await updateProduct(prodId, updatedFormData);
+        // Обновляем состояние с новыми данными продукта
+        setFormData(updatedProduct);
+      } catch (err) {
+        console.error("Ошибка при обновлении продукта:", err);
+      }
+    },
+    [formData, prodId]
+  );
 
   const handleShowPopup = useCallback(() => {
     handleSelectMaterial(0, true);
@@ -167,6 +194,7 @@ const MaterialToProduct = ({ prodId }) => {
                 className="form-control"
                 value={formData.lenght || 0}
                 onChange={handleInputChange}
+                onBlur={handleInputBlur}
               />
             </div>
             <div className="mb-3">
@@ -180,18 +208,18 @@ const MaterialToProduct = ({ prodId }) => {
                 className="form-control"
                 value={formData.resQttToOne || 1}
                 onChange={handleInputChange}
+                onBlur={handleInputBlur}
               />
             </div>
-             <div>
-            <strong>Macca детали: </strong>{mass||0}
-            кг <strong>Цена детали: </strong>{price||0}
-            руб 
-          </div>
+            <div>
+              <strong>Macca детали: </strong>
+              {mass || 0} кг <strong>Цена детали: </strong>
+              {price || 0} руб
+            </div>
           </form>
         </div>
         <div className="col-md-6">
-
-            <PriceHistory matId={formData.matId} mass={mass} />
+          <PriceHistory matId={formData.matId} mass={mass} />
         </div>
       </div>
       {showPopup && (

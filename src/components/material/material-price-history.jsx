@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getMaterialPriceHistory } from "../../api/apiMaterial";
 
 const PriceHistory = ( {matId, mass} ) => {
-  console.log("PriceHistory", matId, mass);
+  // console.log("PriceHistory", matId, mass);
   const [priceData, setPriceData] = useState([]);
   const [error, setError] = useState(null);
 
@@ -36,7 +36,7 @@ const PriceHistory = ( {matId, mass} ) => {
   }
 
   return (
-    <div className="card">
+    <div className="card" style={{ height: "300px", overflowY: "auto" }}>
       <div className="card-body">
         <h5 className="card-title">История цен</h5>
         <div className="table-responsive">

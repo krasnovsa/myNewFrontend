@@ -44,7 +44,6 @@ console.log('last oi prod info oi', oi, 'pj', pj)
       className="card p-2"
       style={{ width: "100%", height: "100%", overflowY: "auto" }}
     >
-      <h3 className="card-title">{oiSName}</h3>
       <div className="card-body p-1">
         <div className="btn-group" role="group" aria-label="Basic example">
           <button
