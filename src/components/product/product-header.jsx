@@ -47,21 +47,20 @@ const ProductHeader = ({ prodId }) => {
   }
 
   return (
-    <div className="d-flex align-items-center">
-      <div className="me-4">
-        <strong>Наименование:</strong>
-        <input
-          type="text"
-          value={product.name}
-          onChange={(e) => setProduct({ ...product, name: e.target.value })}
-          onBlur={handleNameChange}
-          className="form-control d-inline-block w-auto"
-        />
-      </div>
-      <div>
-        <strong>Материал:</strong> {material.name}
-      </div>
-    </div>
+<div className="d-flex align-items-center justify-content-between">
+  <div className="flex-grow-1 me-4">
+    <input
+      type="text"
+      value={product.name}
+      onChange={(e) => setProduct({ ...product, name: e.target.value })}
+      onBlur={handleNameChange}
+      className="form-control d-inline-block w-100"
+    />
+  </div>
+  <div>
+    <strong>Материал:</strong> {material.name}
+  </div>
+</div>
   );
 };
 

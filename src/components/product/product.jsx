@@ -5,16 +5,12 @@ import MaterialForm from "../material/material-to-product";
 import ProductHeader from "./product-header";
 import ProdCalcPrice from "./product-calc-price"; // Импортируем компонент ProdCalcPrice
 
-const Product = ({ prodId }) => {
+const Product = ({ prodId, qtt }) => {
   const [selectedTab, setSelectedTab] = useState("drawing");
-  const [quantity, setQuantity] = useState(1000); // Добавляем состояние для количества
+
 
   const handleTabChange = (tab) => {
     setSelectedTab(tab);
-  };
-
-  const handleQuantityChange = (e) => {
-    setQuantity(e.target.value);
   };
 
   console.log("loading prodId", prodId);
@@ -66,25 +62,12 @@ const Product = ({ prodId }) => {
       {selectedTab === "technology" && <TpListForm prodId={prodId} />}
       {selectedTab === "material" && (
         <div>
-          <MaterialForm prodId={prodId} />
+          <MaterialForm prodId={prodId} initialQtt={qtt||1000}/>
         </div>
       )}
       {selectedTab === "calculation" && (
         <div>
-          <div className="mb-3">
-            <label htmlFor="quantity" className="form-label">
-              Quantity
-            </label>
-            <input
-              type="number"
-              id="quantity"
-              name="quantity"
-              className="form-control"
-              value={quantity}
-              onChange={handleQuantityChange}
-            />
-          </div>
-          <ProdCalcPrice prodId={prodId} initialQtt={quantity} />
+          <ProdCalcPrice prodId={prodId} initialQtt={qtt||1000} />
         </div>
       )}
     </div>
