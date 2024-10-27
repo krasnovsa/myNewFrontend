@@ -26,7 +26,7 @@ const TpListForm = ({ prodId }) => {
   }, [prodId, state.curProdIdTrigger]); // Добавляем зависимость от триггера
 
   return (
-    <div className="tp-list-form-container">
+    <div className="tp-list-form">
       <div className="tp-list-form-content">
         {techProcesses.map((tp) => (
           <div key={tp.tpId} className="border-bottom">

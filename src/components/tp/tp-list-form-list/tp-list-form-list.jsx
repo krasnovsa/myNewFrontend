@@ -27,7 +27,7 @@ const TpListFormList = ({ techProcess }) => {
     <div>
       <div
         className={`row align-items-center 
-          ${curTpItem && curTpItem.tpId === techProcess.tpId && " bg-secondary text-white"}
+          ${curTpItem && curTpItem.tpId === techProcess.tpId && " bg-light"}
           ${techProcess.tpIsDefault && " font-color-blue"}
           `}
       >

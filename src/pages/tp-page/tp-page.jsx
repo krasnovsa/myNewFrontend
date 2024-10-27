@@ -11,25 +11,28 @@ const TpPage = () => {
 
   return (
     <div className="main-container">
-      <Layout title='Создание/редактирование техпроцесса' description='Здесь можно создавать и редактировать техпроцессы'>
-    <div className="tp-page">
-
-      <div className="grid-container">
-        <div className="grid-item-left">
-          <TpAddForm prodId = {parseInt(prodId, 10)}/>
-          <TpListForm prodId={parseInt(prodId, 10)} />
+      <Layout
+        title="Создание/редактирование техпроцесса"
+        description="Здесь можно создавать и редактировать техпроцессы"
+      >
+        <div className="tp-page">
+          <div className="page-container">
+            <div className="tp-list">
+              <h2>Список техпроцессов</h2>
+              <TpListForm prodId={parseInt(prodId, 10)} />
+            </div>
+            <div className="tp-add">
+              <h2>Создание техпроцесса</h2>
+              <TpAddForm prodId={parseInt(prodId, 10)} />
+            </div>
+            <div className="viewer">
+              <AttViewer tableName="Products" keyValue={parseInt(prodId, 10)} />
+            </div>
+          </div>
         </div>
-        <div className="grid-item-right">
-          <AttViewer tableName="Products" keyValue={parseInt(prodId, 10)} />
-        </div>
-      </div>
-    </div>
-    </Layout>
+      </Layout>
     </div>
   );
 };
-
-
-
 
 export default TpPage;

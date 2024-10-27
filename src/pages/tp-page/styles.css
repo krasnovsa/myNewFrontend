@@ -2,21 +2,28 @@
   padding: 20px;
 }
 
-.grid-container {
+.page-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  grid-template-rows: 50% 300px;
+  grid-template-areas: 
+    "tp-list viewer"
+    "tp-add  viewer";
+  gap: 10px;
 }
 
-.grid-item-left {
-  display: flex;
-  grid-template-rows: 1fr 1fr;
-  flex-direction: column;
-  gap: 20px;
+.tp-list {
+  grid-area: tp-list;
+  height: 100%; /* Set a fixed height */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
-.grid-item-right {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.tp-add {
+  grid-area: tp-add;
+  height: 100%; /* Set a fixed height */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.viewer {
+  grid-area: viewer;
 }
