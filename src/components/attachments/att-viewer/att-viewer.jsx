@@ -20,8 +20,6 @@ const AttViewer = ({ keyValue, tableName }) => {
     const fetchData = async () => {
       try {
         const data = await getAttList(
-          token,
-          user._id,
           tableName,
           keyValue,
           -1,

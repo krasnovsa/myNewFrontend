@@ -1,13 +1,15 @@
 import axios from "axios";
 import { getServer } from "./getServer";
+import { isAuthenticated } from "../auth/index"; // Импортируем isAuthenticated
 const { SERVER } = getServer();
 
-export const getAttList = async (token, userId, table, keyValue, parId, Id) => {
+export const getAttList = async (table, keyValue, parId, Id) => {
+  const { user, token } = isAuthenticated(); // Получаем данные о пользователе и токене
   try {
     const response = await fetch(
-      `${SERVER}/api/att/list/t/${table}/kv/${keyValue}/parId/${parId || -1}/Id/${
-        Id || 0
-      }/userId/${userId}`,
+      `${SERVER}/api/att/list/t/${table}/kv/${keyValue}/parId/${
+        parId || -1
+      }/Id/${Id || 0}/userId/${user._id}`,
       {
         method: "GET",
         headers: {
@@ -24,17 +26,11 @@ export const getAttList = async (token, userId, table, keyValue, parId, Id) => {
   }
 };
 
-export const addFolder = async (
-  token,
-  userId,
-  folderName,
-  tableName,
-  keyValue,
-  relPath
-) => {
+export const addFolder = async (folderName, tableName, keyValue, relPath) => {
+  const { user, token } = isAuthenticated(); // Получаем данные о пользователе и токене
   try {
     const response = await fetch(
-      `${SERVER}/att/addFolder/${userId}?tableName=${tableName}&keyValue=${keyValue}&relPath=${relPath}&folderName=${folderName}`,
+      `${SERVER}/att/addFolder/${user._id}?tableName=${tableName}&keyValue=${keyValue}&relPath=${relPath}&folderName=${folderName}`,
       {
         method: "GET",
         headers: {
@@ -53,8 +49,6 @@ export const addFolder = async (
 };
 
 export const uploadFile = (
-  token,
-  userId,
   file,
   tableName,
   keyValue,
@@ -63,6 +57,7 @@ export const uploadFile = (
   changeProgress,
   uploadId
 ) => {
+  const { user, token } = isAuthenticated(); // Получаем данные о пользователе и токене
   return async () => {
     try {
       const formData = new FormData();
@@ -73,7 +68,7 @@ export const uploadFile = (
       formData.append("relPath", relPath);
 
       const response = await axios.post(
-        `${SERVER}/att/upload/${userId}`,
+        `${SERVER}/att/upload/${user._id}`,
         formData,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -99,12 +94,13 @@ export const uploadFile = (
   };
 };
 
-export const removeAtt = (token, userId, Id) => {
+export const removeAtt = (Id) => {
+  const { user, token } = isAuthenticated(); // Получаем данные о пользователе и токене
   return async () => {
     try {
       console.log("start removing");
       const response = await axios.get(
-        `${SERVER}/att/remove/${userId}?attId=${Id}`,
+        `${SERVER}/att/remove/${user._id}?attId=${Id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

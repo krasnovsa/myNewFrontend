@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { addOperationToTechProcess } from "../../../api/apiTp"; // Импортируем метод
 import "./styles.css"; // Импортируем CSS-файл
-import { isAuthenticated } from "../../../auth/index";
+
 
 const TpAddFormListItem = ({ index, onDelete }) => {
   const [state, dispatch] = useContext(CurrentAppContext);
@@ -12,7 +12,7 @@ const TpAddFormListItem = ({ index, onDelete }) => {
     state.tpAddOpsTemplate.operations[index]
   );
   const [wgData, setWgData] = useState([]); // данные связанные с wgId
-  const { user, token } = isAuthenticated();
+
   const tpId = state.curTpItem.tpId; // Получаем tpId из контекста
   const prodId = state.curTpItem.prodId; // Получаем prodId из контекста
 
@@ -53,8 +53,6 @@ const TpAddFormListItem = ({ index, onDelete }) => {
   const handleButtonClick = async () => {
     try {
       const response = await addOperationToTechProcess(
-        token,
-        user._id,
         tpId,
         prodId,
         operation

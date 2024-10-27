@@ -1,14 +1,31 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CurrentAppContext } from "../../../contexts/currentApp";
 import TpAddFormList from "../tp-add-form-list/tp-add-form-list";
 import { createTechProcessWithOperations } from "../../../api/apiTp"; // Импортируем метод для создания техпроцесса
+import { getProductById } from "../../../api/apiProduct"; // Импортируем метод для получения информации о продукте
 import "./styles.css"; // Импортируем CSS-файл
 import { isAuthenticated } from "../../../auth/index";
 
-function TpAddForm(props) {
+function TpAddForm({ prodId }) {
   const [state, dispatch] = useContext(CurrentAppContext);
-  const { tpAddOpsTemplate, curProduct } = state;
+  const { tpAddOpsTemplate } = state;
   const { user, token } = isAuthenticated();
+  const [productLength, setProductLength] = useState(null);
+  const [productName, setProductName] = useState("");
+
+  useEffect(() => {
+    const fetchProductData = async () => {
+      try {
+        const product = await getProductById(prodId);
+        setProductLength(product.lenght);
+        setProductName(product.name);
+      } catch (err) {
+        console.error("Ошибка при получении данных о продукте:", err);
+      }
+    };
+
+    fetchProductData();
+  }, [prodId]);
 
   const handleLengthChange = (e) => {
     const { value } = e.target;
@@ -25,11 +42,11 @@ function TpAddForm(props) {
     });
   };
 
-  const setLenghtToCurProduct = () => {
-    if (curProduct && curProduct.lenght) {
+  const setLenghtToProductLength = () => {
+    if (productLength) {
       dispatch({
         type: "SET_TP_ADD_OPS_TEMPLATE",
-        payload: { ...tpAddOpsTemplate, length: curProduct.lenght },
+        payload: { ...tpAddOpsTemplate, length: productLength },
       });
     }
   };
@@ -37,14 +54,14 @@ function TpAddForm(props) {
   const createProcess = async () => {
     try {
       // Обновляем prodId в tpAddOpsTemplate
-      const updatedTemplate = { ...tpAddOpsTemplate, prodId: curProduct.Id };
+      const updatedTemplate = { ...tpAddOpsTemplate, prodId: prodId };
       dispatch({
         type: "SET_TP_ADD_OPS_TEMPLATE",
         payload: updatedTemplate,
       });
 
       // Выполняем метод для создания техпроцесса
-      await createTechProcessWithOperations(token, user._id, updatedTemplate);
+      await createTechProcessWithOperations(updatedTemplate);
       console.log("Техпроцесс создан с помощью шаблона ", updatedTemplate);
     } catch (err) {
       console.error("Ошибка при создании техпроцесса:", err);
@@ -53,7 +70,6 @@ function TpAddForm(props) {
 
   return (
     <div className="container mt-1">
-      <h3 className="mb-1">Добавление техпроцесса</h3>
       <TpAddFormList />
       <div className="form-group mb-1">
         <label htmlFor="lengthInput">Длина заготовки:</label>
@@ -68,18 +84,18 @@ function TpAddForm(props) {
       <button className="btn btn-secondary mr-3" onClick={setLengthTo750}>
         L=750 мм
       </button>
-      {curProduct && curProduct.lenght && (
+      {productLength && (
         <button
           className="btn btn-secondary mr-2"
-          onClick={setLenghtToCurProduct}
+          onClick={setLenghtToProductLength}
         >
-          L={curProduct.lenght} мм
+          L={productLength} мм
         </button>
       )}
 
       <button className="btn btn-primary" onClick={createProcess}>
-        {curProduct
-          ? `Создать техпроцесс для ${curProduct.name}`
+        {productName
+          ? `Создать техпроцесс для ${productName}`
           : "Создать техпроцесс"}
       </button>
     </div>

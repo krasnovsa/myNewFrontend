@@ -1,19 +1,35 @@
-.tp-add-form-list-item {
-  font-size: 0.875rem; /* 14px */
-  padding: 0.1rem;
+.tp-add-form-list-item  {
+  display: grid;
+  grid-template-columns: 0,5fr 1fr 1fr 1fr 1fr 1fr; /* Шесть равных колонок */
+  grid-template-areas: 
+    "isSelect num wgId qtt qttToOne btns";
+  gap: 10px;
+  align-items: center;
+  font-size: 12px;
 }
 
-.tp-add-form-list-item .form-group {
-  margin-bottom: 0.1rem;
+.isSelect {
+  grid-area: isSelect;
 }
 
-.tp-add-form-list-item .form-control,
-.tp-add-form-list-item .form-check-input {
-  font-size: 0.875rem; /* 14px */
-  padding: 0.1rem;
+.num {
+  grid-area: num;
 }
 
-.tp-add-form-list-item .btn {
-  font-size: 0.875rem; /* 14px */
-  padding: 0.25rem 0.5rem;
+.wgId {
+  grid-area: wgId;
+}
+
+.qtt {
+  grid-area: qtt;
+}
+
+.qttToOne {
+  grid-area: qttToOne;
+}
+
+.btns {
+  grid-area: btns;
+  display: flex;
+  justify-content: center;
 }

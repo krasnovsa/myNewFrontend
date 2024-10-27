@@ -1,18 +1,13 @@
-.list-group-item-header {
+.list-group-item {
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 1fr 2fr 0.5fr; /* Пять равных колонок  */
+  grid-template-columns: 0.5fr 1fr 1fr 1fr 2fr 0.5fr; /* Пять равных колонок и одна авто */
   grid-template-areas: 
-    "num wgName qttPlan qttToOne descr";
+    "num wgName qttPlan qttToOne descr edit";
   align-items: center;
   padding: 3px;
   border: 1px solid #ddd;
   margin-bottom: 2px;
   font-size: 12px;
-
-}
-
-.font-color-blue {
-  color: rgb(0, 89, 255);
 }
 
 .num {
@@ -34,10 +29,10 @@
 .descr {
   grid-area: descr;
 }
+
 .edit {
   grid-area: edit;
 }
-
 
 .descr-text {
   font-size: 0.8em; /* Уменьшенный шрифт для описания */

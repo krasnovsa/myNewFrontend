@@ -1,16 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 
 import PrivateRoute from './auth/PrivateRoute'
-
-// import Boxes from "./pages/boxes";
-// import Rdsr from "./pages/rdsr";
-// import GetTools from "./pages/get-tools";
-// import RdsrPrint from "./pages/rdsr-print/rdsr-print";
-// import WlByEmplPage from "./components/wl/WlByEmplPage";
-// import WlByParams from "./components/wl/WlByParams";
-import Orders from "./pages/orders";
+import TpPage from "./pages/tp-page/tp-page";
+// import Orders from "./pages/orders";
 import MainPage from "./pages/main-page/main-page";
-import ProductPage from "./pages/product-page/product-page";
 // import Oi from "./pages/oi";
 
 // import BoxAddUpdate from "./pages/box-add-update";
@@ -31,45 +24,14 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<PrivateRoute element={Dashboard} />} />
       <Route path="/main-page" element={<PrivateRoute element={MainPage} />} />
-      <Route path="/product-page" element={<PrivateRoute element={ProductPage} />} />
       <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />
-      <Route path="/orders/:loadMode/:filterStr?"  element={<PrivateRoute element={ProductPage}/>} />
-
-      {/* <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />
-      <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />
-      <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} /> */}
-
-      {/* <PrivateRoute path="/boxes/pageNumber/:pageNumber/pageSize/:pageSize/textFilter/:textFilter"  component={Boxes} />
-      
-      <PrivateRoute path="/boxes/pageNumber/:pageNumber/pageSize/:pageSize/textFilter"  component={Boxes} />
-      <PrivateRoute path="/box/addnew" > <BoxAddUpdate loadMode={0}/></PrivateRoute>
-      <PrivateRoute path="/box/update" > <BoxAddUpdate loadMode={1}/></PrivateRoute>
-      
-      <PrivateRoute path="/rdsr/pageNumber/:pageNumber/pageSize/:pageSize/textFilter/:textFilter"  component={Rdsr} />
-      <PrivateRoute path="/rdsr/pageNumber/:pageNumber/pageSize/:pageSize/textFilter"  component={Rdsr} />
-      <PrivateRoute path="/rdsr-print/:rdId"  component={RdsrPrint} />
-
-      <PrivateRoute path="/gt/pageNumber/:pageNumber/pageSize/:pageSize/parAccId/:parAccId/textFilter/:textFilter"  component={GetTools} />
-      <PrivateRoute path="/gt/pageNumber/:pageNumber/pageSize/:pageSize/parAccId/:parAccId/textFilter"  component={GetTools} />
-      
-      <PrivateRoute path="/wl/byEmpl/pageNumber/:pageNumber"><WlByEmplPage /> </PrivateRoute>
-      <PrivateRoute path="/wl/byParams/pageNumber/:pageNumber"><WlByParams /> </PrivateRoute>
-      <PrivateRoute path="/wl/addnew" > <WlAddUpdate loadMode={0}/></PrivateRoute>
-      <PrivateRoute path="/wl/update" > <WlAddUpdate loadMode={1}/></PrivateRoute>
-      
-      <PrivateRoute path="/att/:table/:keyValue" ><ViewerTestPage /></PrivateRoute> */}
-      
-    
-      {/* <PrivateRoute path="/orders/:loadMode/:filterStr" ><Orders /></PrivateRoute>
-      <PrivateRoute path="/orders/:loadMode/" ><Orders /></PrivateRoute>
-      
-      <PrivateRoute path="/order/prod/:ordId/" ><Oi /></PrivateRoute> */}
-     
-      {/* <PrivateRoute path="/qr/:theme" ><QrResponsePage /></PrivateRoute> */}
-
-
+      <Route 
+      path="/tp-page/:prodId"
+      element={<PrivateRoute element={TpPage} />}
+      />
     </Routes>
-  )
-}
+  );
+};
+
 
 export default AppRoutes

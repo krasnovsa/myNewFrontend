@@ -32,8 +32,8 @@ const WlItemLight = ({ wl }) => {
       onClick={handleOnClick}
     >
       {/* First row */}
-      <div className="date">{new Date(wl.wDate).toLocaleDateString()}</div>
       <div className="shift">{renderShiftIcon(wl.wShift)}</div>
+      <div className="date">{new Date(wl.wDate).toLocaleDateString()}</div>
       <div className="btname">{wl.btName}</div>
       <div className="tone">{wl.tOne}</div>
       <div className="unname">{wl.unName}</div>

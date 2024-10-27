@@ -1,0 +1,42 @@
+.edit-form-item {
+  display: grid;
+  grid-template-columns: 50px 75px 50px 50px 1fr auto; /* Пять равных колонок и одна авто */
+  grid-template-areas: 
+    "num wgId qttPlan qttToOne descr form-buttons";
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.num {
+  grid-area: num;
+ font-size: 10px;
+}
+
+.wgId {
+  grid-area: wgId;
+}
+
+.qttPlan {
+  grid-area: qttPlan;
+}
+
+.descr {
+  grid-area: descr;
+}
+
+.qttToOne {
+  grid-area: qttToOne;
+}
+
+.form-buttons {
+  grid-area: form-buttons;
+  display: flex;
+  justify-content: space-between;
+}
+
+.font-size-12 {
+  font-size: 12px;
+}

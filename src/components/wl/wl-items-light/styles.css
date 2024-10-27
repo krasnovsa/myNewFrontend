@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-areas:
-    "date shift btname tone unname qtt wtime descr"
-    "eFio shift btname tone unname qtt wtime descr";
+    "shift date btname tone unname qtt wtime descr"
+    "shift eFio btname tone unname qtt wtime descr";
   gap: 2px;
   align-items: center;
   font-family: Arial, sans-serif;
@@ -19,6 +19,7 @@
 
 .shift {
   grid-area: shift;
+  text-align: center; /* Центрирование содержимого по горизонтали */
 }
 
 .tone {
@@ -45,6 +46,7 @@
 }
 .btname {
   grid-area: btname;
+  text-align: center;
 }
 
 /* Style for active element */

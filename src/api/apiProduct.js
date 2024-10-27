@@ -115,5 +115,27 @@ export const getProdCalcPriceList = async (prodId, queryParams) => {
   }
 };
 
+// Получение истории цен
+export const getPriceHistory = async (prodId) => {
+  const { user, token } = isAuthenticated();
+  try {
+    const response = await fetch(
+      `${API}/product/${prodId}/price-history/${user._id}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
 
 

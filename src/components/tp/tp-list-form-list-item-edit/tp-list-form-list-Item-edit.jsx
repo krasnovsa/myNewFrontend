@@ -4,6 +4,7 @@ import { faSave, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { CurrentAppContext } from "../../../contexts/currentApp";
 import { updateTpItem } from "../../../api/apiTp"; // Import the updateTpItem function
 import { isAuthenticated } from "../../../auth";
+import "./styles.css";
 
 const TPListFormListItemEdit = ({ tpItem, onSave, onCancel }) => {
   const [editedTpItem, setEditedTpItem] = useState(tpItem);
@@ -35,7 +36,7 @@ const TPListFormListItemEdit = ({ tpItem, onSave, onCancel }) => {
 
   const handleSaveClick = async () => {
     try {
-      await updateTpItem(token, _id, editedTpItem); 
+      await updateTpItem(editedTpItem); 
       onSave(editedTpItem); 
       dispatch({ type: "SET_CUR_PROD_ID_TRIGGER", payload: state.curProdIdTrigger + 1 }); // Обновляем триггер
     } catch (err) {
@@ -44,12 +45,12 @@ const TPListFormListItemEdit = ({ tpItem, onSave, onCancel }) => {
   };
 
   return (
-    <>
+    <div className="edit-form-item">
       <div className="form-group num">
         <input
           type="number"
           name="num"
-          className="form-control"
+          className="form-control font-size-12"
           value={editedTpItem.num}
           onChange={handleInputChange}
           placeholder="Номер операции"
@@ -58,7 +59,7 @@ const TPListFormListItemEdit = ({ tpItem, onSave, onCancel }) => {
       <div className="form-group wgId">
         <select
           name="wGroupId"
-          className="form-control"
+          className="form-control font-size-12"
           value={editedTpItem.wGroupId}
           onChange={handleInputChange}
         >
@@ -76,7 +77,7 @@ const TPListFormListItemEdit = ({ tpItem, onSave, onCancel }) => {
         <input
           type="number"
           name="qttPlan"
-          className="form-control"
+          className="form-control font-size-12"
           value={editedTpItem.qttPlan}
           onChange={handleInputChange}
           placeholder="Плановое количество"
@@ -86,7 +87,7 @@ const TPListFormListItemEdit = ({ tpItem, onSave, onCancel }) => {
         <input
           type="text"
           name="descr"
-          className="form-control"
+          className="form-control font-size-12"
           value={editedTpItem.descr}
           onChange={handleInputChange}
           placeholder="Описание"
@@ -96,7 +97,7 @@ const TPListFormListItemEdit = ({ tpItem, onSave, onCancel }) => {
         <input
           type="number"
           name="qttToOne"
-          className="form-control"
+          className="form-control font-size-12"
           value={editedTpItem.qttToOne}
           onChange={handleInputChange}
           placeholder="Количество на единицу"
@@ -110,7 +111,7 @@ const TPListFormListItemEdit = ({ tpItem, onSave, onCancel }) => {
           <FontAwesomeIcon icon={faTimes} />
         </button>
       </div>
-    </>
+    </div>
   );
 };
 

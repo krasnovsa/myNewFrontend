@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { getProdCalcPriceList } from "../../api/apiProduct";
+import ProductPriceHistory from "./product-price-history";
 
 const ProdCalcPrice = ({ prodId, initialQtt }) => {
   const [priceDataTable, setPriceDataTable] = useState([]);
@@ -137,6 +138,7 @@ setPricePurchase(dataPurchasePrice[0])
   return (
     <div>
       <div>
+        <h5>Общие сведения</h5>
         <table className="table table-bordered">
           <thead>
             <tr>
@@ -196,23 +198,21 @@ setPricePurchase(dataPurchasePrice[0])
           </tbody>
         </table>
       </div>
+      <h5>Расчет цены</h5>
 
       <div className="table-responsive">
         <table className="table table-bordered table-hover">
           <thead>
             <tr>
-              <th>Num</th>
-              <th>WgName</th>
-              <th>QttToOne</th>
-              <th>QttUnInTO</th>
-              <th>UnName</th>
-              <th>QttUnOrder</th>
-              <th>PrUn</th>
-              <th>PrOne</th>
-              <th>PrOrd</th>
-              <th>WgCEc</th>
-              <th>OpCEc</th>
-              <th>PriceEc</th>
+              <th>Операця</th>
+              <th>Назввание</th>
+              <th>Оп/шт</th>
+              <th>Ед в операции</th>
+              <th>Ед.изм.</th>
+              <th>Ед. в зак</th>
+              <th>Руб/ед</th>
+              <th>Руб/шт</th>
+              <th>Руб/зак</th>
             </tr>
           </thead>
           <tbody>
@@ -227,14 +227,13 @@ setPricePurchase(dataPurchasePrice[0])
                 <td>{item.prUn}</td>
                 <td>{item.prOne}</td>
                 <td>{item.prOrd}</td>
-                <td>{item.wgCEc}</td>
-                <td>{item.opCEc}</td>
-                <td>{item.priceEc}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      <h5>История цен</h5>
+      <ProductPriceHistory prodId={prodId} />
     </div>
   );
 };

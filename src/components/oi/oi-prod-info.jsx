@@ -115,7 +115,9 @@ console.log('last oi prod info oi', oi, 'pj', pj)
           ) : (
             <WlList options={{ pjId, emplId: 0 }} />
           ))}
-        {selectedTab === "product" && <Product prodId={prodId} />}
+        {selectedTab === "product" && 
+        <Product prodId={prodId} 
+        />}
       </div>
       <div className="card-img-bottom">
         {/* {prodId&&<SliderAtt table='Продукция' keyValue={prodId}/>} */}

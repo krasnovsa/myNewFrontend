@@ -1,0 +1,22 @@
+.tp-page {
+  padding: 20px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.grid-item-left {
+  display: flex;
+  grid-template-rows: 1fr 1fr;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.grid-item-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
