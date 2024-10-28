@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
-import Layout from "../components/layout";
+import Layout from "../components/layout/layout";
 import { login, authenticate, isAuthenticated } from "../auth";
 
 const Login = () => {

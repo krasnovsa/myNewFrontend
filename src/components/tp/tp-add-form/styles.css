@@ -1,3 +1,26 @@
+.tp-add-grid-container {
+    display: grid; 
+    grid-template-rows: 300px 50px 50px;
+    grid-template-areas:
+      "list" 
+      "lengthInput" 
+      "btns";
+    gap: 15px;
+  }
 
+  .list {
+    grid-area: list;
+    overflow-y: auto;
+  }
+  
+  .len-input {
+    grid-area: lengthInput;
+  }
+  
+  .btns {
+    grid-area: btns;
+    display: flex;
+    justify-content: space-between;
+  }
   
  

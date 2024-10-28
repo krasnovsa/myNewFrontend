@@ -1,5 +1,5 @@
 
-import Layout from "../components/layout";
+import Layout from "../components/layout/layout";
 import { isAuthenticated, checkWebRole } from "../auth";
 import { Link, useNavigate } from "react-router-dom";
 

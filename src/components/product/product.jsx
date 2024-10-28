@@ -23,7 +23,7 @@ const Product = ({ prodId, qtt }) => {
   }
 
   return (
-    <div className="d-flex flex-column vh-100">
+    <div className="d-flex flex-column">
       <ProductHeader prodId={prodId} />
       <div className="btn-group" role="group" aria-label="Basic example">
         <button

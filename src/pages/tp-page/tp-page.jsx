@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import Layout from "../../components/layout.jsx";
+import Layout from "../../components/layout/layout"; // Импортируем компонент Layout
 import TpListForm from "../../components/tp/tp-list-form/tp-list-form";
 import TpAddForm from "../../components/tp/tp-add-form/tp-add-form";
 import AttViewer from "../../components/attachments/att-viewer/att-viewer"; // Импортируем компонент AttViewer

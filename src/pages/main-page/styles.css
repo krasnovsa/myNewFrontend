@@ -1,31 +1,32 @@
-.main-container {
-    height: 100vh;
+.main-grid-container {
+    height: 90vh;
     /* Ограничиваем высоту до высоты экрана */
     overflow: hidden;
     /* Чтобы не было скроллов */
+    display:grid;
+    grid-template-columns: 40% 60%;
+    grid-template-rows: 50% 40%;
+    grid-template-areas: "prod-list ord-list"
+                         "prod-list info";
 }
 
-.pane {
-    background-color: white;
-    border: 1px solid white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.prod-list {
+    grid-area: prod-list;
+    border-right: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
 }
 
-
-.split {
-    display: flex;
-    height: 100%;
+.ord-list {
+    grid-area: ord-list;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
 }
 
-.split-horizontal .gutter {
-    cursor: col-resize;
-    /* Курсор для горизонтального разделения */
-}
-
-.split-vertical .gutter {
-    cursor: row-resize;
-    /* Курсор для вертикального разделения */
+.info {
+    grid-area: info;
+    border-right: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
 }

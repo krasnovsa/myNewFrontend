@@ -1,0 +1,15 @@
+.layout-grid-contayner {
+  display: grid;
+  grid-template-rows: 100px auto;
+  height: 100vh;
+  width: 100vw;
+}
+
+.header-container {
+  grid-row: 1;
+}
+
+main {
+  grid-row: 2;
+  overflow: hidden;
+}

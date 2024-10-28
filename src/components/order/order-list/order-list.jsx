@@ -74,7 +74,7 @@ function OrderList(props) {
   };
 
   return (
-    <div className="order-list-container">
+    <div className="order-list-grid">
       <OrderListControls
         searchStr={searchStr}
         handleSearchChange={handleSearchChange}
@@ -92,7 +92,9 @@ function OrderList(props) {
         ) : error ? (
           <div className="alert alert-danger">{error}</div>
         ) : (
+
           <OrderListContent ordList={ordList} setSearchStr={setSearchStr} />
+
         )}
       </div>
     </div>

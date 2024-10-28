@@ -69,9 +69,11 @@ function TpAddForm({ prodId }) {
   };
 
   return (
-    <div className="container mt-1">
+    <div className="tp-add-grid-container mt-1 h-100">
+      <div className="list">
       <TpAddFormList />
-      <div className="form-group mb-1">
+      </div>
+      <div className="len-input form-group mb-1">
         <label htmlFor="lengthInput">Длина заготовки:</label>
         <input
           type="number"
@@ -81,6 +83,7 @@ function TpAddForm({ prodId }) {
           onChange={handleLengthChange}
         />
       </div>
+      <div className="btns form-group mb-1">
       <button className="btn btn-secondary mr-3" onClick={setLengthTo750}>
         L=750 мм
       </button>
@@ -98,6 +101,7 @@ function TpAddForm({ prodId }) {
           ? `Создать техпроцесс для ${productName}`
           : "Создать техпроцесс"}
       </button>
+      </div>
     </div>
   );
 }

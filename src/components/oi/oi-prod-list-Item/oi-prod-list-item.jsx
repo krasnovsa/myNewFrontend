@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { CurrentAppContext } from "../../../contexts/currentApp";
 import { Highlighter } from "../../common/Highlighter/Highlighter";
 import PjList from "../../pj/PjList";
-import OiProdInfo from "../oi-prod-info";
 import "./styles.css"; // Импортируем стили
 
 function OiProdListItem(props) {
