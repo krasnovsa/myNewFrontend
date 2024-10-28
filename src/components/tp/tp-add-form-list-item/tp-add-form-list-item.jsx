@@ -86,7 +86,7 @@ const TpAddFormListItem = ({ index, onDelete }) => {
           type="number"
           id={`num-${index}`}
           name="num"
-          className="form-control"
+          className="form-control  input-small-font"
           value={operation.num}
           onChange={handleInputChange}
           placeholder="Номер операции"
@@ -96,7 +96,7 @@ const TpAddFormListItem = ({ index, onDelete }) => {
         <select
           id={`wgId-${index}`}
           name="wgId"
-          className="form-control"
+          className="form-control  input-small-font"
           value={operation.wgId}
           onChange={handleInputChange}
         >
@@ -115,7 +115,7 @@ const TpAddFormListItem = ({ index, onDelete }) => {
           type="number"
           id={`qtt-${index}`}
           name="qtt"
-          className="form-control"
+          className="form-control  input-small-font"
           value={operation.qtt}
           onChange={handleInputChange}
           placeholder="Количество единиц измерения"
@@ -127,16 +127,16 @@ const TpAddFormListItem = ({ index, onDelete }) => {
           step="0.01"
           id={`qttToOne-${index}`}
           name="qttToOne"
-          className="form-control"
+          className="form-control  input-small-font"
           value={operation.qttToOne}
           onChange={handleInputChange}
           placeholder="Количество на одну деталь"
         />
       </div>
-      <button className="btn btn-danger mr-2" onClick={() => onDelete(index)}>
+      <button className="btn btn-danger mr-2 btn-sm " onClick={() => onDelete(index)}>
         <FontAwesomeIcon icon={faTrash} />
       </button>
-      <button className="btn btn-info" onClick={handleButtonClick}>
+      <button className="btn btn-info btn-sm" onClick={handleButtonClick}>
         <FontAwesomeIcon icon={faArrowRight} />
       </button>
     </li>

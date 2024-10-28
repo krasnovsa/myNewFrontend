@@ -83,20 +83,20 @@ function TpAddForm({ prodId }) {
           onChange={handleLengthChange}
         />
       </div>
-      <div className="btns form-group mb-1">
-      <button className="btn btn-secondary mr-3" onClick={setLengthTo750}>
-        L=750 мм
+      <div className="btns form-group ">
+      <button className="btn btn-secondary m-1 btn-sm" onClick={setLengthTo750}>
+        750мм
       </button>
       {productLength && (
         <button
-          className="btn btn-secondary mr-2"
+          className="btn btn-secondary m-1 btn-sm"
           onClick={setLenghtToProductLength}
         >
-          L={productLength} мм
+          {productLength}мм
         </button>
       )}
 
-      <button className="btn btn-primary" onClick={createProcess}>
+      <button className="btn btn-primary btn-sm m-1" onClick={createProcess}>
         {productName
           ? `Создать техпроцесс для ${productName}`
           : "Создать техпроцесс"}

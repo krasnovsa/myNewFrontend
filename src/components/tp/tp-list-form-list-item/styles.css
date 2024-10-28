@@ -1,6 +1,6 @@
 .list-group-item {
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 1fr 2fr 0.5fr; /* Пять равных колонок и одна авто */
+  grid-template-columns: 0.5fr 1fr 1fr 1fr 2fr 40px; /* Пять равных колонок и одна авто */
   grid-template-areas: 
     "num wgName qttPlan qttToOne descr edit";
   align-items: center;

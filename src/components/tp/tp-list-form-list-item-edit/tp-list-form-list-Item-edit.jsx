@@ -104,10 +104,10 @@ const TPListFormListItemEdit = ({ tpItem, onSave, onCancel }) => {
         />
       </div>
       <div className="form-buttons">
-        <button className="btn btn-success" onClick={handleSaveClick}>
+        <button className="btn btn-success btn-sm" onClick={handleSaveClick}>
           <FontAwesomeIcon icon={faSave} />
         </button>
-        <button className="btn btn-secondary" onClick={onCancel}>
+        <button className="btn btn-primary btn-primary  btn-sm" onClick={onCancel}>
           <FontAwesomeIcon icon={faTimes} />
         </button>
       </div>

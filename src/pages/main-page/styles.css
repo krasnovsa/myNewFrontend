@@ -1,13 +1,14 @@
 .main-grid-container {
-    height: 90vh;
+    height: 100%;
     /* Ограничиваем высоту до высоты экрана */
     overflow: hidden;
     /* Чтобы не было скроллов */
     display:grid;
     grid-template-columns: 40% 60%;
-    grid-template-rows: 50% 40%;
+    grid-template-rows: 50% 50%;
     grid-template-areas: "prod-list ord-list"
                          "prod-list info";
+    border-bottom: 1px solid #ccc;
 }
 
 .prod-list {
@@ -29,4 +30,5 @@
     border-right: 1px solid #ccc;
     padding: 10px;
     overflow-y: auto;
+    
 }

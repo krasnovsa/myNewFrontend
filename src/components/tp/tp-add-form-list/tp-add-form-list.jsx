@@ -71,7 +71,7 @@ const TpAddFormList = () => {
               {labels.qttToOne}
             </div>
             <div className="btns">
-              <button className="btn btn-primary mt-1" onClick={addOperation}>
+              <button className="btn btn-primary m-1 btn-sm" onClick={addOperation}>
                 +
               </button>
             </div>

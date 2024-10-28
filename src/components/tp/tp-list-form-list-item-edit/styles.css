@@ -4,10 +4,10 @@
   grid-template-areas: 
     "num wgId qttPlan qttToOne descr form-buttons";
   align-items: center;
-  gap: 10px;
-  padding: 10px;
+  gap: 3px;
+  padding: 3px;
   border: 1px solid #ddd;
-  margin-bottom: 10px;
+  margin-bottom: 3px;
 }
 
 .num {

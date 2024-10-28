@@ -1,10 +1,10 @@
 .tp-add-grid-container {
     display: grid; 
-    grid-template-rows: 300px 50px 50px;
+    grid-template-rows: 60px 40px 300px ;
     grid-template-areas:
-      "list" 
-      "lengthInput" 
-      "btns";
+    "lengthInput" 
+    "btns" 
+    "list" ;
     gap: 15px;
   }
 
@@ -20,7 +20,7 @@
   .btns {
     grid-area: btns;
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
   }
   
  

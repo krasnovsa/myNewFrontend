@@ -28,7 +28,7 @@ const Product = ({ prodId, qtt }) => {
       <div className="btn-group" role="group" aria-label="Basic example">
         <button
           type="button"
-          className={`btn btn-primary ${
+          className={`btn btn-primary btn-sm ${
             selectedTab === "drawing" ? "active" : ""
           }`}
           onClick={() => handleTabChange("drawing")}
@@ -37,7 +37,7 @@ const Product = ({ prodId, qtt }) => {
         </button>
         <button
           type="button"
-          className={`btn btn-primary ${
+          className={`btn btn-primary btn-sm ${
             selectedTab === "technology" ? "active" : ""
           }`}
           onClick={() => handleTabChange("technology")}
@@ -46,7 +46,7 @@ const Product = ({ prodId, qtt }) => {
         </button>
         <button
           type="button"
-          className={`btn btn-primary ${
+          className={`btn btn-primary btn-sm ${
             selectedTab === "material" ? "active" : ""
           }`}
           onClick={() => handleTabChange("material")}
@@ -55,7 +55,7 @@ const Product = ({ prodId, qtt }) => {
         </button>
         <button
           type="button"
-          className={`btn btn-primary ${
+          className={`btn btn-primary btn-sm ${
             selectedTab === "calculation" ? "active" : ""
           }`}
           onClick={() => handleTabChange("calculation")}
@@ -69,7 +69,7 @@ const Product = ({ prodId, qtt }) => {
         )}
         {selectedTab === "technology" && (
           <div>
-            <button className="btn btn-primary" onClick={handleTpPage}>
+            <button className="btn btn-primary btn-sm mt-1" onClick={handleTpPage}>
               Создать/Редактировать техпроцесс
             </button>
             <TpListForm prodId={prodId} />
