@@ -4,13 +4,14 @@ import { CurrentAppContext } from "../../../contexts/currentApp";
 import { Highlighter } from "../../common/Highlighter/Highlighter";
 import PjList from "../../pj/PjList";
 import "./styles.css"; // Импортируем стили
+import { formatTextWithColor } from "../../../utils/textFormatter";
 
 function OiProdListItem(props) {
   const {
     prodName,
     oiQtt,
     color,
-    matMapNoHTML,
+    matMap,
     matSpec,
     oiQttShipped,
     oiHrsProdused,
@@ -69,27 +70,25 @@ function OiProdListItem(props) {
 
   return (
     <>
-      <div
-        className={`oi-item p-0 ${curOiProd === oiId ? "active" : ""}`}
-      >
+      <div className={`oi-item p-0 ${curOiProd === oiId ? "active" : ""}`}>
         <div
           className="color-bar"
           style={{ backgroundColor: `#${color.toString(16)}` }}
         ></div>
         <div className="oi-item-content" onClick={onBodyClickHandler}>
           <div className="oi-item-header p-1">
-            <div className="m-auto">
-              {oiSName}
-            </div>
+            <div className="m-auto">{oiSName}</div>
             <div className="m-auto">зак:{oiQtt}</div>
-            <div className={`m-auto ${getOiQttShippedClass()}`}>отгр:{oiQttShipped}</div>
+            <div className={`m-auto ${getOiQttShippedClass()}`}>
+              отгр:{oiQttShipped}
+            </div>
             <div className="m-auto">вып ч:{oiHrsProdused}</div>
             <div className="m-auto">вып %:{oiPercHrs}%</div>
           </div>
           <div className="oi-item-details p-1">
             <div className="m-auto">{shipCalendar}</div>
             <div className="m-auto">{matSpec}</div>
-            <div className="m-auto">{matMapNoHTML}</div>
+            <div className="m-auto">{formatTextWithColor(matMap)}</div>
           </div>
         </div>
         <div className="m-auto p-1">

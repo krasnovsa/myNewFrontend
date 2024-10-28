@@ -1,6 +1,6 @@
 .wl-item-light-grid {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: 0.5fr 1fr  0.5fr 0.3fr 0.5fr 0.5fr 0.5fr 3fr;
   grid-template-areas:
     "shift date btname tone unname qtt wtime descr"
     "shift eFio btname tone unname qtt wtime descr";
@@ -43,6 +43,7 @@
 }
 .descr {
   grid-area: descr;
+  font-size: 12px;
 }
 .btname {
   grid-area: btname;
@@ -51,7 +52,7 @@
 
 /* Style for active element */
 .wl-item-light-grid.active {
-  background-color: #007bff; /* Blue background color */
-  color: #fff; /* White text color */
-  border-color: #007bff; /* Blue border color */
+  background-color: #cacbcc; /* Blue background color */
+  color: #3a3939; /* White text color */
+  border-color: #b6b7b8; /* Blue border color */
 }

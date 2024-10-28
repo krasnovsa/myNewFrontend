@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from 'prop-types';
 import { CurrentAppContext } from "../../../contexts/currentApp";
 import './styles.css'; // Импортируем CSS файл
+import { formatTextWithColor } from '../../../utils/textFormatter.jsx'
 
 const OrderListItem = ({ ord, setSearchStr }) => {
   const {
@@ -39,12 +40,9 @@ const OrderListItem = ({ ord, setSearchStr }) => {
   const orderClass = isClosed ? 'order-closed' : isOpen ? 'order-open' : 'order-not-open';
 
   // Заменяем точки с запятой на перенос строки
-  const formattedDescrNoHtml = descrNoHtml.split(';').map((item, index) => (
-    <React.Fragment key={index}>
-      {item}
-      <br />
-    </React.Fragment>
-  ));
+  const formattedDescrNoHtml = formatTextWithColor(descrNoHtml)
+
+
 
   // Определяем класс для firmSName
   const firmSNameClass = `firmSName ${firmSName.toLowerCase()}`;
@@ -52,12 +50,48 @@ const OrderListItem = ({ ord, setSearchStr }) => {
   return (
     <>
       {/* First Row */}
-      <tr key={`${ordId}-row1`} className={`order-list-item ${curOrdId === ordId ? "active-order" : ""} ${orderClass}`} onClick={onClickHandler}>
-        <td rowSpan="2" className={firmSNameClass}>{firmSName}</td><td rowSpan="2" className="ordId">{ordId}</td><td className="dateCreated">{dateCreated}</td><td rowSpan="2" className="custSName">{custSName}</td><td rowSpan="2" className="descrNoHtml">{formattedDescrNoHtml}</td><td className="hrsPlan">{hrsPlan}</td><td className= "shHrs">{shHrs}</td><td rowSpan="2" className="nzpHrs">{nzpHrs}</td><td className="persShipped">{persShipped}</td><td rowSpan="2" className="rang">{rang}</td>
+      <tr
+        key={`${ordId}-row1`}
+        className={`order-list-item ${
+          curOrdId === ordId ? "active-order" : ""
+        } ${orderClass}`}
+        onClick={onClickHandler}
+      >
+        <td rowSpan="2" className={firmSNameClass}>
+          {firmSName}
+        </td>
+        <td rowSpan="2" className="ordId">
+          {ordId}
+        </td>
+        <td className="dateCreated">{dateCreated}</td>
+        <td rowSpan="2" className="custSName">
+          {custSName}
+        </td>
+        <td rowSpan="2" className="descrNoHtml">
+          {formattedDescrNoHtml}
+        </td>
+        <td className="hrsPlan">{hrsPlan}</td>
+        <td className="shHrs">{shHrs}</td>
+        <td rowSpan="2" className="nzpHrs">
+          {nzpHrs}
+        </td>
+        <td className="persShipped">{persShipped}</td>
+        <td rowSpan="2" className="rang">
+          {rang}
+        </td>
       </tr>
       {/* Second Row */}
-      <tr key={`${ordId}-row2`} className={`order-list-item ${curOrdId === ordId ? "active-order" : ""} ${orderClass}`} onClick={onClickHandler}>
-        <td className="invNom">{invNom}</td><td className="hrsByTech">{hrsByTech}</td><td className="hrsProdused">{hrsEcProd}</td><td className="ordProdProgress">{ordProdProgress}</td>
+      <tr
+        key={`${ordId}-row2`}
+        className={`order-list-item ${
+          curOrdId === ordId ? "active-order" : ""
+        } ${orderClass}`}
+        onClick={onClickHandler}
+      >
+        <td className="invNom">{invNom}</td>
+        <td className="hrsByTech">{hrsByTech}</td>
+        <td className="hrsProdused">{hrsEcProd}</td>
+        <td className="ordProdProgress">{ordProdProgress}</td>
       </tr>
     </>
   );

@@ -72,7 +72,14 @@ function OiProdInfo(props) {
           <WlList options={{ pjId, emplId: 0 }} />
         ))}
       {selectedTab === "product" && <Product prodId={prodId} />}
-      {selectedTab === "shipment" && <SiListByOiid oiId={oi.Id||0} />}
+      {selectedTab === "shipment" && <SiListByOiid oiId={oi.oiId||0}
+         initFields = {[
+          { field: "Id", width: 100, header: "Id" },
+          { field: "name", width: 200, header: "Продукция" },
+          { field: "shipDate", width: 200, header: "Дата отгрузки" },
+          { field: "qtt", width: 100, header: "Количество" },
+          { field: "num", width: 100, header: "# документа" },
+          ]} />}
     </div>
   );
 }
