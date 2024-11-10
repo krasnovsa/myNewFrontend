@@ -1,8 +1,11 @@
-import React, { useContext } from "react";
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 import { CurrentAppContext } from "../../../contexts/currentApp";
-import './styles.css'; // Импортируем CSS файл
-import { formatTextWithColor } from '../../../utils/textFormatter.jsx'
+import "./styles.css"; // Импортируем CSS файл
+import {
+  formatTextWithColor,
+  replaceSemicolonsWithLineBreaks,
+} from "../../../utils/textFormatter.jsx";
 
 const OrderListItem = ({ ord, setSearchStr }) => {
   const {
@@ -25,10 +28,17 @@ const OrderListItem = ({ ord, setSearchStr }) => {
   } = ord;
 
   const [state, dispatch] = useContext(CurrentAppContext);
-
   const {
     curOrder: { ordId: curOrdId },
   } = state;
+
+  const itemRef = useRef(null);
+
+  useEffect(() => {
+    if (curOrdId === ordId && itemRef.current) {
+      itemRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [curOrdId, ordId]);
 
   const onClickHandler = (e) => {
     if (curOrdId !== ordId) {
@@ -37,14 +47,16 @@ const OrderListItem = ({ ord, setSearchStr }) => {
     setSearchStr(custSName);
   };
 
-  const orderClass = isClosed ? 'order-closed' : isOpen ? 'order-open' : 'order-not-open';
+  const orderClass = isClosed
+    ? "order-closed"
+    : isOpen
+    ? "order-open"
+    : "order-not-open";
 
-  // Заменяем точки с запятой на перенос строки
-  const formattedDescrNoHtml = formatTextWithColor(descrNoHtml)
+  const formattedDescrNoHtml = replaceSemicolonsWithLineBreaks(
+    formatTextWithColor(descrNoHtml)
+  );
 
-
-
-  // Определяем класс для firmSName
   const firmSNameClass = `firmSName ${firmSName.toLowerCase()}`;
 
   return (
@@ -56,6 +68,7 @@ const OrderListItem = ({ ord, setSearchStr }) => {
           curOrdId === ordId ? "active-order" : ""
         } ${orderClass}`}
         onClick={onClickHandler}
+        ref={itemRef}
       >
         <td rowSpan="2" className={firmSNameClass}>
           {firmSName}

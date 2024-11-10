@@ -28,15 +28,15 @@
   /* Светло-бежевый */
     font-style: italic;
       /* Курсивный текст */
-  color:rgb(120, 120, 121)
+  color:rgb(126, 126, 158)
 }
 
 .active-order {
-  background-color: rgb(0, 106, 255);
+  background-color: rgb(200, 200, 204);
   /* Синий фон */
-  color: white;
+  color: rgb(37, 37, 37);
   /* Белый текст */
-  border: 1px solid rgb(108, 131, 196);
+  border: 1px solid rgb(143, 144, 146);
       /* Светло-серые линии сетки */
 }
 

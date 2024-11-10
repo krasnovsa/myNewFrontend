@@ -20,7 +20,7 @@ const AttExplorer = ({ files, onAttSelect }) => {
         <li
           onClick={() => handleFileClick(file)}
           className={`${selectedId === file.Id ? "selected" : ""} ${
-            file.isValid === 0 ? "invalid" : ""
+            file.notValid == 0 ? "" : "invalid"
           }`}
         >
           <FontAwesomeIcon icon={file.isFolder ? faFolder : faFile} />

@@ -42,12 +42,14 @@ function OiProdListItem(props) {
 
   const onBodyClickHandler = (e) => {
     e.stopPropagation();
-    setIsExtended(!isExtended);
+    
     if (curOiProd !== oiId) {
       dispatch({ type: "SET_CURRENT_OIPROD", payload: props.oi.info });
       dispatch({ type: "SET_CURRENT_PJ", payload: {} });
       return;
-    }
+    } else {
+      setIsExtended(!isExtended);
+     }
   };
 
   const onInfoClickHandler = () => {
